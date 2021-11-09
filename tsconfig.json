@@ -8,6 +8,8 @@
     "sourceMap": true,
     "allowJs": false,
     "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
