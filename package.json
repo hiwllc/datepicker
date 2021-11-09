@@ -10,17 +10,27 @@
   "license": "Apache-2.0",
   "private": false,
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
     "@chakra-ui/react": "^1.6.12",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@rollup/plugin-typescript": "^8.3.0",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/react": "^6.3.12",
     "@types/react": "^17.0.34",
+    "babel-loader": "^8.2.3",
     "framer-motion": "^4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rollup": "^2.59.0",
     "rollup-plugin-dts": "^4.0.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -33,6 +43,9 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "date-fns": "^2.25.0",
-    "framer-motion": "^4"
-  }
+    "framer-motion": "^4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "dependencies": {}
 }
