@@ -1,0 +1,14 @@
+{
+  "name": "@uselessdev/datepicker",
+  "version": "0.1.0",
+  "description": "A simple react datepicker build with chakra-ui and date-fns",
+  "main": "index.js",
+  "repository": "git@github.com:uselessdev/datepicker.git",
+  "author": "Wallace Oliveira <wallacebatistaoliveira@gmail.com>",
+  "license": "Apache-2.0",
+  "private": false,
+  "devDependencies": {
+    "@types/react": "^17.0.34",
+    "typescript": "^4.4.4"
+  }
+}
