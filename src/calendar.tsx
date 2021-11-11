@@ -1,8 +1,16 @@
 import { Box, Flex, Button, Grid } from '@chakra-ui/react'
 import { Month } from './month'
 import { useCalendar } from './useCalendar'
+import type { CalendarDate } from './useCalendar'
 
-export function Calendar() {
+type Calendar = {
+  values: {
+    start: CalendarDate
+    end?: CalendarDate
+  }
+}
+
+export function Calendar({ values }: Calendar) {
   const {
     startDateDays,
     endDateDays,
@@ -11,23 +19,41 @@ export function Calendar() {
     nextMonth,
     prevMonth,
   } = useCalendar({
-    start: new Date(),
+    start: values?.start || new Date(),
   })
 
   return (
-    <Box p={2} w="600px" borderWidth="1px" rounded="md" shadow="lg">
-      <Flex w="100%" justifyContent="space-between">
-        <Button onClick={prevMonth} size="sm">
+    <Box
+      position="relative"
+      w="600px"
+      borderWidth="1px"
+      rounded="md"
+      shadow="lg"
+    >
+      <Flex p={4} position="absolute" w="100%" justifyContent="space-between">
+        <Button onClick={prevMonth} size="xs">
           prev
         </Button>
-        <Button onClick={nextMonth} size="sm">
+        <Button onClick={nextMonth} size="xs">
           next
         </Button>
       </Flex>
 
-      <Grid gap={4} w="100%" gridTemplateColumns="1fr 1fr">
-        <Month date={startDate} days={startDateDays} />
-        <Month date={endDate} days={endDateDays} />
+      <Grid p={4} gap={4} w="100%" gridTemplateColumns="1fr 1fr">
+        <Month
+          startSelectedDate={values?.start}
+          endSelectedDate={values?.end}
+          values={values}
+          date={startDate}
+          days={startDateDays}
+        />
+        <Month
+          startSelectedDate={values?.start}
+          endSelectedDate={values?.end}
+          values={values}
+          date={endDate}
+          days={endDateDays}
+        />
       </Grid>
     </Box>
   )

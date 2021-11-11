@@ -6,4 +6,8 @@ export default {
   component: Calendar,
 } as ComponentMeta<typeof Calendar>
 
-export const Basic: ComponentStory<typeof Calendar> = () => <Calendar />
+export const Basic: ComponentStory<typeof Calendar> = args => (
+  <Calendar {...args} />
+)
+
+Basic.args = {}

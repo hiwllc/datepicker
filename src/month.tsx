@@ -1,13 +1,24 @@
-import { Grid, Box, Heading, Text, Button } from '@chakra-ui/react'
-import { format } from 'date-fns'
+import { Grid, Box, Heading, Text } from '@chakra-ui/react'
+import { format, isSameDay } from 'date-fns'
+import { eachDayOfInterval } from 'date-fns/esm'
+import { Day } from './day'
 import type { CalendarDate } from './useCalendar'
 
 export type Month = {
   date: CalendarDate
   days: (CalendarDate | null)[]
+  values?: { start?: CalendarDate; end?: CalendarDate }
+  startSelectedDate?: CalendarDate
+  endSelectedDate?: CalendarDate
 }
 
-export function Month({ date, days }: Month) {
+export function Month({
+  date,
+  days,
+  values,
+  startSelectedDate,
+  endSelectedDate,
+}: Month) {
   return (
     <Box>
       <Heading
@@ -30,16 +41,37 @@ export function Month({ date, days }: Month) {
         <Text textAlign="center">Sat</Text>
       </Grid>
 
-      <Grid gap={1} gridTemplateColumns="repeat(7, 1fr)">
-        {days.map(day => {
+      <Grid gridTemplateColumns="repeat(7, 1fr)">
+        {days.map((day, index) => {
           if (!day) {
-            return <span />
+            return <span key={`not-a-day-${index}`} />
           }
 
+          const isSelected = Boolean(
+            (startSelectedDate && isSameDay(day, startSelectedDate)) ||
+              (endSelectedDate && isSameDay(day, endSelectedDate))
+          )
+
+          const interval =
+            values?.start &&
+            values.end &&
+            eachDayOfInterval({
+              start: values?.start as CalendarDate,
+              end: values?.end as CalendarDate,
+            })
+
+          const isInRange = interval
+            ? interval.some(date => isSameDay(day, date))
+            : false
+
           return (
-            <Button variant="ghost" size="sm" key={format(day, 'd-M')}>
-              {format(day, 'dd')}
-            </Button>
+            <Day
+              isSelected={isSelected}
+              isInRange={isInRange}
+              day={day}
+              key={format(day, 'd-M')}
+              onSelectDate={() => null}
+            />
           )
         })}
       </Grid>
