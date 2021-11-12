@@ -1,8 +1,8 @@
-import { Box, Flex, Button, Grid } from '@chakra-ui/react'
+import { Box, Flex, Button, Grid, useMultiStyleConfig } from '@chakra-ui/react'
 import { Month } from './month'
 import { useCalendar } from './useCalendar'
 import type { CalendarDate } from './useCalendar'
-import { isAfter, isBefore } from 'date-fns'
+import { isAfter } from 'date-fns'
 
 export type Values = {
   start?: CalendarDate
@@ -31,6 +31,8 @@ export function Calendar({
     start: values?.start || new Date(),
   })
 
+  const styles = useMultiStyleConfig('Calendar', {})
+
   const selectDateHandler = (date: CalendarDate) => {
     if (values.start && isAfter(date, values.start)) {
       return onSelectEndDate(date)
@@ -40,13 +42,7 @@ export function Calendar({
   }
 
   return (
-    <Box
-      position="relative"
-      w="600px"
-      borderWidth="1px"
-      rounded="md"
-      shadow="lg"
-    >
+    <Box sx={styles.calendar}>
       <Flex p={4} position="absolute" w="100%" justifyContent="space-between">
         <Button onClick={prevMonth} size="xs">
           prev
@@ -56,7 +52,7 @@ export function Calendar({
         </Button>
       </Flex>
 
-      <Grid p={4} gap={4} w="100%" gridTemplateColumns="1fr 1fr">
+      <Grid sx={styles.months}>
         <Month
           startSelectedDate={values?.start}
           endSelectedDate={values?.end}

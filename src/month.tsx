@@ -1,4 +1,4 @@
-import { Grid, Box, Heading, Text } from '@chakra-ui/react'
+import { Grid, Box, Heading, Text, useMultiStyleConfig } from '@chakra-ui/react'
 import { format, isSameDay } from 'date-fns'
 import { eachDayOfInterval } from 'date-fns/esm'
 import { Day } from './day'
@@ -21,38 +21,37 @@ export function Month({
   endSelectedDate,
   onSelectDate,
 }: Month) {
+  const styles = useMultiStyleConfig('Month', {})
+
   return (
     <Box>
-      <Heading
-        h="32px"
-        textAlign="center"
-        as="h2"
-        lineHeight="32px"
-        fontSize="md"
-      >
-        {format(date, 'MMMM, yyyy')}
-      </Heading>
+      <Heading sx={styles.name}>{format(date, 'MMMM, yyyy')}</Heading>
 
-      <Grid gridTemplateColumns="repeat(7, 1fr)">
-        <Text textAlign="center">Sun</Text>
-        <Text textAlign="center">Mon</Text>
-        <Text textAlign="center">Tue</Text>
-        <Text textAlign="center">Wed</Text>
-        <Text textAlign="center">Thu</Text>
-        <Text textAlign="center">Fri</Text>
-        <Text textAlign="center">Sat</Text>
+      <Grid sx={styles.week}>
+        <Text sx={styles.weekday}>Sun</Text>
+        <Text sx={styles.weekday}>Mon</Text>
+        <Text sx={styles.weekday}>Tue</Text>
+        <Text sx={styles.weekday}>Wed</Text>
+        <Text sx={styles.weekday}>Thu</Text>
+        <Text sx={styles.weekday}>Fri</Text>
+        <Text sx={styles.weekday}>Sat</Text>
       </Grid>
 
-      <Grid gridTemplateColumns="repeat(7, 1fr)">
+      <Grid sx={styles.days}>
         {days.map((day, index) => {
           if (!day) {
             return <span key={`not-a-day-${index}`} />
           }
 
-          const isSelected = Boolean(
+          let variant: 'selected' | 'range' | undefined
+
+          const isSelected =
             (startSelectedDate && isSameDay(day, startSelectedDate)) ||
-              (endSelectedDate && isSameDay(day, endSelectedDate))
-          )
+            (endSelectedDate && isSameDay(day, endSelectedDate))
+
+          if (isSelected) {
+            variant = 'selected'
+          }
 
           const interval =
             values?.start &&
@@ -66,10 +65,13 @@ export function Month({
             ? interval.some(date => isSameDay(day, date))
             : false
 
+          if (isInRange && !isSelected) {
+            variant = 'range'
+          }
+
           return (
             <Day
-              isSelected={isSelected}
-              isInRange={isInRange}
+              variant={variant}
               day={day}
               key={format(day, 'd-M')}
               onSelectDate={onSelectDate}
