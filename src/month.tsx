@@ -10,6 +10,7 @@ export type Month = {
   values?: { start?: CalendarDate; end?: CalendarDate }
   startSelectedDate?: CalendarDate
   endSelectedDate?: CalendarDate
+  onSelectDate: (date: CalendarDate) => void
 }
 
 export function Month({
@@ -18,6 +19,7 @@ export function Month({
   values,
   startSelectedDate,
   endSelectedDate,
+  onSelectDate,
 }: Month) {
   return (
     <Box>
@@ -70,7 +72,7 @@ export function Month({
               isInRange={isInRange}
               day={day}
               key={format(day, 'd-M')}
-              onSelectDate={() => null}
+              onSelectDate={onSelectDate}
             />
           )
         })}

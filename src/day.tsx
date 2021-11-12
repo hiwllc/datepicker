@@ -9,7 +9,7 @@ type Day = {
   onSelectDate: (date: Date | number) => void
 }
 
-export function Day({ day, isSelected, isInRange }: Day) {
+export function Day({ day, isSelected, isInRange, onSelectDate }: Day) {
   let styles = {}
 
   if (isSelected) {
@@ -35,7 +35,13 @@ export function Day({ day, isSelected, isInRange }: Day) {
   }
 
   return (
-    <Button rounded="none" size="sm" variant="ghost" {...styles}>
+    <Button
+      onClick={() => onSelectDate(day)}
+      rounded="none"
+      size="sm"
+      variant="ghost"
+      {...styles}
+    >
       {format(day, 'd')}
     </Button>
   )

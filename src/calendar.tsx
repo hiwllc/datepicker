@@ -2,15 +2,24 @@ import { Box, Flex, Button, Grid } from '@chakra-ui/react'
 import { Month } from './month'
 import { useCalendar } from './useCalendar'
 import type { CalendarDate } from './useCalendar'
+import { isAfter, isBefore } from 'date-fns'
 
-type Calendar = {
-  values: {
-    start: CalendarDate
-    end?: CalendarDate
-  }
+export type Values = {
+  start?: CalendarDate
+  end?: CalendarDate
 }
 
-export function Calendar({ values }: Calendar) {
+type Calendar = {
+  values: Values
+  onSelectStartDate: (date: CalendarDate) => void
+  onSelectEndDate: (date: CalendarDate) => void
+}
+
+export function Calendar({
+  values,
+  onSelectStartDate,
+  onSelectEndDate,
+}: Calendar) {
   const {
     startDateDays,
     endDateDays,
@@ -21,6 +30,14 @@ export function Calendar({ values }: Calendar) {
   } = useCalendar({
     start: values?.start || new Date(),
   })
+
+  const selectDateHandler = (date: CalendarDate) => {
+    if (values.start && isAfter(date, values.start)) {
+      return onSelectEndDate(date)
+    }
+
+    return onSelectStartDate(date)
+  }
 
   return (
     <Box
@@ -46,6 +63,7 @@ export function Calendar({ values }: Calendar) {
           values={values}
           date={startDate}
           days={startDateDays}
+          onSelectDate={selectDateHandler}
         />
         <Month
           startSelectedDate={values?.start}
@@ -53,6 +71,7 @@ export function Calendar({ values }: Calendar) {
           values={values}
           date={endDate}
           days={endDateDays}
+          onSelectDate={selectDateHandler}
         />
       </Grid>
     </Box>
