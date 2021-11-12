@@ -14,13 +14,19 @@ yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^
 After install these dependencies you can now use Datepicker
 
 ```tsx
-import { useDatepicker, Calendar } from 'datepicker'
+import { Calendar } from 'datepicker'
 
 export function App() {
-  useDatepicker(new Date())
+  const [dates, setDates] = useState()
 
   return (
-    <Calendar />
+    return (
+    <Calendar
+      values={dates}
+      onSelectEndDate={handleSelectEndDate}
+      onSelectStartDate={handleSelectStartDate}
+    />
+  )
   )
 }
 ```
