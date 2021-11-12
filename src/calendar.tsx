@@ -1,8 +1,9 @@
-import { Box, Flex, Button, Grid, useMultiStyleConfig } from '@chakra-ui/react'
+import { Box, Grid, useMultiStyleConfig } from '@chakra-ui/react'
 import { Month } from './month'
 import { useCalendar } from './useCalendar'
 import type { CalendarDate } from './useCalendar'
 import { isAfter } from 'date-fns'
+import { Controls } from './control'
 
 export type Values = {
   start?: CalendarDate
@@ -43,14 +44,7 @@ export function Calendar({
 
   return (
     <Box sx={styles.calendar}>
-      <Flex p={4} position="absolute" w="100%" justifyContent="space-between">
-        <Button onClick={prevMonth} size="xs">
-          prev
-        </Button>
-        <Button onClick={nextMonth} size="xs">
-          next
-        </Button>
-      </Flex>
+      <Controls prevMonth={prevMonth} nextMonth={nextMonth} />
 
       <Grid sx={styles.months}>
         <Month
