@@ -54,6 +54,8 @@ export function App() {
 
 **note that the example above doens't render an input but only the calendar**
 
+If you want to use this with inputs and a popover [you can see this example](https://uselessdev-datepicker.netlify.app/?path=/story/calendar--with-inputs)
+
 ### Customizing
 
 `TODO`
