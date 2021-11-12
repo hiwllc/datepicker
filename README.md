@@ -1,6 +1,6 @@
 # Datepicker
 
-A simple datepicker component build with date-fns and Chakra-UI.
+A simple datepicker component build with [date-fns][1] and [Chakra-UI][2].
 
 ## Table of Contents
 
@@ -126,7 +126,12 @@ Theses changes will produce the following results in Calendar:
 
 ## Available components theme keys
 
-`TODO`
+| Key name        | Description                                                                    | Parts                                    |
+|-----------------|--------------------------------------------------------------------------------|------------------------------------------|
+| Calendar        | Calendar is a multipart component this is reponsible for the calendar it self. |`calendar`, `months`                      |
+| Month           | Month is responsible to style one month block.                                 |`month`, `name`, `week`, `weekday`, `days`|
+| Day             | Day apply styles to individual day. This is the only single part component.    | --                                       |
+| CalendarControl | CalendarControl apply styles to prev and next months.                          |`controls`, `button`                      |
 
 ## License
 This code is under the [Apache-2.0](LICENSE) License
