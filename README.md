@@ -28,7 +28,7 @@ Before to use this you can create your own theme or use the default one.
 
 ```tsx
 import { ChakraProvider } from '@chakra-ui/react'
-import { Calendar, CalendarDefaultTheme } from 'datepicker'
+import { Calendar, CalendarDefaultTheme } from '@uselessdev/datepicker'
 
 export function App() {
   const [dates, setDates] = useState()
