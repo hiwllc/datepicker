@@ -10,7 +10,7 @@ import {
   Box,
 } from '@chakra-ui/react'
 import format from 'date-fns/format'
-import { CalendarDate, CalendarValues } from './types'
+import { CalendarValues } from './types'
 import { Calendar } from './calendar'
 
 export default {
@@ -24,19 +24,9 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
     end: undefined,
   })
 
-  const handleSelectStartDate = (date: CalendarDate) =>
-    setDates(dates => ({ ...dates, start: date }))
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
-  const handleSelectEndDate = (date: CalendarDate) =>
-    setDates(dates => ({ ...dates, end: date }))
-
-  return (
-    <Calendar
-      value={dates}
-      onSelectEndDate={handleSelectEndDate}
-      onSelectStartDate={handleSelectStartDate}
-    />
-  )
+  return <Calendar value={dates} onSelectDate={handleSelectDate} />
 }
 
 export const WithInputs: ComponentStory<typeof Calendar> = () => {
@@ -45,13 +35,7 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
     end: undefined,
   })
 
-  const handleSelectStartDate = (date: CalendarDate) => {
-    setDates(dates => ({ ...dates, start: date }))
-  }
-
-  const handleSelectEndDate = (date: CalendarDate) => {
-    setDates(dates => ({ ...dates, end: date }))
-  }
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return (
     <Box h="600px">
@@ -78,11 +62,7 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
           _focus={{ boxShadow: 'none' }}
         >
           <PopoverBody>
-            <Calendar
-              value={dates}
-              onSelectStartDate={handleSelectStartDate}
-              onSelectEndDate={handleSelectEndDate}
-            />
+            <Calendar value={dates} onSelectDate={handleSelectDate} />
           </PopoverBody>
         </PopoverContent>
       </Popover>
@@ -96,18 +76,7 @@ export const SingleMonth: ComponentStory<typeof Calendar> = () => {
     end: undefined,
   })
 
-  const handleSelectStartDate = (date: CalendarDate) =>
-    setDates(dates => ({ ...dates, start: date }))
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
-  const handleSelectEndDate = (date: CalendarDate) =>
-    setDates(dates => ({ ...dates, end: date }))
-
-  return (
-    <Calendar
-      value={dates}
-      onlyOneMonth
-      onSelectEndDate={handleSelectEndDate}
-      onSelectStartDate={handleSelectStartDate}
-    />
-  )
+  return <Calendar value={dates} onlyOneMonth onSelectDate={handleSelectDate} />
 }

@@ -8,15 +8,15 @@ import { Controls } from './control'
 export type Calendar = {
   value: CalendarValues
   onlyOneMonth?: boolean
-  onSelectStartDate: (date: CalendarDate) => void
-  onSelectEndDate: (date: CalendarDate) => void
+  singleDateSelection?: boolean
+  onSelectDate: (value: CalendarDate | CalendarValues) => void
 }
 
 export function Calendar({
   value,
   onlyOneMonth = false,
-  onSelectStartDate,
-  onSelectEndDate,
+  singleDateSelection = false,
+  onSelectDate,
 }: Calendar) {
   const {
     startDateDays,
@@ -33,10 +33,10 @@ export function Calendar({
 
   const selectDateHandler = (date: CalendarDate) => {
     if (value.start && isAfter(date, value.start)) {
-      return onSelectEndDate(date)
+      return onSelectDate({ ...value, end: date })
     }
 
-    return onSelectStartDate(date)
+    return onSelectDate({ ...value, start: date })
   }
 
   return (
