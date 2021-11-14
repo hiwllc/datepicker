@@ -21,7 +21,7 @@ export function Month({
   endSelectedDate,
   onSelectDate,
 }: Month) {
-  const styles = useMultiStyleConfig('Month', {})
+  const styles = useMultiStyleConfig('CalendarMonth', {})
 
   return (
     <Box>

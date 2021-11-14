@@ -9,7 +9,7 @@ export type Day = {
 }
 
 export function Day({ day, variant, onSelectDate }: Day) {
-  const styles = useStyleConfig('Day', { variant })
+  const styles = useStyleConfig('CalendarDay', { variant })
 
   return (
     <Button onClick={() => onSelectDate(day)} sx={styles}>

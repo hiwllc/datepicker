@@ -126,12 +126,12 @@ Theses changes will produce the following results in Calendar:
 
 ## Available components theme keys
 
-| Key name        | Description                                                                    | Parts                                    |
-|-----------------|--------------------------------------------------------------------------------|------------------------------------------|
-| Calendar        | Calendar is a multipart component this is reponsible for the calendar it self. |`calendar`, `months`                      |
-| Month           | Month is responsible to style one month block.                                 |`month`, `name`, `week`, `weekday`, `days`|
-| Day             | Day apply styles to individual day. This is the only single part component.    | --                                       |
-| CalendarControl | CalendarControl apply styles to prev and next months.                          |`controls`, `button`                      |
+| Key name        | Description                                                               | Parts                                    |
+|-----------------|---------------------------------------------------------------------------|------------------------------------------|
+| Calendar        | A multipart component this is reponsible for the calendar it self.        |`calendar`, `months`                      |
+| CalendarMonth   | Responsible to style one month block.                                     |`month`, `name`, `week`, `weekday`, `days`|
+| CalendarDay     | Applies styles to individual day. This is the only single part component. | --                                       |
+| CalendarControl | Applies styles to prev and next months.                                   |`controls`, `button`                      |
 
 ## License
 This code is under the [Apache-2.0](LICENSE) License

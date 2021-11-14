@@ -1,6 +1,6 @@
 import { ComponentSingleStyleConfig } from '@chakra-ui/react'
 
-export const Day: ComponentSingleStyleConfig = {
+export const CalendarDay: ComponentSingleStyleConfig = {
   baseStyle: {
     rounded: 'none',
     bgColor: 'transparent',

@@ -12,8 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom next/prev buttons render
 
 ### Changed
-- rename `Values` to `CalendarValues`
-- `Calendar` profix to theme keys
+- Rename `Values` to `CalendarValues`
+- Prefix theme keys with `Calendar`
 
 ## [0.1.1] - 2021-11-12
 ### Added
