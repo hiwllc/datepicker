@@ -8,6 +8,7 @@ import {
   PopoverContent,
   PopoverBody,
   Box,
+  useDisclosure,
 } from '@chakra-ui/react'
 import format from 'date-fns/format'
 import { CalendarValues, CalendarDate } from './types'
@@ -35,13 +36,21 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
     end: undefined,
   })
 
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const handleSelectDate = (dates: CalendarValues) => {
+    setDates(dates)
+
+    if (dates.end) {
+      onClose()
+    }
+  }
 
   return (
     <Box h="600px">
-      <Popover>
+      <Popover isOpen={isOpen} onClose={onClose}>
         <PopoverTrigger>
-          <Flex w="300px" p={2} borderWidth={1} rounded="md">
+          <Flex onClick={onOpen} w="300px" p={2} borderWidth={1} rounded="md">
             <Input
               variant="unstyled"
               placeholder="start date"
@@ -57,6 +66,7 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
 
         <PopoverContent
           p={0}
+          w="min-content"
           border="none"
           outline="none"
           _focus={{ boxShadow: 'none' }}
