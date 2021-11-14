@@ -1,13 +1,14 @@
 import { Grid, Box, Heading, Text, useMultiStyleConfig } from '@chakra-ui/react'
 import { format, isSameDay } from 'date-fns'
 import { eachDayOfInterval } from 'date-fns/esm'
+import { CalendarValues } from 'src'
 import { Day } from './day'
 import type { CalendarDate } from './useCalendar'
 
 export type Month = {
   date: CalendarDate
   days: (CalendarDate | null)[]
-  values?: { start?: CalendarDate; end?: CalendarDate }
+  values?: CalendarValues
   startSelectedDate?: CalendarDate
   endSelectedDate?: CalendarDate
   onSelectDate: (date: CalendarDate) => void

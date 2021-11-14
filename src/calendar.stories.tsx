@@ -10,7 +10,7 @@ import {
   Box,
 } from '@chakra-ui/react'
 import format from 'date-fns/format'
-import { CalendarDate, Values } from 'src'
+import { CalendarDate, CalendarValues } from 'src'
 import { Calendar } from './calendar'
 
 export default {
@@ -19,7 +19,7 @@ export default {
 } as ComponentMeta<typeof Calendar>
 
 export const Basic: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<Values>({
+  const [dates, setDates] = useState<CalendarValues>({
     start: undefined,
     end: undefined,
   })
@@ -40,7 +40,7 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
 }
 
 export const WithInputs: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<Values>({
+  const [dates, setDates] = useState<CalendarValues>({
     start: undefined,
     end: undefined,
   })

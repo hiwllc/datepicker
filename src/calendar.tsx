@@ -1,17 +1,17 @@
 import { Box, Grid, useMultiStyleConfig } from '@chakra-ui/react'
+import { isAfter } from 'date-fns'
+import type { CalendarDate } from './useCalendar'
 import { Month } from './month'
 import { useCalendar } from './useCalendar'
-import type { CalendarDate } from './useCalendar'
-import { isAfter } from 'date-fns'
 import { Controls } from './control'
 
-export type Values = {
+export type CalendarValues = {
   start?: CalendarDate
   end?: CalendarDate
 }
 
-type Calendar = {
-  values: Values
+export type Calendar = {
+  values: CalendarValues
   onSelectStartDate: (date: CalendarDate) => void
   onSelectEndDate: (date: CalendarDate) => void
 }
