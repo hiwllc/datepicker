@@ -5,9 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Show only one month
+- Select only one date
 - Example to close on select dates
 - Chevron icons in next/prev buttons
-- Select only one date
 - Render only one month in calendar
 - Custom next/prev buttons render
 

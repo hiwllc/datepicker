@@ -89,3 +89,25 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
     </Box>
   )
 }
+
+export const SingleMonth: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectStartDate = (date: CalendarDate) =>
+    setDates(dates => ({ ...dates, start: date }))
+
+  const handleSelectEndDate = (date: CalendarDate) =>
+    setDates(dates => ({ ...dates, end: date }))
+
+  return (
+    <Calendar
+      values={dates}
+      onlyOneMonth
+      onSelectEndDate={handleSelectEndDate}
+      onSelectStartDate={handleSelectStartDate}
+    />
+  )
+}

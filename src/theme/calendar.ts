@@ -6,7 +6,7 @@ export const Calendar: ComponentMultiStyleConfig = {
   baseStyle: {
     calendar: {
       position: 'relative',
-      w: '600px',
+      w: 'min-content',
       borderWidth: '1px',
       rounded: 'md',
       shadow: 'lg',

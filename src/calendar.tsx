@@ -7,12 +7,14 @@ import { Controls } from './control'
 
 export type Calendar = {
   values: CalendarValues
+  onlyOneMonth?: boolean
   onSelectStartDate: (date: CalendarDate) => void
   onSelectEndDate: (date: CalendarDate) => void
 }
 
 export function Calendar({
   values,
+  onlyOneMonth = false,
   onSelectStartDate,
   onSelectEndDate,
 }: Calendar) {
@@ -50,14 +52,17 @@ export function Calendar({
           days={startDateDays}
           onSelectDate={selectDateHandler}
         />
-        <Month
-          startSelectedDate={values?.start}
-          endSelectedDate={values?.end}
-          values={values}
-          date={endDate}
-          days={endDateDays}
-          onSelectDate={selectDateHandler}
-        />
+
+        {!onlyOneMonth ? (
+          <Month
+            startSelectedDate={values?.start}
+            endSelectedDate={values?.end}
+            values={values}
+            date={endDate}
+            days={endDateDays}
+            onSelectDate={selectDateHandler}
+          />
+        ) : null}
       </Grid>
     </Box>
   )
