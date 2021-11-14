@@ -8,15 +8,14 @@ import {
   isSameMonth,
   subMonths,
 } from 'date-fns'
-
-export type CalendarDate = Date | number
-
-type UseCalendar = {
-  start: CalendarDate
-}
+import type { CalendarDate } from './types'
 
 function replaceOutMonthDays(days: CalendarDate[], date: CalendarDate) {
   return days.map(d => (isSameMonth(date, d) ? d : null))
+}
+
+export type UseCalendar = {
+  start: CalendarDate
 }
 
 export function useCalendar({ start }: UseCalendar) {

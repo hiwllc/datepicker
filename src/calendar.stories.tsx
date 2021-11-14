@@ -10,7 +10,7 @@ import {
   Box,
 } from '@chakra-ui/react'
 import format from 'date-fns/format'
-import { CalendarDate, CalendarValues } from 'src'
+import { CalendarDate, CalendarValues } from './types'
 import { Calendar } from './calendar'
 
 export default {

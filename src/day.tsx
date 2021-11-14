@@ -1,11 +1,11 @@
 import format from 'date-fns/format'
 import { Button, useStyleConfig } from '@chakra-ui/react'
-import { CalendarDate } from 'src'
+import { CalendarDate } from './types'
 
-type Day = {
+export type Day = {
   day: CalendarDate
   variant?: 'selected' | 'range'
-  onSelectDate: (date: Date | number) => void
+  onSelectDate: (date: CalendarDate) => void
 }
 
 export function Day({ day, variant, onSelectDate }: Day) {

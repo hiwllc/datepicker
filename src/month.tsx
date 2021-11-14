@@ -1,9 +1,8 @@
 import { Grid, Box, Heading, Text, useMultiStyleConfig } from '@chakra-ui/react'
 import { format, isSameDay } from 'date-fns'
 import { eachDayOfInterval } from 'date-fns/esm'
-import { CalendarValues } from 'src'
+import type { CalendarValues, CalendarDate } from './types'
 import { Day } from './day'
-import type { CalendarDate } from './useCalendar'
 
 export type Month = {
   date: CalendarDate
