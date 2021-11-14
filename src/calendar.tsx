@@ -32,6 +32,10 @@ export function Calendar({
   const styles = useMultiStyleConfig('Calendar', {})
 
   const selectDateHandler = (date: CalendarDate) => {
+    if (singleDateSelection) {
+      return onSelectDate(date)
+    }
+
     if (value.start && isAfter(date, value.start)) {
       return onSelectDate({ ...value, end: date })
     }

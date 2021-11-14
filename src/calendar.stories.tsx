@@ -10,7 +10,7 @@ import {
   Box,
 } from '@chakra-ui/react'
 import format from 'date-fns/format'
-import { CalendarValues } from './types'
+import { CalendarValues, CalendarDate } from './types'
 import { Calendar } from './calendar'
 
 export default {
@@ -79,4 +79,23 @@ export const SingleMonth: ComponentStory<typeof Calendar> = () => {
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return <Calendar value={dates} onlyOneMonth onSelectDate={handleSelectDate} />
+}
+
+export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
+  const [date, setDate] = useState<CalendarDate>(new Date())
+
+  const handleSelectDate = (date: CalendarDate) => setDate(date)
+
+  return (
+    <Box>
+      <Input w="200px" mb={4} value={format(date, 'MM/dd/yyyy')} />
+
+      <Calendar
+        value={{ start: date }}
+        onlyOneMonth
+        singleDateSelection
+        onSelectDate={handleSelectDate}
+      />
+    </Box>
+  )
 }

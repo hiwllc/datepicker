@@ -9,8 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Select only one date
 - Example to close on select dates
 - Chevron icons in next/prev buttons
-- Render only one month in calendar
-- Custom next/prev buttons render
 
 ### Changed
 - Rename `Values` to `CalendarValues`
