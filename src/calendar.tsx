@@ -6,14 +6,14 @@ import { useCalendar } from './useCalendar'
 import { Controls } from './control'
 
 export type Calendar = {
-  values: CalendarValues
+  value: CalendarValues
   onlyOneMonth?: boolean
   onSelectStartDate: (date: CalendarDate) => void
   onSelectEndDate: (date: CalendarDate) => void
 }
 
 export function Calendar({
-  values,
+  value,
   onlyOneMonth = false,
   onSelectStartDate,
   onSelectEndDate,
@@ -26,13 +26,13 @@ export function Calendar({
     nextMonth,
     prevMonth,
   } = useCalendar({
-    start: values?.start || new Date(),
+    start: value?.start || new Date(),
   })
 
   const styles = useMultiStyleConfig('Calendar', {})
 
   const selectDateHandler = (date: CalendarDate) => {
-    if (values.start && isAfter(date, values.start)) {
+    if (value.start && isAfter(date, value.start)) {
       return onSelectEndDate(date)
     }
 
@@ -45,9 +45,9 @@ export function Calendar({
 
       <Grid sx={styles.months}>
         <Month
-          startSelectedDate={values?.start}
-          endSelectedDate={values?.end}
-          values={values}
+          startSelectedDate={value?.start}
+          endSelectedDate={value?.end}
+          value={value}
           date={startDate}
           days={startDateDays}
           onSelectDate={selectDateHandler}
@@ -55,9 +55,9 @@ export function Calendar({
 
         {!onlyOneMonth ? (
           <Month
-            startSelectedDate={values?.start}
-            endSelectedDate={values?.end}
-            values={values}
+            startSelectedDate={value?.start}
+            endSelectedDate={value?.end}
+            value={value}
             date={endDate}
             days={endDateDays}
             onSelectDate={selectDateHandler}

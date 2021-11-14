@@ -7,7 +7,7 @@ import { Day } from './day'
 export type Month = {
   date: CalendarDate
   days: (CalendarDate | null)[]
-  values?: CalendarValues
+  value?: CalendarValues
   startSelectedDate?: CalendarDate
   endSelectedDate?: CalendarDate
   onSelectDate: (date: CalendarDate) => void
@@ -16,7 +16,7 @@ export type Month = {
 export function Month({
   date,
   days,
-  values,
+  value,
   startSelectedDate,
   endSelectedDate,
   onSelectDate,
@@ -54,11 +54,11 @@ export function Month({
           }
 
           const interval =
-            values?.start &&
-            values.end &&
+            value?.start &&
+            value.end &&
             eachDayOfInterval({
-              start: values?.start as CalendarDate,
-              end: values?.end as CalendarDate,
+              start: value?.start as CalendarDate,
+              end: value?.end as CalendarDate,
             })
 
           const isInRange = interval

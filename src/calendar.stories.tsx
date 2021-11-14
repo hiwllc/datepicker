@@ -32,7 +32,7 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
 
   return (
     <Calendar
-      values={dates}
+      value={dates}
       onSelectEndDate={handleSelectEndDate}
       onSelectStartDate={handleSelectStartDate}
     />
@@ -79,7 +79,7 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
         >
           <PopoverBody>
             <Calendar
-              values={dates}
+              value={dates}
               onSelectStartDate={handleSelectStartDate}
               onSelectEndDate={handleSelectEndDate}
             />
@@ -104,7 +104,7 @@ export const SingleMonth: ComponentStory<typeof Calendar> = () => {
 
   return (
     <Calendar
-      values={dates}
+      value={dates}
       onlyOneMonth
       onSelectEndDate={handleSelectEndDate}
       onSelectStartDate={handleSelectStartDate}
