@@ -33,17 +33,12 @@ import { Calendar, CalendarDefaultTheme } from '@uselessdev/datepicker'
 export function App() {
   const [dates, setDates] = useState()
 
-  const handleSelectEndDate = (date) => setDates(dates => ({ ...dates, end: date }))
-  const handleSelectStartDate = (date) => setDates(dates => ({ ...dates, start: date }))
+  const handleSelectDate = (values) => setDates(values)
 
   return (
     return (
       <ChakraProvider theme={CalendarDefaultTheme}>
-        <Calendar
-          values={dates}
-          onSelectEndDate={handleSelectEndDate}
-          onSelectStartDate={handleSelectStartDate}
-        />
+        <Calendar values={dates} onSelectDate={handleSelectDate} />
       </ChakraProvider>
     )
   )
