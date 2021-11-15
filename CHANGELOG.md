@@ -5,10 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Reset to current date if not selected on close
+
+## [0.2.0] - 2021-11-14
+### Added
 - Show only one month
 - Select only one date
 - Example to close on select dates
-- Reset to current date if not selected on close
 - Chevron icons in next/prev buttons
 - Custom buttons control
 
