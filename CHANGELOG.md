@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Example to close on select dates
 - Reset to current date if not selected on close
 - Chevron icons in next/prev buttons
+- Custom buttons control
 
 ### Changed
 - Rename `Values` to `CalendarValues`

@@ -1,21 +1,39 @@
 import { Flex, Button, useMultiStyleConfig } from '@chakra-ui/react'
 
+type Buttons = ({ onClick }: { onClick: () => void }) => JSX.Element
+
 export type Controls = {
   prevMonth: () => void
   nextMonth: () => void
+  nextButton?: Buttons
+  prevButton?: Buttons
 }
 
-export function Controls({ nextMonth, prevMonth }: Controls) {
+export function Controls({
+  nextMonth,
+  prevMonth,
+  nextButton,
+  prevButton,
+}: Controls) {
   const styles = useMultiStyleConfig('CalendarControl', {})
 
   return (
     <Flex sx={styles.controls}>
-      <Button onClick={prevMonth} sx={styles.button}>
-        prev
-      </Button>
-      <Button onClick={nextMonth} sx={styles.button}>
-        next
-      </Button>
+      {prevButton ? (
+        prevButton({ onClick: prevMonth })
+      ) : (
+        <Button onClick={prevMonth} sx={styles.button}>
+          &#8592;
+        </Button>
+      )}
+
+      {nextButton ? (
+        nextButton({ onClick: nextMonth })
+      ) : (
+        <Button onClick={nextMonth} sx={styles.button}>
+          &#8594;
+        </Button>
+      )}
     </Flex>
   )
 }

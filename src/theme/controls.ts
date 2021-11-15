@@ -14,7 +14,8 @@ export const CalendarControl: ComponentMultiStyleConfig = {
     button: {
       h: 6,
       px: 2,
-      fontSize: 'sm',
+      lineHeight: 0,
+      fontSize: 'md',
     },
   },
 }

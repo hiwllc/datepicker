@@ -8,6 +8,7 @@ import {
   PopoverContent,
   PopoverBody,
   Box,
+  Button,
   useDisclosure,
 } from '@chakra-ui/react'
 import format from 'date-fns/format'
@@ -107,5 +108,31 @@ export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
         onSelectDate={handleSelectDate}
       />
     </Box>
+  )
+}
+
+export const WithCustomButton: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar
+      nextButton={props => (
+        <Button size="xs" colorScheme="purple" {...props}>
+          &#8250;
+        </Button>
+      )}
+      prevButton={props => (
+        <Button size="xs" colorScheme="purple" {...props}>
+          &#8249;
+        </Button>
+      )}
+      value={dates}
+      onSelectDate={handleSelectDate}
+    />
   )
 }

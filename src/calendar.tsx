@@ -5,11 +5,16 @@ import { Month } from './month'
 import { useCalendar } from './useCalendar'
 import { Controls } from './control'
 
+type NextButton = ({ onClick }: { onClick: () => void }) => JSX.Element
+type PrevButton = ({ onClick }: { onClick: () => void }) => JSX.Element
+
 export type Calendar = {
   value: CalendarValues
   onlyOneMonth?: boolean
   singleDateSelection?: boolean
   onSelectDate: (value: CalendarDate | CalendarValues) => void
+  nextButton?: NextButton
+  prevButton?: PrevButton
 }
 
 export function Calendar({
@@ -17,6 +22,8 @@ export function Calendar({
   onlyOneMonth = false,
   singleDateSelection = false,
   onSelectDate,
+  nextButton,
+  prevButton,
 }: Calendar) {
   const {
     startDateDays,
@@ -45,7 +52,12 @@ export function Calendar({
 
   return (
     <Box sx={styles.calendar}>
-      <Controls prevMonth={prevMonth} nextMonth={nextMonth} />
+      <Controls
+        prevButton={prevButton}
+        nextButton={nextButton}
+        prevMonth={prevMonth}
+        nextMonth={nextMonth}
+      />
 
       <Grid sx={styles.months}>
         <Month
