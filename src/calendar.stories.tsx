@@ -14,6 +14,7 @@ import {
 import format from 'date-fns/format'
 import { CalendarValues, CalendarDate } from './types'
 import { Calendar } from './calendar'
+import ptBR from 'date-fns/locale/pt-BR'
 
 export default {
   title: 'Calendar',
@@ -134,5 +135,18 @@ export const WithCustomButton: ComponentStory<typeof Calendar> = () => {
       value={dates}
       onSelectDate={handleSelectDate}
     />
+  )
+}
+
+export const CustomLocale: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} locale={ptBR} onSelectDate={handleSelectDate} />
   )
 }

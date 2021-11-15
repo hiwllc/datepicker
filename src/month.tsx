@@ -1,5 +1,5 @@
 import { Grid, Box, Heading, Text, useMultiStyleConfig } from '@chakra-ui/react'
-import { format, isSameDay } from 'date-fns'
+import { addDays, format, isSameDay, Locale, startOfWeek } from 'date-fns'
 import { eachDayOfInterval } from 'date-fns/esm'
 import type { CalendarValues, CalendarDate } from './types'
 import { Day } from './day'
@@ -10,7 +10,15 @@ export type Month = {
   value?: CalendarValues
   startSelectedDate?: CalendarDate
   endSelectedDate?: CalendarDate
+  locale?: Locale
   onSelectDate: (date: CalendarDate) => void
+}
+
+function weekdays(locale?: Locale) {
+  const start = startOfWeek(new Date())
+  return [...Array(7).keys()].map(i =>
+    format(addDays(start, i), 'EEEEEE', { locale })
+  )
 }
 
 export function Month({
@@ -19,22 +27,24 @@ export function Month({
   value,
   startSelectedDate,
   endSelectedDate,
+  locale,
   onSelectDate,
 }: Month) {
   const styles = useMultiStyleConfig('CalendarMonth', {})
+  const week = weekdays(locale)
 
   return (
     <Box>
-      <Heading sx={styles.name}>{format(date, 'MMMM, yyyy')}</Heading>
+      <Heading sx={styles.name}>
+        {format(date, 'MMMM, yyyy', { locale })}
+      </Heading>
 
       <Grid sx={styles.week}>
-        <Text sx={styles.weekday}>Sun</Text>
-        <Text sx={styles.weekday}>Mon</Text>
-        <Text sx={styles.weekday}>Tue</Text>
-        <Text sx={styles.weekday}>Wed</Text>
-        <Text sx={styles.weekday}>Thu</Text>
-        <Text sx={styles.weekday}>Fri</Text>
-        <Text sx={styles.weekday}>Sat</Text>
+        {week.map(weekday => (
+          <Text key={weekday} sx={styles.weekday}>
+            {weekday}
+          </Text>
+        ))}
       </Grid>
 
       <Grid sx={styles.days}>

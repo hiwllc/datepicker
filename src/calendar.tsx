@@ -1,5 +1,5 @@
 import { Box, Grid, useMultiStyleConfig } from '@chakra-ui/react'
-import { isAfter } from 'date-fns'
+import { isAfter, Locale } from 'date-fns'
 import type { CalendarDate, CalendarValues } from './types'
 import { Month } from './month'
 import { useCalendar } from './useCalendar'
@@ -12,6 +12,7 @@ export type Calendar = {
   value: CalendarValues
   onlyOneMonth?: boolean
   singleDateSelection?: boolean
+  locale?: Locale
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   nextButton?: NextButton
   prevButton?: PrevButton
@@ -21,6 +22,7 @@ export function Calendar({
   value,
   onlyOneMonth = false,
   singleDateSelection = false,
+  locale,
   onSelectDate,
   nextButton,
   prevButton,
@@ -61,6 +63,7 @@ export function Calendar({
 
       <Grid sx={styles.months}>
         <Month
+          locale={locale}
           startSelectedDate={value?.start}
           endSelectedDate={value?.end}
           value={value}
@@ -71,6 +74,7 @@ export function Calendar({
 
         {!onlyOneMonth ? (
           <Month
+            locale={locale}
             startSelectedDate={value?.start}
             endSelectedDate={value?.end}
             value={value}

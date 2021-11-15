@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Support lacales with date-fns
+- Month name and year format
 - Reset to current date if not selected on close
 
 ## [0.2.0] - 2021-11-14
