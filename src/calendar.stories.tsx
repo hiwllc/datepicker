@@ -147,6 +147,11 @@ export const CustomLocale: ComponentStory<typeof Calendar> = () => {
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return (
-    <Calendar value={dates} locale={ptBR} onSelectDate={handleSelectDate} />
+    <Calendar
+      weekdayFormat="EEEEEE"
+      value={dates}
+      locale={ptBR}
+      onSelectDate={handleSelectDate}
+    />
   )
 }

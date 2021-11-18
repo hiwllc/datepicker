@@ -11,13 +11,16 @@ export type Month = {
   startSelectedDate?: CalendarDate
   endSelectedDate?: CalendarDate
   locale?: Locale
+  monthYearFormat: string
+  weekdayFormat: string
   onSelectDate: (date: CalendarDate) => void
 }
 
-function weekdays(locale?: Locale) {
+function weekdays(weekdayFormat: string, locale?: Locale) {
   const start = startOfWeek(new Date())
   return [...Array(7).keys()].map(i =>
-    format(addDays(start, i), 'EEEEEE', { locale })
+    // EEEEEE
+    format(addDays(start, i), weekdayFormat, { locale })
   )
 }
 
@@ -28,15 +31,17 @@ export function Month({
   startSelectedDate,
   endSelectedDate,
   locale,
+  monthYearFormat,
+  weekdayFormat,
   onSelectDate,
 }: Month) {
   const styles = useMultiStyleConfig('CalendarMonth', {})
-  const week = weekdays(locale)
+  const week = weekdays(weekdayFormat, locale)
 
   return (
     <Box>
       <Heading sx={styles.name}>
-        {format(date, 'MMMM, yyyy', { locale })}
+        {format(date, monthYearFormat, { locale })}
       </Heading>
 
       <Grid sx={styles.week}>

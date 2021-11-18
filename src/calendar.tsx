@@ -10,6 +10,8 @@ export type Calendar = {
   onlyOneMonth?: boolean
   singleDateSelection?: boolean
   locale?: Locale
+  monthYearFormat?: string
+  weekdayFormat?: string
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   nextButton?: Buttons
   prevButton?: Buttons
@@ -20,6 +22,8 @@ export function Calendar({
   onlyOneMonth = false,
   singleDateSelection = false,
   locale,
+  monthYearFormat = 'MMMM, yyyy',
+  weekdayFormat = 'E',
   onSelectDate,
   nextButton,
   prevButton,
@@ -66,6 +70,8 @@ export function Calendar({
           value={value}
           date={startDate}
           days={startDateDays}
+          monthYearFormat={monthYearFormat}
+          weekdayFormat={weekdayFormat}
           onSelectDate={selectDateHandler}
         />
 
@@ -77,6 +83,8 @@ export function Calendar({
             value={value}
             date={endDate}
             days={endDateDays}
+            monthYearFormat={monthYearFormat}
+            weekdayFormat={weekdayFormat}
             onSelectDate={selectDateHandler}
           />
         ) : null}
