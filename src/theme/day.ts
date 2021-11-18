@@ -8,6 +8,14 @@ export const CalendarDay: ComponentSingleStyleConfig = {
     _hover: {
       bgColor: 'gray.100',
     },
+
+    _disabled: {
+      color: 'gray.200',
+      _hover: {
+        cursor: 'initial',
+        bgColor: 'transparent',
+      },
+    },
   },
 
   sizes: {

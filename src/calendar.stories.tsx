@@ -155,3 +155,16 @@ export const CustomLocale: ComponentStory<typeof Calendar> = () => {
     />
   )
 }
+
+export const BlockPastDates: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar blockPastDates value={dates} onSelectDate={handleSelectDate} />
+  )
+}

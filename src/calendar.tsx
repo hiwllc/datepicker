@@ -14,6 +14,7 @@ export type Calendar = {
   locale?: Locale
   monthYearFormat?: string
   weekdayFormat?: string
+  blockPastDates?: boolean
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   nextButton?: Buttons
   prevButton?: Buttons
@@ -26,6 +27,7 @@ export function Calendar({
   locale,
   monthYearFormat = 'MMMM, yyyy',
   weekdayFormat = 'E',
+  blockPastDates = false,
   onSelectDate,
   nextButton,
   prevButton,
@@ -94,6 +96,7 @@ export function Calendar({
           monthYearFormat={monthYearFormat}
           weekdayFormat={weekdayFormat}
           onSelectDate={selectDateHandler}
+          blockPastDates={blockPastDates}
         />
 
         {!onlyOneMonth ? (
@@ -107,6 +110,7 @@ export function Calendar({
             monthYearFormat={monthYearFormat}
             weekdayFormat={weekdayFormat}
             onSelectDate={selectDateHandler}
+            blockPastDates={blockPastDates}
           />
         ) : null}
       </Grid>
