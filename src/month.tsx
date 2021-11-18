@@ -39,7 +39,7 @@ export function Month({
   const week = weekdays(weekdayFormat, locale)
 
   return (
-    <Box>
+    <Box sx={styles.month}>
       <Heading sx={styles.name}>
         {format(date, monthYearFormat, { locale })}
       </Heading>
