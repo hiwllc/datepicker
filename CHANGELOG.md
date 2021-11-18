@@ -4,11 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Reset to current date if not selected on close
+
+## [0.3.0] - 2021-11-18
 ### Added
 - Support lacales with date-fns
 - Month name and year format
 - Month missing `styles.month` prop
-- Reset to current date if not selected on close
 
 ### Changed
 - Move `Buttons`, `NextButton` and `PrevButton` type to type file
