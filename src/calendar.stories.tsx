@@ -168,3 +168,16 @@ export const BlockPastDates: ComponentStory<typeof Calendar> = () => {
     <Calendar blockPastDates value={dates} onSelectDate={handleSelectDate} />
   )
 }
+
+export const BlockFutureDates: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar blockFutureDates value={dates} onSelectDate={handleSelectDate} />
+  )
+}

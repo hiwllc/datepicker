@@ -2,6 +2,7 @@ import { Grid, Box, Heading, Text, useMultiStyleConfig } from '@chakra-ui/react'
 import {
   addDays,
   format,
+  isAfter,
   isBefore,
   isSameDay,
   Locale,
@@ -42,6 +43,7 @@ export function Month({
   monthYearFormat,
   weekdayFormat,
   blockPastDates,
+  blockFutureDates,
   onSelectDate,
 }: Month) {
   const styles = useMultiStyleConfig('CalendarMonth', {})
@@ -93,7 +95,9 @@ export function Month({
             variant = 'range'
           }
 
-          const isDisabled = blockPastDates && isBefore(day, new Date())
+          const isDisabled =
+            (blockPastDates && isBefore(day, new Date())) ||
+            (blockFutureDates && isAfter(day, new Date()))
 
           return (
             <Day

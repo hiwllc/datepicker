@@ -16,10 +16,13 @@ function replaceOutMonthDays(days: CalendarDate[], date: CalendarDate) {
 
 export type UseCalendar = {
   start: CalendarDate
+  blockFuture?: boolean
 }
 
-export function useCalendar({ start }: UseCalendar) {
-  const [date, setDate] = useState<CalendarDate>(start)
+export function useCalendar({ start, blockFuture }: UseCalendar) {
+  const [date, setDate] = useState<CalendarDate>(
+    blockFuture ? subMonths(start, 1) : start
+  )
 
   const startDateStartOfMonth = startOfMonth(date)
   const startDateEndOfMonth = endOfMonth(date)
