@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Box, Grid, useMultiStyleConfig } from '@chakra-ui/react'
-import { isAfter, Locale } from 'date-fns'
+import { isAfter, isBefore, isSameDay, Locale } from 'date-fns'
+import { Target } from './types'
 import type { CalendarDate, CalendarValues, Buttons } from './types'
 import { Month } from './month'
 import { useCalendar } from './useCalendar'
@@ -39,6 +41,8 @@ export function Calendar({
     start: value?.start || new Date(),
   })
 
+  const [target, setTarget] = useState<Target>(Target.START)
+
   const styles = useMultiStyleConfig('Calendar', {})
 
   const selectDateHandler = (date: CalendarDate) => {
@@ -46,10 +50,27 @@ export function Calendar({
       return onSelectDate(date)
     }
 
-    if (value.start && isAfter(date, value.start)) {
+    if (
+      (value.start && isSameDay(date, value.start)) ||
+      (value.end && isSameDay(date, value.end))
+    ) {
+      return
+    }
+
+    if (value.start && isBefore(date, value.start)) {
+      return onSelectDate({ ...value, start: date })
+    }
+
+    if (value.end && isAfter(date, value.end)) {
       return onSelectDate({ ...value, end: date })
     }
 
+    if (target === Target.END) {
+      setTarget(Target.START)
+      return onSelectDate({ ...value, end: date })
+    }
+
+    setTarget(Target.END)
     return onSelectDate({ ...value, start: date })
   }
 
