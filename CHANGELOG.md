@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Month name and year format
 - Reset to current date if not selected on close
 
+### Changed
+- Move `Buttons`, `NextButton` and `PrevButton` type to type file
+
 ## [0.2.0] - 2021-11-14
 ### Added
 - Show only one month

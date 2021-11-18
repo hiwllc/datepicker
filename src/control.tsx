@@ -1,6 +1,5 @@
 import { Flex, Button, useMultiStyleConfig } from '@chakra-ui/react'
-
-type Buttons = ({ onClick }: { onClick: () => void }) => JSX.Element
+import type { Buttons } from './types'
 
 export type Controls = {
   prevMonth: () => void

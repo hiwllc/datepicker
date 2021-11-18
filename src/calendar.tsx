@@ -1,12 +1,9 @@
 import { Box, Grid, useMultiStyleConfig } from '@chakra-ui/react'
 import { isAfter, Locale } from 'date-fns'
-import type { CalendarDate, CalendarValues } from './types'
+import type { CalendarDate, CalendarValues, Buttons } from './types'
 import { Month } from './month'
 import { useCalendar } from './useCalendar'
 import { Controls } from './control'
-
-type NextButton = ({ onClick }: { onClick: () => void }) => JSX.Element
-type PrevButton = ({ onClick }: { onClick: () => void }) => JSX.Element
 
 export type Calendar = {
   value: CalendarValues
@@ -14,8 +11,8 @@ export type Calendar = {
   singleDateSelection?: boolean
   locale?: Locale
   onSelectDate: (value: CalendarDate | CalendarValues) => void
-  nextButton?: NextButton
-  prevButton?: PrevButton
+  nextButton?: Buttons
+  prevButton?: Buttons
 }
 
 export function Calendar({
