@@ -208,3 +208,16 @@ export const BlockSomeDates: ComponentStory<typeof Calendar> = () => {
     />
   )
 }
+
+export const BlockWeekends: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar blockWeekends value={dates} onSelectDate={handleSelectDate} />
+  )
+}

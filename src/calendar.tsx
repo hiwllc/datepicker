@@ -16,6 +16,7 @@ export type Calendar = {
   weekdayFormat?: string
   blockPastDates?: boolean
   blockFutureDates?: boolean
+  blockWeekends?: boolean
   blockDates?: CalendarDate[]
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   nextButton?: Buttons
@@ -31,6 +32,7 @@ export function Calendar({
   weekdayFormat = 'E',
   blockPastDates = false,
   blockFutureDates = false,
+  blockWeekends = false,
   blockDates,
   onSelectDate,
   nextButton,
@@ -103,6 +105,7 @@ export function Calendar({
           onSelectDate={selectDateHandler}
           blockPastDates={blockPastDates}
           blockFutureDates={blockFutureDates}
+          blockWeekends={blockWeekends}
           blockDates={blockDates}
         />
 
@@ -119,6 +122,7 @@ export function Calendar({
             onSelectDate={selectDateHandler}
             blockPastDates={blockPastDates}
             blockFutureDates={blockFutureDates}
+            blockWeekends={blockWeekends}
             blockDates={blockDates}
           />
         ) : null}

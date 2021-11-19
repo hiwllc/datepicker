@@ -5,6 +5,7 @@ import {
   isAfter,
   isBefore,
   isSameDay,
+  isWeekend,
   Locale,
   startOfWeek,
 } from 'date-fns'
@@ -23,6 +24,7 @@ export type Month = {
   weekdayFormat: string
   blockPastDates?: boolean
   blockFutureDates?: boolean
+  blockWeekends?: boolean
   blockDates?: CalendarDate[]
   onSelectDate: (date: CalendarDate) => void
 }
@@ -45,6 +47,7 @@ export function Month({
   weekdayFormat,
   blockPastDates,
   blockFutureDates,
+  blockWeekends,
   blockDates,
   onSelectDate,
 }: Month) {
@@ -100,6 +103,7 @@ export function Month({
           const isDisabled =
             (blockPastDates && isBefore(day, new Date())) ||
             (blockFutureDates && isAfter(day, new Date())) ||
+            (blockWeekends && isWeekend(day)) ||
             (blockDates && blockDates.some(date => isSameDay(day, date)))
 
           return (
