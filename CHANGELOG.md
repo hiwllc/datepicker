@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Block previous dates
 - Block future dates
 - Block weekends
+- Block some dates
 - Add preset of dates: `7 days`, `14 days`, `1 month`
+- Enable outside days in single month
 - Reset to current date if not selected on close
 
 ## [0.3.0] - 2021-11-18
