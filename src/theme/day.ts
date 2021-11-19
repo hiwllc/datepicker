@@ -41,6 +41,12 @@ export const CalendarDay: ComponentSingleStyleConfig = {
       _hover: {
         bgColor: 'pink.100',
       },
+
+      _disabled: {
+        _hover: {
+          bgColor: 'pink.300',
+        },
+      },
     },
   },
 

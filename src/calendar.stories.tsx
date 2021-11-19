@@ -11,7 +11,7 @@ import {
   Button,
   useDisclosure,
 } from '@chakra-ui/react'
-import format from 'date-fns/format'
+import { format, addDays, subDays, addMonths } from 'date-fns'
 import { CalendarValues, CalendarDate } from './types'
 import { Calendar } from './calendar'
 import ptBR from 'date-fns/locale/pt-BR'
@@ -179,5 +179,32 @@ export const BlockFutureDates: ComponentStory<typeof Calendar> = () => {
 
   return (
     <Calendar blockFutureDates value={dates} onSelectDate={handleSelectDate} />
+  )
+}
+
+export const BlockSomeDates: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  const date = new Date()
+
+  const denyDates = [
+    subDays(date, 2),
+    subDays(date, 1),
+    date,
+    addDays(date, 2),
+    addMonths(date, 1),
+  ]
+
+  return (
+    <Calendar
+      blockDates={denyDates}
+      value={dates}
+      onSelectDate={handleSelectDate}
+    />
   )
 }
