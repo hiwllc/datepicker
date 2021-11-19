@@ -14,10 +14,10 @@ export type Calendar = {
   locale?: Locale
   monthYearFormat?: string
   weekdayFormat?: string
-  blockPastDates?: boolean
-  blockFutureDates?: boolean
-  blockWeekends?: boolean
-  blockDates?: CalendarDate[]
+  disablePastDates?: boolean
+  disableFutureDates?: boolean
+  disableWeekends?: boolean
+  disableDates?: CalendarDate[]
   allowOutsideDays?: boolean
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   nextButton?: Buttons
@@ -31,10 +31,10 @@ export function Calendar({
   locale,
   monthYearFormat = 'MMMM, yyyy',
   weekdayFormat = 'E',
-  blockPastDates = false,
-  blockFutureDates = false,
-  blockWeekends = false,
-  blockDates,
+  disablePastDates = false,
+  disableFutureDates = false,
+  disableWeekends = false,
+  disableDates,
   allowOutsideDays = false,
   onSelectDate,
   nextButton,
@@ -49,7 +49,7 @@ export function Calendar({
     prevMonth,
   } = useCalendar({
     allowOutsideDays: allowOutsideDays && onlyOneMonth,
-    blockFuture: blockFutureDates,
+    blockFuture: disableFutureDates,
     start: value?.start || new Date(),
   })
 
@@ -106,10 +106,10 @@ export function Calendar({
           monthYearFormat={monthYearFormat}
           weekdayFormat={weekdayFormat}
           onSelectDate={selectDateHandler}
-          blockPastDates={blockPastDates}
-          blockFutureDates={blockFutureDates}
-          blockWeekends={blockWeekends}
-          blockDates={blockDates}
+          disablePastDates={disablePastDates}
+          disableFutureDates={disableFutureDates}
+          disableWeekends={disableWeekends}
+          disableDates={disableDates}
         />
 
         {!onlyOneMonth ? (
@@ -123,10 +123,10 @@ export function Calendar({
             monthYearFormat={monthYearFormat}
             weekdayFormat={weekdayFormat}
             onSelectDate={selectDateHandler}
-            blockPastDates={blockPastDates}
-            blockFutureDates={blockFutureDates}
-            blockWeekends={blockWeekends}
-            blockDates={blockDates}
+            disablePastDates={disablePastDates}
+            disableFutureDates={disableFutureDates}
+            disableWeekends={disableWeekends}
+            disableDates={disableDates}
           />
         ) : null}
       </Grid>

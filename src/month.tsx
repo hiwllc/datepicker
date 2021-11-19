@@ -24,10 +24,10 @@ export type Month = {
   locale?: Locale
   monthYearFormat: string
   weekdayFormat: string
-  blockPastDates?: boolean
-  blockFutureDates?: boolean
-  blockWeekends?: boolean
-  blockDates?: CalendarDate[]
+  disablePastDates?: boolean
+  disableFutureDates?: boolean
+  disableWeekends?: boolean
+  disableDates?: CalendarDate[]
   onSelectDate: (date: CalendarDate) => void
 }
 
@@ -47,10 +47,10 @@ export function Month({
   locale,
   monthYearFormat,
   weekdayFormat,
-  blockPastDates,
-  blockFutureDates,
-  blockWeekends,
-  blockDates,
+  disablePastDates,
+  disableFutureDates,
+  disableWeekends,
+  disableDates,
   onSelectDate,
 }: Month) {
   const styles = useMultiStyleConfig('CalendarMonth', {})
@@ -111,10 +111,10 @@ export function Month({
           }
 
           const isDisabled =
-            (blockPastDates && isBefore(day, new Date())) ||
-            (blockFutureDates && isAfter(day, new Date())) ||
-            (blockWeekends && isWeekend(day)) ||
-            (blockDates && blockDates.some(date => isSameDay(day, date)))
+            (disablePastDates && isBefore(day, new Date())) ||
+            (disableFutureDates && isAfter(day, new Date())) ||
+            (disableWeekends && isWeekend(day)) ||
+            (disableDates && disableDates.some(date => isSameDay(day, date)))
 
           return (
             <Day

@@ -156,7 +156,7 @@ export const CustomLocale: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const BlockPastDates: ComponentStory<typeof Calendar> = () => {
+export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
   const [dates, setDates] = useState<CalendarValues>({
     start: undefined,
     end: undefined,
@@ -165,11 +165,11 @@ export const BlockPastDates: ComponentStory<typeof Calendar> = () => {
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return (
-    <Calendar blockPastDates value={dates} onSelectDate={handleSelectDate} />
+    <Calendar disablePastDates value={dates} onSelectDate={handleSelectDate} />
   )
 }
 
-export const BlockFutureDates: ComponentStory<typeof Calendar> = () => {
+export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
   const [dates, setDates] = useState<CalendarValues>({
     start: undefined,
     end: undefined,
@@ -178,11 +178,15 @@ export const BlockFutureDates: ComponentStory<typeof Calendar> = () => {
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return (
-    <Calendar blockFutureDates value={dates} onSelectDate={handleSelectDate} />
+    <Calendar
+      disableFutureDates
+      value={dates}
+      onSelectDate={handleSelectDate}
+    />
   )
 }
 
-export const BlockSomeDates: ComponentStory<typeof Calendar> = () => {
+export const DisableSomeDates: ComponentStory<typeof Calendar> = () => {
   const [dates, setDates] = useState<CalendarValues>({
     start: undefined,
     end: undefined,
@@ -202,14 +206,14 @@ export const BlockSomeDates: ComponentStory<typeof Calendar> = () => {
 
   return (
     <Calendar
-      blockDates={denyDates}
+      disableDates={denyDates}
       value={dates}
       onSelectDate={handleSelectDate}
     />
   )
 }
 
-export const BlockWeekends: ComponentStory<typeof Calendar> = () => {
+export const DisableWeekends: ComponentStory<typeof Calendar> = () => {
   const [dates, setDates] = useState<CalendarValues>({
     start: undefined,
     end: undefined,
@@ -218,7 +222,7 @@ export const BlockWeekends: ComponentStory<typeof Calendar> = () => {
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return (
-    <Calendar blockWeekends value={dates} onSelectDate={handleSelectDate} />
+    <Calendar disableWeekends value={dates} onSelectDate={handleSelectDate} />
   )
 }
 
