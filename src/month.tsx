@@ -19,7 +19,6 @@ export type Month = {
 function weekdays(weekdayFormat: string, locale?: Locale) {
   const start = startOfWeek(new Date())
   return [...Array(7).keys()].map(i =>
-    // EEEEEE
     format(addDays(start, i), weekdayFormat, { locale })
   )
 }
