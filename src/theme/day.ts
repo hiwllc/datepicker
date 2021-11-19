@@ -48,6 +48,10 @@ export const CalendarDay: ComponentSingleStyleConfig = {
         },
       },
     },
+
+    outside: {
+      color: 'gray.300',
+    },
   },
 
   defaultProps: {

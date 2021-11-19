@@ -221,3 +221,21 @@ export const BlockWeekends: ComponentStory<typeof Calendar> = () => {
     <Calendar blockWeekends value={dates} onSelectDate={handleSelectDate} />
   )
 }
+
+export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar
+      onlyOneMonth
+      allowOutsideDays
+      value={dates}
+      onSelectDate={handleSelectDate}
+    />
+  )
+}

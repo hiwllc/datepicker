@@ -18,6 +18,7 @@ export type Calendar = {
   blockFutureDates?: boolean
   blockWeekends?: boolean
   blockDates?: CalendarDate[]
+  allowOutsideDays?: boolean
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   nextButton?: Buttons
   prevButton?: Buttons
@@ -34,6 +35,7 @@ export function Calendar({
   blockFutureDates = false,
   blockWeekends = false,
   blockDates,
+  allowOutsideDays = false,
   onSelectDate,
   nextButton,
   prevButton,
@@ -46,6 +48,7 @@ export function Calendar({
     nextMonth,
     prevMonth,
   } = useCalendar({
+    allowOutsideDays: allowOutsideDays && onlyOneMonth,
     blockFuture: blockFutureDates,
     start: value?.start || new Date(),
   })

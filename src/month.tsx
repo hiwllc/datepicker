@@ -1,12 +1,14 @@
 import { Grid, Box, Heading, Text, useMultiStyleConfig } from '@chakra-ui/react'
 import {
   addDays,
+  endOfMonth,
   format,
   isAfter,
   isBefore,
   isSameDay,
   isWeekend,
   Locale,
+  startOfMonth,
   startOfWeek,
 } from 'date-fns'
 import { eachDayOfInterval } from 'date-fns/esm'
@@ -74,7 +76,7 @@ export function Month({
             return <span key={`not-a-day-${index}`} />
           }
 
-          let variant: 'selected' | 'range' | undefined
+          let variant: 'selected' | 'range' | 'outside' | undefined
 
           const isSelected =
             (startSelectedDate && isSameDay(day, startSelectedDate)) ||
@@ -82,6 +84,14 @@ export function Month({
 
           if (isSelected) {
             variant = 'selected'
+          }
+
+          if (
+            (isBefore(day, startOfMonth(date)) ||
+              isAfter(day, endOfMonth(date))) &&
+            !isSelected
+          ) {
+            variant = 'outside'
           }
 
           const interval =

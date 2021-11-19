@@ -4,7 +4,7 @@ import { CalendarDate } from './types'
 
 export type Day = {
   day: CalendarDate
-  variant?: 'selected' | 'range'
+  variant?: 'selected' | 'range' | 'outside'
   disabled?: boolean
   onSelectDate: (date: CalendarDate) => void
 }

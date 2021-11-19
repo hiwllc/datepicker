@@ -7,6 +7,7 @@ import {
   startOfWeek,
   isSameMonth,
   subMonths,
+  endOfWeek,
 } from 'date-fns'
 import type { CalendarDate } from './types'
 
@@ -17,9 +18,14 @@ function replaceOutMonthDays(days: CalendarDate[], date: CalendarDate) {
 export type UseCalendar = {
   start: CalendarDate
   blockFuture?: boolean
+  allowOutsideDays?: boolean
 }
 
-export function useCalendar({ start, blockFuture }: UseCalendar) {
+export function useCalendar({
+  start,
+  blockFuture,
+  allowOutsideDays,
+}: UseCalendar) {
   const [date, setDate] = useState<CalendarDate>(
     blockFuture ? subMonths(start, 1) : start
   )
@@ -27,10 +33,11 @@ export function useCalendar({ start, blockFuture }: UseCalendar) {
   const startDateStartOfMonth = startOfMonth(date)
   const startDateEndOfMonth = endOfMonth(date)
   const startDateMonthStarOftWeek = startOfWeek(startDateStartOfMonth)
+  const startDateMonthEndOfWeek = endOfWeek(startDateEndOfMonth)
 
   const startDateDays = eachDayOfInterval({
     start: startDateMonthStarOftWeek,
-    end: startDateEndOfMonth,
+    end: startDateMonthEndOfWeek,
   })
 
   const endDate = addMonths(date, 1)
@@ -38,10 +45,11 @@ export function useCalendar({ start, blockFuture }: UseCalendar) {
   const endDateStartOfMonth = startOfMonth(endDate)
   const endDateEndOfMonth = endOfMonth(endDate)
   const endDateMonthStarOftWeek = startOfWeek(endDateStartOfMonth)
+  const endDateMonthEndOfWeek = endOfWeek(endDateEndOfMonth)
 
   const endDateDays = eachDayOfInterval({
     start: endDateMonthStarOftWeek,
-    end: endDateEndOfMonth,
+    end: endDateMonthEndOfWeek,
   })
 
   const nextMonth = () => setDate(() => addMonths(date, 1))
@@ -50,8 +58,12 @@ export function useCalendar({ start, blockFuture }: UseCalendar) {
   return {
     startDate: date,
     endDate,
-    startDateDays: replaceOutMonthDays(startDateDays, date),
-    endDateDays: replaceOutMonthDays(endDateDays, endDate),
+    startDateDays: allowOutsideDays
+      ? startDateDays
+      : replaceOutMonthDays(startDateDays, date),
+    endDateDays: allowOutsideDays
+      ? endDateDays
+      : replaceOutMonthDays(endDateDays, endDate),
     nextMonth,
     prevMonth,
   }
