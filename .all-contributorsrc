@@ -6,6 +6,16 @@
   "commit": false,
   "contributors": [
     {
+      "login": "uselessdev",
+      "name": "Wallace Batista",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6943919?v=4",
+      "profile": "https://iamwallace.dev",
+      "contributions": [
+        "ideias",
+        "code"
+      ]
+    },
+    {
       "login": "leonardoelias",
       "name": "Leonardo Elias",
       "avatar_url": "https://avatars.githubusercontent.com/u/1995213?v=4",
