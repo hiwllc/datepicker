@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "leonardoelias",
+      "name": "Leonardo Elias",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1995213?v=4",
+      "profile": "http://htttp://www.leonardoelias.me",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "datepicker",
+  "projectOwner": "uselessdev",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
