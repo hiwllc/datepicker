@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add preset of dates: `7 days`, `14 days`, `1 month`
 - Reset to current date if not selected on close
 
+### Changed
+- Rename prop `onlyOneMonth` to `singleMonth`
+
 ## [0.4.0] - 2021-11-18
 ### Added
 - Allow disable previous dates

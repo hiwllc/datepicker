@@ -91,7 +91,7 @@ export const SingleMonth: ComponentStory<typeof Calendar> = () => {
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
-  return <Calendar value={dates} onlyOneMonth onSelectDate={handleSelectDate} />
+  return <Calendar value={dates} singleMonth onSelectDate={handleSelectDate} />
 }
 
 export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
@@ -105,7 +105,7 @@ export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
 
       <Calendar
         value={{ start: date }}
-        onlyOneMonth
+        singleMonth
         singleDateSelection
         onSelectDate={handleSelectDate}
       />
@@ -237,7 +237,7 @@ export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
 
   return (
     <Calendar
-      onlyOneMonth
+      singleMonth
       allowOutsideDays
       value={dates}
       onSelectDate={handleSelectDate}
