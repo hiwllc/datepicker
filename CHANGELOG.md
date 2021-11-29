@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0] - 2021-11-18
 ### Added
-- Support lacales with date-fns
+- Support locales with date-fns
 - Month name and year format
 - Month missing `styles.month` prop
 

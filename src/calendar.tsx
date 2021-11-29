@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Box, Grid, useMultiStyleConfig } from '@chakra-ui/react'
+import { ReactNode, useState } from 'react'
+import { Box, Grid, useMultiStyleConfig, Flex } from '@chakra-ui/react'
 import { isAfter, isBefore, isSameDay, Locale } from 'date-fns'
 import { Target } from './types'
 import type { CalendarDate, CalendarValues, Buttons } from './types'
@@ -22,6 +22,7 @@ export type Calendar = {
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   nextButton?: Buttons
   prevButton?: Buttons
+  children?: ReactNode
 }
 
 export function Calendar({
@@ -39,6 +40,7 @@ export function Calendar({
   onSelectDate,
   nextButton,
   prevButton,
+  children,
 }: Calendar) {
   const {
     startDateDays,
@@ -88,48 +90,54 @@ export function Calendar({
 
   return (
     <Box sx={styles.calendar}>
-      <Controls
-        prevButton={prevButton}
-        nextButton={nextButton}
-        prevMonth={prevMonth}
-        nextMonth={nextMonth}
-      />
-
-      <Grid sx={styles.months}>
-        <Month
-          locale={locale}
-          startSelectedDate={value?.start}
-          endSelectedDate={value?.end}
-          value={value}
-          date={startDate}
-          days={startDateDays}
-          monthYearFormat={monthYearFormat}
-          weekdayFormat={weekdayFormat}
-          onSelectDate={selectDateHandler}
-          disablePastDates={disablePastDates}
-          disableFutureDates={disableFutureDates}
-          disableWeekends={disableWeekends}
-          disableDates={disableDates}
-        />
-
-        {!onlyOneMonth ? (
-          <Month
-            locale={locale}
-            startSelectedDate={value?.start}
-            endSelectedDate={value?.end}
-            value={value}
-            date={endDate}
-            days={endDateDays}
-            monthYearFormat={monthYearFormat}
-            weekdayFormat={weekdayFormat}
-            onSelectDate={selectDateHandler}
-            disablePastDates={disablePastDates}
-            disableFutureDates={disableFutureDates}
-            disableWeekends={disableWeekends}
-            disableDates={disableDates}
+      <Flex>
+        <Box position="relative">
+          <Controls
+            prevButton={prevButton}
+            nextButton={nextButton}
+            prevMonth={prevMonth}
+            nextMonth={nextMonth}
           />
-        ) : null}
-      </Grid>
+
+          <Grid sx={styles.months}>
+            <Month
+              locale={locale}
+              startSelectedDate={value?.start}
+              endSelectedDate={value?.end}
+              value={value}
+              date={startDate}
+              days={startDateDays}
+              monthYearFormat={monthYearFormat}
+              weekdayFormat={weekdayFormat}
+              onSelectDate={selectDateHandler}
+              disablePastDates={disablePastDates}
+              disableFutureDates={disableFutureDates}
+              disableWeekends={disableWeekends}
+              disableDates={disableDates}
+            />
+
+            {!onlyOneMonth ? (
+              <Month
+                locale={locale}
+                startSelectedDate={value?.start}
+                endSelectedDate={value?.end}
+                value={value}
+                date={endDate}
+                days={endDateDays}
+                monthYearFormat={monthYearFormat}
+                weekdayFormat={weekdayFormat}
+                onSelectDate={selectDateHandler}
+                disablePastDates={disablePastDates}
+                disableFutureDates={disableFutureDates}
+                disableWeekends={disableWeekends}
+                disableDates={disableDates}
+              />
+            ) : null}
+          </Grid>
+        </Box>
+
+        {children ? <Box>{children}</Box> : null}
+      </Flex>
     </Box>
   )
 }
