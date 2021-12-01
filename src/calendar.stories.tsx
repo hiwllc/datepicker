@@ -12,11 +12,10 @@ import {
   VStack,
   useDisclosure,
 } from '@chakra-ui/react'
-import { format, addDays, subDays, addMonths } from 'date-fns'
+import { format, addDays, subDays, addMonths, subMonths } from 'date-fns'
 import { CalendarValues, CalendarDate } from './types'
 import { Calendar } from './calendar'
 import ptBR from 'date-fns/locale/pt-BR'
-import { subMonths } from 'date-fns/esm'
 
 export default {
   title: 'Calendar',
