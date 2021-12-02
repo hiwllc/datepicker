@@ -9,9 +9,10 @@ import {
   PopoverBody,
   Box,
   Button,
+  VStack,
   useDisclosure,
 } from '@chakra-ui/react'
-import { format, addDays, subDays, addMonths } from 'date-fns'
+import { format, addDays, subDays, addMonths, subMonths } from 'date-fns'
 import { CalendarValues, CalendarDate } from './types'
 import { Calendar } from './calendar'
 import ptBR from 'date-fns/locale/pt-BR'
@@ -241,5 +242,89 @@ export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
       value={dates}
       onSelectDate={handleSelectDate}
     />
+  )
+}
+
+export const PresetDates: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({
+    start: undefined,
+    end: undefined,
+  })
+
+  const handleSelectDate = (dates: CalendarValues) => {
+    setDates(dates)
+  }
+
+  const date = new Date()
+
+  const handleSelectPastPresetDates = (amount: number, isMonth?: boolean) => {
+    setDates({
+      start: isMonth ? subMonths(date, amount) : subDays(date, amount),
+      end: new Date(),
+    })
+  }
+
+  const handleSelectFuturePresetDates = (amount: number, isMonth?: boolean) => {
+    setDates({
+      start: new Date(),
+      end: isMonth ? addMonths(date, amount) : addDays(date, amount),
+    })
+  }
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate}>
+      <VStack
+        spacing={4}
+        py={6}
+        p={4}
+        h="100%"
+        alignItems="stretch"
+        bgColor="gray.50"
+        borderEndRadius="md"
+      >
+        <Button
+          onClick={() => handleSelectPastPresetDates(7)}
+          colorScheme="teal"
+          size="xs"
+        >
+          last 7 days
+        </Button>
+        <Button
+          onClick={() => handleSelectPastPresetDates(14)}
+          colorScheme="teal"
+          size="xs"
+        >
+          last 14 days
+        </Button>
+        <Button
+          onClick={() => handleSelectPastPresetDates(1, true)}
+          colorScheme="teal"
+          size="xs"
+        >
+          last month
+        </Button>
+        <Button
+          onClick={() => handleSelectFuturePresetDates(7)}
+          colorScheme="pink"
+          size="xs"
+        >
+          next 7 days
+        </Button>
+        <Button
+          onClick={() => handleSelectFuturePresetDates(14)}
+          colorScheme="pink"
+          size="xs"
+        >
+          next 14 days
+        </Button>
+        <Button
+          onClick={() => handleSelectFuturePresetDates(1, true)}
+          colorScheme="pink"
+          size="xs"
+        >
+          next month
+        </Button>
+      </VStack>
+    </Calendar>
   )
 }
