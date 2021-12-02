@@ -10,8 +10,8 @@ import {
   Locale,
   startOfMonth,
   startOfWeek,
+  eachDayOfInterval,
 } from 'date-fns'
-import { eachDayOfInterval } from 'date-fns/esm'
 import type { CalendarValues, CalendarDate } from './types'
 import { Day } from './day'
 
