@@ -9,7 +9,7 @@ import { Controls } from './control'
 
 export type Calendar = {
   value: CalendarValues
-  onlyOneMonth?: boolean
+  singleMonth?: boolean
   singleDateSelection?: boolean
   locale?: Locale
   monthYearFormat?: string
@@ -27,7 +27,7 @@ export type Calendar = {
 
 export function Calendar({
   value,
-  onlyOneMonth = false,
+  singleMonth = false,
   singleDateSelection = false,
   locale,
   monthYearFormat = 'MMMM, yyyy',
@@ -50,7 +50,7 @@ export function Calendar({
     nextMonth,
     prevMonth,
   } = useCalendar({
-    allowOutsideDays: allowOutsideDays && onlyOneMonth,
+    allowOutsideDays: allowOutsideDays && singleMonth,
     blockFuture: disableFutureDates,
     start: value?.start || new Date(),
   })
@@ -116,7 +116,7 @@ export function Calendar({
               disableDates={disableDates}
             />
 
-            {!onlyOneMonth ? (
+            {!singleMonth ? (
               <Month
                 locale={locale}
                 startSelectedDate={value?.start}
