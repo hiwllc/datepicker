@@ -41,7 +41,7 @@ export function App() {
   return (
     return (
       <ChakraProvider theme={CalendarDefaultTheme}>
-        <Calendar values={dates} onSelectDate={handleSelectDate} />
+        <Calendar value={dates} onSelectDate={handleSelectDate} />
       </ChakraProvider>
     )
   )
