@@ -92,6 +92,7 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
         initialFocusRef={startInputRef}
         isOpen={isOpen}
         onClose={onClose}
+        isLazy
       >
         <PopoverTrigger>
           <Flex

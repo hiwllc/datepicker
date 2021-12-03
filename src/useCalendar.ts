@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
   endOfMonth,
   startOfMonth,
@@ -56,6 +56,8 @@ export function useCalendar({
         end: endDateMonthEndOfWeek,
       })
 
+      const resetDate = () => setDate(initialState)
+
       return {
         startDateDays: allowOutsideDays
           ? startDateDays
@@ -65,6 +67,7 @@ export function useCalendar({
           : replaceOutMonthDays(endDateDays, endDate),
         nextMonth,
         prevMonth,
+        resetDate,
       }
     },
     [
@@ -73,6 +76,7 @@ export function useCalendar({
       endDate,
       endDateMonthEndOfWeek,
       endDateMonthStarOftWeek,
+      initialState,
       startDateMonthEndOfWeek,
       startDateMonthStarOftWeek,
     ]
