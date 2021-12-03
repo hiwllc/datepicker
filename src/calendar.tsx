@@ -98,24 +98,40 @@ export function Calendar({
   }
 
   return (
-    <Box sx={styles.calendar}>
-      <Flex>
-        <Box position="relative">
-          <Controls
-            prevButton={prevButton}
-            nextButton={nextButton}
-            prevMonth={prevMonth}
-            nextMonth={nextMonth}
+    <Flex sx={styles.calendar}>
+      <Box position="relative">
+        <Controls
+          prevButton={prevButton}
+          nextButton={nextButton}
+          prevMonth={prevMonth}
+          nextMonth={nextMonth}
+        />
+
+        <Grid sx={styles.months}>
+          <Month
+            locale={locale}
+            startSelectedDate={value?.start}
+            endSelectedDate={value?.end}
+            value={value}
+            date={startDate}
+            days={startDateDays}
+            monthYearFormat={monthYearFormat}
+            weekdayFormat={weekdayFormat}
+            onSelectDate={selectDateHandler}
+            disablePastDates={disablePastDates}
+            disableFutureDates={disableFutureDates}
+            disableWeekends={disableWeekends}
+            disableDates={disableDates}
           />
 
-          <Grid sx={styles.months}>
+          {!singleMonth ? (
             <Month
               locale={locale}
               startSelectedDate={value?.start}
               endSelectedDate={value?.end}
               value={value}
-              date={startDate}
-              days={startDateDays}
+              date={endDate}
+              days={endDateDays}
               monthYearFormat={monthYearFormat}
               weekdayFormat={weekdayFormat}
               onSelectDate={selectDateHandler}
@@ -124,29 +140,11 @@ export function Calendar({
               disableWeekends={disableWeekends}
               disableDates={disableDates}
             />
+          ) : null}
+        </Grid>
+      </Box>
 
-            {!singleMonth ? (
-              <Month
-                locale={locale}
-                startSelectedDate={value?.start}
-                endSelectedDate={value?.end}
-                value={value}
-                date={endDate}
-                days={endDateDays}
-                monthYearFormat={monthYearFormat}
-                weekdayFormat={weekdayFormat}
-                onSelectDate={selectDateHandler}
-                disablePastDates={disablePastDates}
-                disableFutureDates={disableFutureDates}
-                disableWeekends={disableWeekends}
-                disableDates={disableDates}
-              />
-            ) : null}
-          </Grid>
-        </Box>
-
-        {children ? <Box>{children}</Box> : null}
-      </Flex>
-    </Box>
+      {children ? <Box>{children}</Box> : null}
+    </Flex>
   )
 }
