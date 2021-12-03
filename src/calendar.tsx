@@ -1,6 +1,6 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Box, Grid, useMultiStyleConfig, Flex } from '@chakra-ui/react'
-import { isAfter, isBefore, isSameDay, Locale } from 'date-fns'
+import { isAfter, isBefore, isSameDay, isValid, Locale } from 'date-fns'
 import { Target } from './types'
 import type { CalendarDate, CalendarValues, Buttons } from './types'
 import { Month } from './month'
@@ -49,6 +49,7 @@ export function Calendar({
     endDate,
     nextMonth,
     prevMonth,
+    resetDate,
   } = useCalendar({
     allowOutsideDays: allowOutsideDays && singleMonth,
     blockFuture: disableFutureDates,
@@ -56,6 +57,14 @@ export function Calendar({
   })
 
   const [target, setTarget] = useState<Target>(Target.START)
+
+  useEffect(() => {
+    if (isValid(value.start)) {
+      resetDate()
+    }
+    // missing resetDate, adding resetDate causes to calendar
+    // impossible to navigation through months.
+  }, [value.start])
 
   const styles = useMultiStyleConfig('Calendar', {})
 
