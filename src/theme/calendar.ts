@@ -14,7 +14,6 @@ export const Calendar: ComponentMultiStyleConfig = {
 
     months: {
       p: 4,
-      gap: 4,
       w: '100%',
       gridTemplateColumns: '1fr 1fr',
     },
