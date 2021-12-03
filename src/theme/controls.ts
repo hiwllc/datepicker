@@ -16,6 +16,7 @@ export const CalendarControl: ComponentMultiStyleConfig = {
       px: 2,
       lineHeight: 0,
       fontSize: 'md',
+      rounded: 'none',
     },
   },
 }
