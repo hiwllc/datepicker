@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { useState, ChangeEvent, useRef } from 'react'
+import { useState, ChangeEvent, useRef, useEffect } from 'react'
 import {
   Input,
   Flex,
@@ -20,6 +20,8 @@ import {
   addMonths,
   subMonths,
   isValid,
+  isAfter,
+  isBefore,
 } from 'date-fns'
 import { CalendarValues, CalendarDate } from './types'
 import { Calendar } from './calendar'
@@ -41,14 +43,22 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
   return <Calendar value={dates} onSelectDate={handleSelectDate} />
 }
 
+const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
+
 export const WithInputs: ComponentStory<typeof Calendar> = () => {
   const [dates, setDates] = useState<CalendarValues>({
     start: undefined,
     end: undefined,
   })
 
+  const [values, setInputValues] = useState({
+    start: '',
+    end: '',
+  })
+
   const startInputRef = useRef<HTMLInputElement>(null)
   const endInputRef = useRef<HTMLInputElement>(null)
+  const startFocusRef = useRef(null)
   const popoverRef = useRef(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -61,24 +71,56 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
     }
   }
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.replace(/\D!\//g, '')
-    const match = value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
+  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setInputValues({
+      ...values,
+      [target.name]: target.value,
+    })
 
-    const date = match ? new Date(value) : null
-
-    if (isValid(date)) {
-      setDates({ ...dates, [event.target.name]: date })
-
-      if (event.target.name === 'start' && endInputRef.current) {
-        endInputRef.current.focus()
-      }
+    if (target.name === 'start' && match(target.value) && endInputRef.current) {
+      endInputRef.current.focus()
     }
 
-    if (!isValid(date)) {
-      setDates({ ...dates, [event.target.name]: undefined })
-    }
+    // if (target.name === 'end' && match(target.value)) {
+    //   onClose()
+    // }
   }
+
+  useEffect(() => {
+    if (match(values.start)) {
+      const startDate = new Date(values.start)
+      const isValidStartDate = isValid(startDate)
+      const isAfterEndDate = dates.end && isAfter(startDate, dates.end)
+
+      if (isValidStartDate && isAfterEndDate) {
+        setInputValues({ ...values, end: '' })
+        return setDates({ end: undefined, start: startDate })
+      }
+
+      return setDates({ ...dates, start: startDate })
+    }
+  }, [values.start])
+
+  useEffect(() => {
+    if (match(values.end)) {
+      const endDate = new Date(values.end)
+      const isValidEndDate = isValid(endDate)
+      const isBeforeStartDate = dates.start && isBefore(endDate, dates.start)
+
+      if (isValidEndDate && isBeforeStartDate) {
+        setInputValues({ ...values, start: '' })
+
+        console.log(startInputRef.current)
+
+        startInputRef.current?.focus()
+
+        return setDates({ start: undefined, end: endDate })
+      }
+
+      onClose()
+      return setDates({ ...dates, end: endDate })
+    }
+  }, [values.end])
 
   useOutsideClick({
     ref: popoverRef,
@@ -89,14 +131,14 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
   return (
     <Box h="600px">
       <Popover
-        initialFocusRef={startInputRef}
+        initialFocusRef={startFocusRef}
         isOpen={isOpen}
         onClose={onClose}
         isLazy
       >
         <PopoverTrigger>
           <Flex
-            ref={startInputRef}
+            ref={startFocusRef}
             onClick={onOpen}
             w="300px"
             p={2}
@@ -108,7 +150,8 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
               placeholder="MM/dd/yyyy"
               name="start"
               onChange={handleInputChange}
-              value={dates.start && format(dates.start, 'MM/dd/yyyy')}
+              value={values.start}
+              ref={startInputRef}
             />
             <Input
               variant="unstyled"
@@ -116,7 +159,7 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
               name="end"
               onChange={handleInputChange}
               ref={endInputRef}
-              value={dates.end && format(dates.end, 'MM/dd/yyyy')}
+              value={values.end}
             />
           </Flex>
         </PopoverTrigger>
