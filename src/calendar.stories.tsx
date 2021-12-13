@@ -80,10 +80,6 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
     if (target.name === 'start' && match(target.value) && endInputRef.current) {
       endInputRef.current.focus()
     }
-
-    // if (target.name === 'end' && match(target.value)) {
-    //   onClose()
-    // }
   }
 
   useEffect(() => {
@@ -109,8 +105,6 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
 
       if (isValidEndDate && isBeforeStartDate) {
         setInputValues({ ...values, start: '' })
-
-        console.log(startInputRef.current)
 
         startInputRef.current?.focus()
 
