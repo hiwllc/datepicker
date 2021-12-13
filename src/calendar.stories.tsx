@@ -66,6 +66,13 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
   const handleSelectDate = (dates: CalendarValues) => {
     setDates(dates)
 
+    setInputValues({
+      start: isValid(dates.start)
+        ? format(dates.start as Date, 'MM/dd/yyyy')
+        : '',
+      end: isValid(dates.end) ? format(dates.end as Date, 'MM/dd/yyyy') : '',
+    })
+
     if (dates.end) {
       onClose()
     }
