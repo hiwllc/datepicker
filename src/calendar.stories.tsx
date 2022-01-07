@@ -1,5 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { useState } from 'react'
+import { addDays, subDays } from 'date-fns'
+import { Button, IconButton } from '@chakra-ui/react'
 
 import { Calendar } from './calendar'
 import { CalendarMonth } from './month'
@@ -11,7 +13,6 @@ import { CalendarControls } from './control'
 import { CalendarNextButton } from './control-next-button'
 import { CalendarPrevButton } from './control-prev-button'
 import { CalendarDate, CalendarValues } from './types'
-import { addDays, subDays } from 'date-fns'
 
 export default {
   title: 'Calendar',
@@ -183,6 +184,45 @@ export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
       <CalendarControls>
         <CalendarPrevButton />
         <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const CustomControlButtons: ComponentStory<typeof Calendar> = () => {
+  const [date, setDate] = useState<CalendarDate>()
+
+  const handleSelectDate = (date: CalendarDate) => setDate(date)
+
+  return (
+    <Calendar
+      value={{ start: date }}
+      onSelectDate={handleSelectDate}
+      singleDateSelection
+    >
+      <CalendarControls>
+        <CalendarPrevButton
+          as={props => (
+            <Button size="xs" rounded="full" colorScheme="pink" {...props}>
+              &#8249;
+            </Button>
+          )}
+        />
+        <CalendarNextButton
+          as={props => (
+            <Button size="xs" rounded="full" colorScheme="pink" {...props}>
+              &#8250;
+            </Button>
+          )}
+        />
       </CalendarControls>
 
       <CalendarMonths>
