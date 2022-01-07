@@ -13,12 +13,9 @@ import {
 import type { CalendarMonthStyles } from './types'
 import { CalendarContext } from './context'
 import { Day } from './day'
+import { MonthContext } from './month'
 
-type CalendarDays = {
-  month?: number
-}
-
-export function CalendarDays({ month = 0 }: CalendarDays) {
+export function CalendarDays() {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
   const {
     dates,
@@ -30,10 +27,11 @@ export function CalendarDays({ month = 0 }: CalendarDays) {
     disablePastDates,
     disableWeekends,
   } = React.useContext(CalendarContext)
+  const { month } = React.useContext(MonthContext)
 
   return (
     <Grid sx={styles.days}>
-      {dates[month].days.map((day, index) => {
+      {dates[Number(month)].days.map((day, index) => {
         if (!day) {
           return <span key={`not-a-day-${index}`} />
         }
@@ -49,8 +47,8 @@ export function CalendarDays({ month = 0 }: CalendarDays) {
         }
 
         if (
-          (isBefore(day, startOfMonth(dates[month].startDateOfMonth)) ||
-            isAfter(day, endOfMonth(dates[month].startDateOfMonth))) &&
+          (isBefore(day, startOfMonth(dates[Number(month)].startDateOfMonth)) ||
+            isAfter(day, endOfMonth(dates[Number(month)].startDateOfMonth))) &&
           !isSelected
         ) {
           variant = 'outside'
