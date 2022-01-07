@@ -19,72 +19,55 @@ export type UseCalendar = {
   start: CalendarDate
   blockFuture?: boolean
   allowOutsideDays?: boolean
+  months?: number
 }
 
 export function useCalendar({
   start,
+  months = 1,
   blockFuture,
   allowOutsideDays,
 }: UseCalendar) {
   const initialState = blockFuture ? subMonths(start, 1) : start
   const [date, setDate] = useState<CalendarDate>(initialState)
 
-  const startDateStartOfMonth = startOfMonth(date)
-  const startDateEndOfMonth = endOfMonth(date)
-  const startDateMonthStarOftWeek = startOfWeek(startDateStartOfMonth)
-  const startDateMonthEndOfWeek = endOfWeek(startDateEndOfMonth)
-
-  const endDate = addMonths(date, 1)
-
-  const endDateStartOfMonth = startOfMonth(endDate)
-  const endDateEndOfMonth = endOfMonth(endDate)
-  const endDateMonthStarOftWeek = startOfWeek(endDateStartOfMonth)
-  const endDateMonthEndOfWeek = endOfWeek(endDateEndOfMonth)
-
   const actions = useMemo(
     function actionsFn() {
       const nextMonth = () => setDate(prevSet => addMonths(prevSet, 1))
       const prevMonth = () => setDate(prevSet => subMonths(prevSet, 1))
 
-      const startDateDays = eachDayOfInterval({
-        start: startDateMonthStarOftWeek,
-        end: startDateMonthEndOfWeek,
-      })
-
-      const endDateDays = eachDayOfInterval({
-        start: endDateMonthStarOftWeek,
-        end: endDateMonthEndOfWeek,
-      })
-
       const resetDate = () => setDate(initialState)
 
+      const dates = [...Array(months).keys()].map(i => {
+        const month = addMonths(date, i)
+
+        const startDateOfMonth = startOfMonth(month)
+        const endDateOfMonth = endOfMonth(month)
+        const startWeek = startOfWeek(startDateOfMonth)
+        const endWeek = endOfWeek(endDateOfMonth)
+        const days = eachDayOfInterval({ start: startWeek, end: endWeek })
+
+        return {
+          startDateOfMonth,
+          endDateOfMonth,
+          startWeek,
+          endWeek,
+          days: allowOutsideDays ? days : replaceOutMonthDays(days, month),
+        }
+      })
+
       return {
-        startDateDays: allowOutsideDays
-          ? startDateDays
-          : replaceOutMonthDays(startDateDays, date),
-        endDateDays: allowOutsideDays
-          ? endDateDays
-          : replaceOutMonthDays(endDateDays, endDate),
         nextMonth,
         prevMonth,
         resetDate,
+        dates,
       }
     },
-    [
-      allowOutsideDays,
-      date,
-      endDate,
-      endDateMonthEndOfWeek,
-      endDateMonthStarOftWeek,
-      initialState,
-      startDateMonthEndOfWeek,
-      startDateMonthStarOftWeek,
-    ]
+    [allowOutsideDays, date, initialState, months]
   )
 
   return {
     startDate: date,
-    endDate,
     ...actions,
   }
 }
