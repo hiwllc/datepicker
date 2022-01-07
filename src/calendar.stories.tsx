@@ -1,7 +1,15 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { useState } from 'react'
-import { addDays, subDays } from 'date-fns'
-import { Button, IconButton } from '@chakra-ui/react'
+import { addDays, format, subDays } from 'date-fns'
+import {
+  Box,
+  Button,
+  Input,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+} from '@chakra-ui/react'
 
 import { Calendar } from './calendar'
 import { CalendarMonth } from './month'
@@ -235,3 +243,30 @@ export const CustomControlButtons: ComponentStory<typeof Calendar> = () => {
     </Calendar>
   )
 }
+
+export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const MONTHS = 2
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate} months={MONTHS}>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        {[...Array(MONTHS).keys()].map(month => (
+          <CalendarMonth month={month} key={month}>
+            <CalendarMonthName />
+            <CalendarWeek />
+            <CalendarDays />
+          </CalendarMonth>
+        ))}
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
