@@ -3,7 +3,7 @@ import { useMultiStyleConfig, Flex } from '@chakra-ui/react'
 import { CalendarContext } from './context'
 import { useCalendar } from './useCalendar'
 import { CalendarDate, CalendarStyles, CalendarValues, Target } from './types'
-import { isAfter, isBefore, isSameDay } from 'date-fns'
+import { isAfter, isBefore, isSameDay, isValid } from 'date-fns'
 
 export type Calendar = React.PropsWithChildren<{
   value: CalendarValues
@@ -31,7 +31,7 @@ export function Calendar({
 }: Calendar) {
   const styles = useMultiStyleConfig('Calendar', {}) as CalendarStyles
 
-  const values = useCalendar({
+  const { resetDate, ...values } = useCalendar({
     allowOutsideDays,
     blockFuture: false,
     start: value?.start || new Date(),
@@ -39,6 +39,15 @@ export function Calendar({
   })
 
   const [target, setTarget] = React.useState<Target>(Target.START)
+
+  React.useEffect(() => {
+    if (isValid(value.start)) {
+      resetDate()
+    }
+    // missing resetDate, adding resetDate causes to calendar
+    // impossible to navigation through months.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value.start])
 
   const selectDateHandler = (date: CalendarDate) => {
     if (singleDateSelection) {
