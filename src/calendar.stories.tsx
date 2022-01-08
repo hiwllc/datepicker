@@ -12,6 +12,7 @@ import {
   PopoverTrigger,
   useDisclosure,
   useOutsideClick,
+  VStack,
 } from '@chakra-ui/react'
 import ptBR from 'date-fns/locale/pt-BR'
 
@@ -550,5 +551,61 @@ export const WithInputPopoverStartEndDates: ComponentStory<
         </PopoverContent>
       </Popover>
     </Box>
+  )
+}
+
+export const CustomContent: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  const today = new Date()
+
+  const addSevenDays = () =>
+    setDates({
+      start: today,
+      end: addDays(today, 7),
+    })
+
+  const subSevenDays = () =>
+    setDates({
+      start: subDays(today, 7),
+      end: today,
+    })
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate}>
+      <Box position="relative">
+        <CalendarControls>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarControls>
+
+        <CalendarMonths>
+          <CalendarMonth>
+            <CalendarMonthName />
+            <CalendarWeek />
+            <CalendarDays />
+          </CalendarMonth>
+        </CalendarMonths>
+      </Box>
+
+      <VStack
+        spacing={4}
+        bgColor="gray.50"
+        p={4}
+        alignItems="stretch"
+        borderEndRadius="md"
+        flex={1}
+      >
+        <Button onClick={addSevenDays} colorScheme="blue" size="xs">
+          7 next days
+        </Button>
+
+        <Button onClick={subSevenDays} colorScheme="red" size="xs">
+          7 prev days
+        </Button>
+      </VStack>
+    </Calendar>
   )
 }
