@@ -13,10 +13,14 @@ export function CalendarMonthName({
   format = 'MMMM, yyyy',
 }: CalendarMonthName) {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
-  const { dates } = React.useContext(CalendarContext)
+  const { dates, locale } = React.useContext(CalendarContext)
   const { month } = React.useContext(MonthContext)
 
   const currentMonth = dates[Number(month)].startDateOfMonth
 
-  return <Heading sx={styles.name}>{dateFormat(currentMonth, format)}</Heading>
+  return (
+    <Heading sx={styles.name}>
+      {dateFormat(currentMonth, format, { locale })}
+    </Heading>
+  )
 }

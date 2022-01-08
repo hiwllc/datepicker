@@ -13,6 +13,7 @@ import {
   useDisclosure,
   useOutsideClick,
 } from '@chakra-ui/react'
+import ptBR from 'date-fns/locale/pt-BR'
 
 import { Calendar } from './calendar'
 import { CalendarMonth } from './month'
@@ -37,6 +38,34 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
 
   return (
     <Calendar value={dates} onSelectDate={handleSelectDate}>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const CustomLocale: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar
+      value={dates}
+      onSelectDate={handleSelectDate}
+      locale={ptBR}
+      weekdayFormat="EEEEEE"
+    >
       <CalendarControls>
         <CalendarPrevButton />
         <CalendarNextButton />

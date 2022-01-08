@@ -2,19 +2,21 @@ import * as React from 'react'
 import { useMultiStyleConfig, Flex } from '@chakra-ui/react'
 import { CalendarContext } from './context'
 import { useCalendar } from './useCalendar'
+import { isAfter, isBefore, isSameDay, isValid, Locale } from 'date-fns'
 import { CalendarDate, CalendarStyles, CalendarValues, Target } from './types'
-import { isAfter, isBefore, isSameDay, isValid } from 'date-fns'
 
 export type Calendar = React.PropsWithChildren<{
   value: CalendarValues
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   months?: number
+  locale?: Locale
   allowOutsideDays?: boolean
   disablePastDates?: boolean
   disableFutureDates?: boolean
   disableWeekends?: boolean
   disableDates?: CalendarDate[]
   singleDateSelection?: boolean
+  weekdayFormat?: string
 }>
 
 export function Calendar({
@@ -27,6 +29,8 @@ export function Calendar({
   disableFutureDates,
   disableWeekends,
   disableDates,
+  locale,
+  weekdayFormat,
   onSelectDate,
 }: Calendar) {
   const styles = useMultiStyleConfig('Calendar', {}) as CalendarStyles
@@ -89,6 +93,8 @@ export function Calendar({
         disableFutureDates,
         disablePastDates,
         disableWeekends,
+        locale,
+        weekdayFormat,
       }}
     >
       <Flex sx={styles.calendar}>{children}</Flex>

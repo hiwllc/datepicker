@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Locale } from 'date-fns'
 import { CalendarDate } from './types'
 
 export type CalendarContext = {
@@ -19,6 +20,8 @@ export type CalendarContext = {
   disableFutureDates?: boolean
   disableWeekends?: boolean
   disableDates?: CalendarDate[]
+  locale?: Locale
+  weekdayFormat?: string
 }
 
 export const CalendarContext = React.createContext<CalendarContext>({
