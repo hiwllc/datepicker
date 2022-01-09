@@ -13,7 +13,12 @@ export function Day({ day, variant, disabled, onSelectDate }: Day) {
   const styles = useStyleConfig('CalendarDay', { variant })
 
   return (
-    <Button onClick={() => onSelectDate(day)} sx={styles} isDisabled={disabled}>
+    <Button
+      aria-label={format(day, 'MM-d')}
+      onClick={() => onSelectDate(day)}
+      sx={styles}
+      isDisabled={disabled}
+    >
       {format(day, 'd')}
     </Button>
   )
