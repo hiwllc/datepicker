@@ -390,3 +390,43 @@ test('should change a range date interval in input', () => {
   expect(HEADING_FIRST).not.toBeInTheDocument()
   expect(HEADING_SECOND).not.toBeInTheDocument()
 })
+
+test('should change a range date interval end before start and start after end', () => {
+  render(<CalendarRange />)
+
+  const START_INPUT = screen.getByPlaceholderText(/start date/i)
+  const END_INPUT = screen.getByPlaceholderText(/end date/i)
+  fireEvent.click(START_INPUT)
+
+  const [HEADING_FIRST, HEADING_SECOND] = screen.getAllByRole('heading')
+  expect(HEADING_FIRST).toHaveTextContent(CURRENT_CALENDAR_NAME)
+  expect(HEADING_SECOND).toHaveTextContent(NEXT_CALENDAR_NAME)
+
+  fireEvent.change(START_INPUT, { target: { value: '01/10/2022' } })
+  expect(END_INPUT).toHaveFocus()
+
+  fireEvent.change(END_INPUT, { target: { value: '02/05/2022' } })
+
+  /** reopen calendar */
+  fireEvent.click(END_INPUT)
+  expect(END_INPUT).toHaveFocus()
+
+  const FIRST_HEADING = screen.getByRole('heading', {
+    name: CURRENT_CALENDAR_NAME,
+  })
+  const LAST_HEADING = screen.getByRole('heading', { name: NEXT_CALENDAR_NAME })
+
+  fireEvent.change(END_INPUT, { target: { value: '01/05/2022' } })
+  expect(START_INPUT).toHaveValue('')
+  expect(START_INPUT).toHaveFocus()
+  expect(FIRST_HEADING).toBeInTheDocument()
+
+  fireEvent.change(START_INPUT, { target: { value: '01/07/2022' } })
+  expect(END_INPUT).toHaveValue('')
+  expect(END_INPUT).toHaveFocus()
+  expect(LAST_HEADING).toBeInTheDocument()
+
+  fireEvent.change(END_INPUT, { target: { value: '01/10/2022' } })
+  expect(FIRST_HEADING).not.toBeInTheDocument()
+  expect(LAST_HEADING).not.toBeInTheDocument()
+})
