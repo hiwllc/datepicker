@@ -356,4 +356,37 @@ test('should select a range date interval', () => {
   expect(HEADING_SECOND).not.toBeInTheDocument()
 })
 
-test.todo('should change a range date interval in input')
+test('should change a range date interval in input', () => {
+  render(<CalendarRange />)
+
+  const START_INPUT = screen.getByPlaceholderText(/start date/i)
+  const END_INPUT = screen.getByPlaceholderText(/end date/i)
+
+  fireEvent.click(START_INPUT)
+
+  const [HEADING_FIRST, HEADING_SECOND] = screen.getAllByRole('heading')
+
+  expect(HEADING_FIRST).toHaveTextContent(CURRENT_CALENDAR_NAME)
+  expect(HEADING_SECOND).toHaveTextContent(NEXT_CALENDAR_NAME)
+
+  fireEvent.change(START_INPUT, { target: { value: '01/10/2022' } })
+
+  expect(END_INPUT).toHaveFocus()
+
+  fireEvent.change(END_INPUT, { target: { value: '02/05/2022' } })
+
+  /** reopen calendar */
+  fireEvent.click(START_INPUT)
+
+  const [FIRST_SELECTED, SECOND_SELECTED] = screen.getAllByRole('button', {
+    current: 'date',
+  })
+
+  expect(FIRST_SELECTED).toHaveTextContent('10')
+  expect(SECOND_SELECTED).toHaveTextContent('5')
+
+  fireEvent.change(START_INPUT, { target: { value: '01/09/2022' } })
+
+  expect(HEADING_FIRST).not.toBeInTheDocument()
+  expect(HEADING_SECOND).not.toBeInTheDocument()
+})
