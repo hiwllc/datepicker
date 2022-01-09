@@ -23,6 +23,9 @@
     "downlevelIteration": true,
 
     "baseUrl": "./",
+    "paths": {
+      "renderer": ["./.jest/with-theme"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
