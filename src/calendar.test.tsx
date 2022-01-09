@@ -140,6 +140,20 @@ test('should select a date', () => {
   expect(CALENDAR_HEADER).not.toBeInTheDocument()
 })
 
-test.todo('should change date in input')
+test('should change date in input', () => {
+  render(<CalendarBasic />)
+
+  const INPUT = screen.getByPlaceholderText(/select a date/i)
+  fireEvent.click(INPUT)
+
+  const CALENDAR_HEADER = screen.getByRole('heading')
+  expect(CALENDAR_HEADER).toHaveTextContent(CURRENT_CALENDAR_NAME)
+
+  fireEvent.change(INPUT, { target: { value: '01/10/2022' } })
+
+  expect(INPUT).toHaveValue('01/10/2022')
+  expect(CALENDAR_HEADER).not.toBeInTheDocument()
+})
+
 test.todo('should select a range date interval')
 test.todo('should change a range date interval in input')
