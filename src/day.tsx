@@ -19,7 +19,6 @@ export function Day({ day, variant, disabled, onSelectDate }: Day) {
       sx={styles}
       isDisabled={disabled}
       aria-current={variant === 'selected' ? 'date' : false}
-      aria-selected={variant === 'selected' ? true : false}
     >
       {format(day, 'd')}
     </Button>
