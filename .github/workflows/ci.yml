@@ -18,3 +18,9 @@ jobs:
 
       - name: Run lint tests
         run: yarn lint
+
+      - name: Run tests
+        run: yarn test --collect-coverage
+
+      - name: Run build
+        run: yarn build
