@@ -21,6 +21,7 @@
     "noUnusedParameters": true,
     "esModuleInterop": true,
     "downlevelIteration": true,
+    "rootDir": ".",
 
     "baseUrl": "./",
     "paths": {
