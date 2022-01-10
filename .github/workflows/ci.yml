@@ -21,6 +21,3 @@ jobs:
 
       - name: Run tests
         run: yarn test --collect-coverage
-
-      - name: Run build
-        run: yarn build
