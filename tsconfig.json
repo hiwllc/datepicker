@@ -21,8 +21,12 @@
     "noUnusedParameters": true,
     "esModuleInterop": true,
     "downlevelIteration": true,
+    "rootDir": ".",
 
     "baseUrl": "./",
+    "paths": {
+      "renderer": ["./.jest/with-theme"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

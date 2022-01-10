@@ -1,31 +1,31 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { useState, ChangeEvent, useRef, useEffect } from 'react'
+import { ChangeEvent, useRef, useState, useEffect } from 'react'
+import { addDays, format, isAfter, isBefore, isValid, subDays } from 'date-fns'
 import {
-  Input,
-  Flex,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
   Box,
   Button,
-  VStack,
+  Flex,
+  Input,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   useDisclosure,
   useOutsideClick,
+  VStack,
 } from '@chakra-ui/react'
-import {
-  format,
-  addDays,
-  subDays,
-  addMonths,
-  subMonths,
-  isValid,
-  isAfter,
-  isBefore,
-} from 'date-fns'
-import { CalendarValues, CalendarDate } from './types'
-import { Calendar } from './calendar'
 import ptBR from 'date-fns/locale/pt-BR'
+
+import { Calendar } from './calendar'
+import { CalendarMonth } from './month'
+import { CalendarDays } from './month-days'
+import { CalendarMonthName } from './month-name'
+import { CalendarWeek } from './month-week'
+import { CalendarMonths } from './months'
+import { CalendarControls } from './control'
+import { CalendarNextButton } from './control-next-button'
+import { CalendarPrevButton } from './control-prev-button'
+import { CalendarDate, CalendarValues } from './types'
 
 export default {
   title: 'Calendar',
@@ -33,40 +33,390 @@ export default {
 } as ComponentMeta<typeof Calendar>
 
 export const Basic: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
+  const [dates, setDates] = useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
-  return <Calendar value={dates} onSelectDate={handleSelectDate} />
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate}>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
 }
 
-const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
+export const CustomLocale: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
 
-export const WithInputs: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar
+      value={dates}
+      onSelectDate={handleSelectDate}
+      locale={ptBR}
+      weekdayFormat="EEEEEE"
+    >
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate} disablePastDates>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate} disableFutureDates>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const DisableDates: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  const today = new Date()
+  const disabledDates = [
+    subDays(today, 5),
+    today,
+    addDays(today, 1),
+    addDays(today, 2),
+    addDays(today, 40),
+  ]
+
+  return (
+    <Calendar
+      value={dates}
+      onSelectDate={handleSelectDate}
+      disableDates={disabledDates}
+    >
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const DisableWeekends: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate} disableWeekends>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate} allowOutsideDays>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
+  const [date, setDate] = useState<CalendarDate>()
+
+  const handleSelectDate = (date: CalendarDate) => setDate(date)
+
+  return (
+    <Calendar
+      value={{ start: date }}
+      onSelectDate={handleSelectDate}
+      singleDateSelection
+    >
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const CustomControlButtons: ComponentStory<typeof Calendar> = () => {
+  const [date, setDate] = useState<CalendarDate>()
+
+  const handleSelectDate = (date: CalendarDate) => setDate(date)
+
+  return (
+    <Calendar
+      value={{ start: date }}
+      onSelectDate={handleSelectDate}
+      singleDateSelection
+    >
+      <CalendarControls>
+        <CalendarPrevButton
+          as={props => (
+            <Button size="xs" rounded="full" colorScheme="pink" {...props}>
+              &#8249;
+            </Button>
+          )}
+        />
+        <CalendarNextButton
+          as={props => (
+            <Button size="xs" rounded="full" colorScheme="pink" {...props}>
+              &#8250;
+            </Button>
+          )}
+        />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const MONTHS = 2
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate} months={MONTHS}>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        {[...Array(MONTHS).keys()].map(month => (
+          <CalendarMonth month={month} key={month}>
+            <CalendarMonthName />
+            <CalendarWeek />
+            <CalendarDays />
+          </CalendarMonth>
+        ))}
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const WithInputPopover: ComponentStory<typeof Calendar> = () => {
+  const [date, setDate] = useState<CalendarDate>()
+  const [value, setValue] = useState('')
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const initialRef = useRef(null)
+  const calendarRef = useRef(null)
+
+  const handleSelectDate = (date: CalendarDate) => {
+    setDate(date)
+    setValue(() => (isValid(date) ? format(date, 'MM/dd/yyyy') : ''))
+    onClose()
+  }
+
+  const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
+
+  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setValue(target.value)
+
+    if (match(target.value)) {
+      onClose()
+    }
+  }
+
+  useOutsideClick({
+    ref: calendarRef,
+    handler: onClose,
+    enabled: isOpen,
   })
 
-  const [values, setInputValues] = useState({
+  useEffect(() => {
+    if (match(value)) {
+      const date = new Date(value)
+
+      return setDate(date)
+    }
+  }, [value])
+
+  return (
+    <Box minH="400px">
+      <Popover
+        placement="auto-start"
+        isOpen={isOpen}
+        onClose={onClose}
+        initialFocusRef={initialRef}
+        isLazy
+      >
+        <PopoverTrigger>
+          <Box onClick={onOpen} ref={initialRef}>
+            <Input
+              placeholder="MM/dd/yyyy"
+              value={value}
+              onChange={handleInputChange}
+            />
+          </Box>
+        </PopoverTrigger>
+
+        <PopoverContent
+          p={0}
+          w="min-content"
+          border="none"
+          outline="none"
+          _focus={{ boxShadow: 'none' }}
+          ref={calendarRef}
+        >
+          <Calendar
+            value={{ start: date }}
+            onSelectDate={handleSelectDate}
+            singleDateSelection
+          >
+            <PopoverBody p={0}>
+              <CalendarControls>
+                <CalendarPrevButton />
+                <CalendarNextButton />
+              </CalendarControls>
+
+              <CalendarMonths>
+                <CalendarMonth>
+                  <CalendarMonthName />
+                  <CalendarWeek />
+                  <CalendarDays />
+                </CalendarMonth>
+              </CalendarMonths>
+            </PopoverBody>
+          </Calendar>
+        </PopoverContent>
+      </Popover>
+    </Box>
+  )
+}
+
+export const WithInputPopoverStartEndDates: ComponentStory<
+  typeof Calendar
+> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+  const [values, setValues] = useState({
     start: '',
     end: '',
   })
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const initialRef = useRef(null)
+  const calendarRef = useRef(null)
   const startInputRef = useRef<HTMLInputElement>(null)
   const endInputRef = useRef<HTMLInputElement>(null)
-  const startFocusRef = useRef(null)
-  const popoverRef = useRef(null)
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const MONTHS = 2
 
   const handleSelectDate = (dates: CalendarValues) => {
     setDates(dates)
 
-    setInputValues({
+    setValues({
       start: isValid(dates.start)
         ? format(dates.start as Date, 'MM/dd/yyyy')
         : '',
@@ -78,8 +428,10 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
     }
   }
 
+  const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
+
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setInputValues({
+    setValues({
       ...values,
       [target.name]: target.value,
     })
@@ -89,6 +441,12 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
     }
   }
 
+  useOutsideClick({
+    ref: calendarRef,
+    handler: onClose,
+    enabled: isOpen,
+  })
+
   useEffect(() => {
     if (match(values.start)) {
       const startDate = new Date(values.start)
@@ -96,7 +454,7 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
       const isAfterEndDate = dates.end && isAfter(startDate, dates.end)
 
       if (isValidStartDate && isAfterEndDate) {
-        setInputValues({ ...values, end: '' })
+        setValues({ ...values, end: '' })
         return setDates({ end: undefined, start: startDate })
       }
 
@@ -111,7 +469,7 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
       const isBeforeStartDate = dates.start && isBefore(endDate, dates.start)
 
       if (isValidEndDate && isBeforeStartDate) {
-        setInputValues({ ...values, start: '' })
+        setValues({ ...values, start: '' })
 
         startInputRef.current?.focus()
 
@@ -123,44 +481,39 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
     }
   }, [values.end])
 
-  useOutsideClick({
-    ref: popoverRef,
-    handler: onClose,
-    enabled: isOpen,
-  })
-
   return (
-    <Box h="600px">
+    <Box minH="400px">
       <Popover
-        initialFocusRef={startFocusRef}
+        placement="auto-start"
         isOpen={isOpen}
         onClose={onClose}
+        initialFocusRef={initialRef}
         isLazy
       >
         <PopoverTrigger>
           <Flex
-            ref={startFocusRef}
-            onClick={onOpen}
-            w="300px"
-            p={2}
+            w="400px"
             borderWidth={1}
             rounded="md"
+            p={2}
+            onClick={onOpen}
+            ref={initialRef}
           >
             <Input
               variant="unstyled"
-              placeholder="MM/dd/yyyy"
               name="start"
-              onChange={handleInputChange}
+              placeholder="MM/dd/yyyy"
               value={values.start}
+              onChange={handleInputChange}
               ref={startInputRef}
             />
             <Input
               variant="unstyled"
-              placeholder="MM/dd/yyyy"
               name="end"
+              placeholder="MM/dd/yyyy"
+              value={values.end}
               onChange={handleInputChange}
               ref={endInputRef}
-              value={values.end}
             />
           </Flex>
         </PopoverTrigger>
@@ -170,258 +523,87 @@ export const WithInputs: ComponentStory<typeof Calendar> = () => {
           w="min-content"
           border="none"
           outline="none"
-          ref={popoverRef}
           _focus={{ boxShadow: 'none' }}
+          ref={calendarRef}
         >
-          <PopoverBody>
-            <Calendar value={dates} onSelectDate={handleSelectDate} />
-          </PopoverBody>
+          <Calendar
+            value={dates}
+            onSelectDate={handleSelectDate}
+            months={MONTHS}
+          >
+            <PopoverBody p={0}>
+              <CalendarControls>
+                <CalendarPrevButton />
+                <CalendarNextButton />
+              </CalendarControls>
+
+              <CalendarMonths>
+                {[...Array(MONTHS).keys()].map(m => (
+                  <CalendarMonth key={m} month={m}>
+                    <CalendarMonthName />
+                    <CalendarWeek />
+                    <CalendarDays />
+                  </CalendarMonth>
+                ))}
+              </CalendarMonths>
+            </PopoverBody>
+          </Calendar>
         </PopoverContent>
       </Popover>
     </Box>
   )
 }
 
-export const SingleMonth: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
+export const CustomContent: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
-  return <Calendar value={dates} singleMonth onSelectDate={handleSelectDate} />
-}
+  const today = new Date()
 
-export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
-  const [date, setDate] = useState<CalendarDate>(new Date())
-
-  const handleSelectDate = (date: CalendarDate) => setDate(date)
-
-  return (
-    <Box>
-      <Input w="200px" mb={4} value={format(date, 'MM/dd/yyyy')} />
-
-      <Calendar
-        value={{ start: date }}
-        singleMonth
-        singleDateSelection
-        onSelectDate={handleSelectDate}
-      />
-    </Box>
-  )
-}
-
-export const WithCustomButton: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
-
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar
-      nextButton={props => (
-        <Button size="xs" colorScheme="purple" {...props}>
-          &#8250;
-        </Button>
-      )}
-      prevButton={props => (
-        <Button size="xs" colorScheme="purple" {...props}>
-          &#8249;
-        </Button>
-      )}
-      value={dates}
-      onSelectDate={handleSelectDate}
-    />
-  )
-}
-
-export const CustomLocale: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
-
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar
-      weekdayFormat="EEEEEE"
-      value={dates}
-      locale={ptBR}
-      onSelectDate={handleSelectDate}
-    />
-  )
-}
-
-export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
-
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar disablePastDates value={dates} onSelectDate={handleSelectDate} />
-  )
-}
-
-export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
-
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar
-      disableFutureDates
-      value={dates}
-      onSelectDate={handleSelectDate}
-    />
-  )
-}
-
-export const DisableSomeDates: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
-
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  const date = new Date()
-
-  const denyDates = [
-    subDays(date, 2),
-    subDays(date, 1),
-    date,
-    addDays(date, 2),
-    addMonths(date, 1),
-  ]
-
-  return (
-    <Calendar
-      disableDates={denyDates}
-      value={dates}
-      onSelectDate={handleSelectDate}
-    />
-  )
-}
-
-export const DisableWeekends: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
-
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar disableWeekends value={dates} onSelectDate={handleSelectDate} />
-  )
-}
-
-export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
-
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar
-      singleMonth
-      allowOutsideDays
-      value={dates}
-      onSelectDate={handleSelectDate}
-    />
-  )
-}
-
-export const PresetDates: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({
-    start: undefined,
-    end: undefined,
-  })
-
-  const handleSelectDate = (dates: CalendarValues) => {
-    setDates(dates)
-  }
-
-  const date = new Date()
-
-  const handleSelectPastPresetDates = (amount: number, isMonth?: boolean) => {
+  const addSevenDays = () =>
     setDates({
-      start: isMonth ? subMonths(date, amount) : subDays(date, amount),
-      end: new Date(),
+      start: today,
+      end: addDays(today, 7),
     })
-  }
 
-  const handleSelectFuturePresetDates = (amount: number, isMonth?: boolean) => {
+  const subSevenDays = () =>
     setDates({
-      start: new Date(),
-      end: isMonth ? addMonths(date, amount) : addDays(date, amount),
+      start: subDays(today, 7),
+      end: today,
     })
-  }
 
   return (
     <Calendar value={dates} onSelectDate={handleSelectDate}>
+      <Box position="relative">
+        <CalendarControls>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarControls>
+
+        <CalendarMonths>
+          <CalendarMonth>
+            <CalendarMonthName />
+            <CalendarWeek />
+            <CalendarDays />
+          </CalendarMonth>
+        </CalendarMonths>
+      </Box>
+
       <VStack
         spacing={4}
-        py={6}
-        p={4}
-        h="100%"
-        alignItems="stretch"
         bgColor="gray.50"
+        p={4}
+        alignItems="stretch"
         borderEndRadius="md"
+        flex={1}
       >
-        <Button
-          onClick={() => handleSelectPastPresetDates(7)}
-          colorScheme="teal"
-          size="xs"
-        >
-          last 7 days
+        <Button onClick={addSevenDays} colorScheme="blue" size="xs">
+          7 next days
         </Button>
-        <Button
-          onClick={() => handleSelectPastPresetDates(14)}
-          colorScheme="teal"
-          size="xs"
-        >
-          last 14 days
-        </Button>
-        <Button
-          onClick={() => handleSelectPastPresetDates(1, true)}
-          colorScheme="teal"
-          size="xs"
-        >
-          last month
-        </Button>
-        <Button
-          onClick={() => handleSelectFuturePresetDates(7)}
-          colorScheme="pink"
-          size="xs"
-        >
-          next 7 days
-        </Button>
-        <Button
-          onClick={() => handleSelectFuturePresetDates(14)}
-          colorScheme="pink"
-          size="xs"
-        >
-          next 14 days
-        </Button>
-        <Button
-          onClick={() => handleSelectFuturePresetDates(1, true)}
-          colorScheme="pink"
-          size="xs"
-        >
-          next month
+
+        <Button onClick={subSevenDays} colorScheme="red" size="xs">
+          7 prev days
         </Button>
       </VStack>
     </Calendar>

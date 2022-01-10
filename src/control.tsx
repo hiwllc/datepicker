@@ -1,38 +1,14 @@
-import { Flex, Button, useMultiStyleConfig } from '@chakra-ui/react'
-import type { Buttons } from './types'
+import * as React from 'react'
+import { Flex, useMultiStyleConfig } from '@chakra-ui/react'
+import { CalendarControlStyles } from './types'
 
-export type Controls = {
-  prevMonth: () => void
-  nextMonth: () => void
-  nextButton?: Buttons
-  prevButton?: Buttons
-}
+export type CalendarControls = React.PropsWithChildren<unknown>
 
-export function Controls({
-  nextMonth,
-  prevMonth,
-  nextButton,
-  prevButton,
-}: Controls) {
-  const styles = useMultiStyleConfig('CalendarControl', {})
+export function CalendarControls({ children }: CalendarControls) {
+  const styles = useMultiStyleConfig(
+    'CalendarControl',
+    {}
+  ) as CalendarControlStyles
 
-  return (
-    <Flex sx={styles.controls}>
-      {prevButton ? (
-        prevButton({ onClick: prevMonth })
-      ) : (
-        <Button onClick={prevMonth} sx={styles.button}>
-          &#8592;
-        </Button>
-      )}
-
-      {nextButton ? (
-        nextButton({ onClick: nextMonth })
-      ) : (
-        <Button onClick={nextMonth} sx={styles.button}>
-          &#8594;
-        </Button>
-      )}
-    </Flex>
-  )
+  return <Flex sx={styles.controls}>{children}</Flex>
 }

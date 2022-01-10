@@ -1,72 +1,57 @@
-import { ReactNode, useEffect, useState } from 'react'
-import { Box, Grid, useMultiStyleConfig, Flex } from '@chakra-ui/react'
-import { isAfter, isBefore, isSameDay, isValid, Locale } from 'date-fns'
-import { Target } from './types'
-import type { CalendarDate, CalendarValues, Buttons } from './types'
-import { Month } from './month'
+import * as React from 'react'
+import { useMultiStyleConfig, Flex } from '@chakra-ui/react'
+import { CalendarContext } from './context'
 import { useCalendar } from './useCalendar'
-import { Controls } from './control'
+import { isAfter, isBefore, isSameDay, isValid, Locale } from 'date-fns'
+import { CalendarDate, CalendarStyles, CalendarValues, Target } from './types'
 
-export type Calendar = {
+export type Calendar = React.PropsWithChildren<{
   value: CalendarValues
-  singleMonth?: boolean
-  singleDateSelection?: boolean
+  onSelectDate: (value: CalendarDate | CalendarValues) => void
+  months?: number
   locale?: Locale
-  monthYearFormat?: string
-  weekdayFormat?: string
+  allowOutsideDays?: boolean
   disablePastDates?: boolean
   disableFutureDates?: boolean
   disableWeekends?: boolean
   disableDates?: CalendarDate[]
-  allowOutsideDays?: boolean
-  onSelectDate: (value: CalendarDate | CalendarValues) => void
-  nextButton?: Buttons
-  prevButton?: Buttons
-  children?: ReactNode
-}
+  singleDateSelection?: boolean
+  weekdayFormat?: string
+}>
 
 export function Calendar({
-  value,
-  singleMonth = false,
-  singleDateSelection = false,
-  locale,
-  monthYearFormat = 'MMMM, yyyy',
-  weekdayFormat = 'E',
-  disablePastDates = false,
-  disableFutureDates = false,
-  disableWeekends = false,
-  disableDates,
-  allowOutsideDays = false,
-  onSelectDate,
-  nextButton,
-  prevButton,
   children,
+  months,
+  value,
+  allowOutsideDays,
+  singleDateSelection,
+  disablePastDates,
+  disableFutureDates,
+  disableWeekends,
+  disableDates,
+  locale,
+  weekdayFormat,
+  onSelectDate,
 }: Calendar) {
-  const {
-    startDateDays,
-    endDateDays,
-    startDate,
-    endDate,
-    nextMonth,
-    prevMonth,
-    resetDate,
-  } = useCalendar({
-    allowOutsideDays: allowOutsideDays && singleMonth,
-    blockFuture: disableFutureDates,
+  const styles = useMultiStyleConfig('Calendar', {}) as CalendarStyles
+
+  const { resetDate, ...values } = useCalendar({
+    allowOutsideDays,
+    blockFuture: false,
     start: value?.start || new Date(),
+    months,
   })
 
-  const [target, setTarget] = useState<Target>(Target.START)
+  const [target, setTarget] = React.useState<Target>(Target.START)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isValid(value.start)) {
       resetDate()
     }
     // missing resetDate, adding resetDate causes to calendar
     // impossible to navigation through months.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value.start])
-
-  const styles = useMultiStyleConfig('Calendar', {})
 
   const selectDateHandler = (date: CalendarDate) => {
     if (singleDateSelection) {
@@ -98,53 +83,21 @@ export function Calendar({
   }
 
   return (
-    <Flex sx={styles.calendar}>
-      <Box position="relative">
-        <Controls
-          prevButton={prevButton}
-          nextButton={nextButton}
-          prevMonth={prevMonth}
-          nextMonth={nextMonth}
-        />
-
-        <Grid sx={styles.months}>
-          <Month
-            locale={locale}
-            startSelectedDate={value?.start}
-            endSelectedDate={value?.end}
-            value={value}
-            date={startDate}
-            days={startDateDays}
-            monthYearFormat={monthYearFormat}
-            weekdayFormat={weekdayFormat}
-            onSelectDate={selectDateHandler}
-            disablePastDates={disablePastDates}
-            disableFutureDates={disableFutureDates}
-            disableWeekends={disableWeekends}
-            disableDates={disableDates}
-          />
-
-          {!singleMonth ? (
-            <Month
-              locale={locale}
-              startSelectedDate={value?.start}
-              endSelectedDate={value?.end}
-              value={value}
-              date={endDate}
-              days={endDateDays}
-              monthYearFormat={monthYearFormat}
-              weekdayFormat={weekdayFormat}
-              onSelectDate={selectDateHandler}
-              disablePastDates={disablePastDates}
-              disableFutureDates={disableFutureDates}
-              disableWeekends={disableWeekends}
-              disableDates={disableDates}
-            />
-          ) : null}
-        </Grid>
-      </Box>
-
-      {children ? <Box>{children}</Box> : null}
-    </Flex>
+    <CalendarContext.Provider
+      value={{
+        ...values,
+        onSelectDates: selectDateHandler,
+        startSelectedDate: value?.start,
+        endSelectedDate: value?.end,
+        disableDates,
+        disableFutureDates,
+        disablePastDates,
+        disableWeekends,
+        locale,
+        weekdayFormat,
+      }}
+    >
+      <Flex sx={styles.calendar}>{children}</Flex>
+    </CalendarContext.Provider>
   )
 }
