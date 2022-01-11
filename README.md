@@ -41,7 +41,20 @@ export function App() {
   return (
     return (
       <ChakraProvider theme={CalendarDefaultTheme}>
-        <Calendar value={dates} onSelectDate={handleSelectDate} />
+        <Calendar value={dates} onSelectDate={handleSelectDate}>
+          <CalendarControls>
+            <CalendarPrevButton />
+            <CalendarNextButton />
+          </CalendarControls>
+
+          <CalendarMonths>
+            <CalendarMonth>
+              <CalendarMonthName />
+              <CalendarWeek />
+              <CalendarDays />
+            </CalendarMonth>
+          </CalendarMonths>
+        </Calendar>
       </ChakraProvider>
     )
   )

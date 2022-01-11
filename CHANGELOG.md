@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2022-01-10
+### Changed
+- Refactor the library to use compound components.
+
 ## [1.0.0] - 2021-12-13
 ### Added
 - Reset to current date if not selected on close
