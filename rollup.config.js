@@ -4,8 +4,7 @@ import typescript from '@rollup/plugin-typescript'
 import { terser } from 'rollup-plugin-terser'
 import external from 'rollup-plugin-peer-deps-external'
 import dts from 'rollup-plugin-dts'
-
-const config = require('./package.json')
+import config from './package.json'
 
 export default [
   {
