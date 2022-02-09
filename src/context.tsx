@@ -22,6 +22,7 @@ export type CalendarContext = {
   disableDates?: CalendarDate[]
   locale?: Locale
   weekdayFormat?: string
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
 }
 
 export const CalendarContext = React.createContext<CalendarContext>({
@@ -29,4 +30,5 @@ export const CalendarContext = React.createContext<CalendarContext>({
   nextMonth: () => null,
   prevMonth: () => null,
   onSelectDates: () => null,
+  weekStartsOn: 0,
 })
