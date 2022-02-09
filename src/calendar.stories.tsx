@@ -609,3 +609,26 @@ export const CustomContent: ComponentStory<typeof Calendar> = () => {
     </Calendar>
   )
 }
+
+export const StartWeekDay: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate} weekStartsOn={1}>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}

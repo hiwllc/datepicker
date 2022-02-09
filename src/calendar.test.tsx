@@ -396,25 +396,27 @@ test('should change a range date interval end before start and start after end',
 
   const START_INPUT = screen.getByPlaceholderText(/start date/i)
   const END_INPUT = screen.getByPlaceholderText(/end date/i)
+
   fireEvent.click(START_INPUT)
 
   const [HEADING_FIRST, HEADING_SECOND] = screen.getAllByRole('heading')
+
   expect(HEADING_FIRST).toHaveTextContent(CURRENT_CALENDAR_NAME)
   expect(HEADING_SECOND).toHaveTextContent(NEXT_CALENDAR_NAME)
 
   fireEvent.change(START_INPUT, { target: { value: '01/10/2022' } })
+
   expect(END_INPUT).toHaveFocus()
 
   fireEvent.change(END_INPUT, { target: { value: '02/05/2022' } })
 
   /** reopen calendar */
   fireEvent.click(END_INPUT)
+
   expect(END_INPUT).toHaveFocus()
 
-  const FIRST_HEADING = screen.getByRole('heading', {
-    name: CURRENT_CALENDAR_NAME,
-  })
-  const LAST_HEADING = screen.getByRole('heading', { name: NEXT_CALENDAR_NAME })
+  const FIRST_HEADING = screen.getByRole('heading', { name: 'January, 2022' })
+  const LAST_HEADING = screen.getByRole('heading', { name: 'February, 2022' })
 
   fireEvent.change(END_INPUT, { target: { value: '01/05/2022' } })
   expect(START_INPUT).toHaveValue('')

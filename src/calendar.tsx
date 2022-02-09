@@ -17,6 +17,7 @@ export type Calendar = React.PropsWithChildren<{
   disableDates?: CalendarDate[]
   singleDateSelection?: boolean
   weekdayFormat?: string
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
 }>
 
 export function Calendar({
@@ -32,6 +33,7 @@ export function Calendar({
   locale,
   weekdayFormat,
   onSelectDate,
+  weekStartsOn,
 }: Calendar) {
   const styles = useMultiStyleConfig('Calendar', {}) as CalendarStyles
 
@@ -40,6 +42,7 @@ export function Calendar({
     blockFuture: false,
     start: value?.start || new Date(),
     months,
+    weekStartsOn,
   })
 
   const [target, setTarget] = React.useState<Target>(Target.START)
@@ -95,6 +98,7 @@ export function Calendar({
         disableWeekends,
         locale,
         weekdayFormat,
+        weekStartsOn,
       }}
     >
       <Flex sx={styles.calendar}>{children}</Flex>
