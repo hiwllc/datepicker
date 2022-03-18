@@ -9,6 +9,17 @@
   "imageSize": 100,
   "commit": true,
   "commitConvention": "none",
-  "contributors": [],
-  "contributorsPerLine": 7
+  "contributors": [
+    {
+      "login": "uselessdev",
+      "name": "Wallace Batista",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6943919?v=4",
+      "profile": "https://iamwallace.dev",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
