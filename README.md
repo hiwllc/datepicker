@@ -17,8 +17,9 @@ You need to install [date-fns][1] and [chakra-ui][2] in order to use this librar
 
 ```bash
 yarn add date-fns
-yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4
 ```
+
+To install chakra-ui follow their [guide here](https://chakra-ui.com/guides/first-steps#framework-guide).
 
 ## Installation and Usage
 After install these dependencies you can now install the library and use this as below:
@@ -31,7 +32,18 @@ Before to use this you can create your own theme or use the default one.
 
 ```tsx
 import { ChakraProvider } from '@chakra-ui/react'
-import { Calendar, CalendarDefaultTheme } from '@uselessdev/datepicker'
+import {
+  Calendar,
+  CalendarDefaultTheme,
+  CalendarControls,
+  CalendarPrevButton,
+  CalendarNextButton,
+  CalendarMonths,
+  CalendarMonth,
+  CalendarMonthName,
+  CalendarWeek,
+  CalendarDays,
+} from '@uselessdev/datepicker'
 
 export function App() {
   const [dates, setDates] = useState()
