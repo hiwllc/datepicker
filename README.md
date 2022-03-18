@@ -1,6 +1,6 @@
 # Datepicker
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 A simple datepicker component build with [date-fns][1] and [Chakra-UI][2].
@@ -17,8 +17,9 @@ You need to install [date-fns][1] and [chakra-ui][2] in order to use this librar
 
 ```bash
 yarn add date-fns
-yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4
 ```
+
+To install chakra-ui follow their [guide here](https://chakra-ui.com/guides/first-steps#framework-guide).
 
 ## Installation and Usage
 After install these dependencies you can now install the library and use this as below:
@@ -31,7 +32,18 @@ Before to use this you can create your own theme or use the default one.
 
 ```tsx
 import { ChakraProvider } from '@chakra-ui/react'
-import { Calendar, CalendarDefaultTheme } from '@uselessdev/datepicker'
+import {
+  Calendar,
+  CalendarDefaultTheme,
+  CalendarControls,
+  CalendarPrevButton,
+  CalendarNextButton,
+  CalendarMonths,
+  CalendarMonth,
+  CalendarMonthName,
+  CalendarWeek,
+  CalendarDays,
+} from '@uselessdev/datepicker'
 
 export function App() {
   const [dates, setDates] = useState()
@@ -157,16 +169,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://iamwallace.dev"><img src="https://avatars2.githubusercontent.com/u/6943919?v=4" width="100px;" alt=""/><br /><sub><b>Wallace Batista</b></sub></a><br /><a href="#ideas-uselessdev" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/uselessdev/datepicker/commits?author=uselessdev" title="Code">💻</a></td></td>
-    <td align="center"><a href="http://htttp://www.leonardoelias.me"><img src="https://avatars.githubusercontent.com/u/1995213?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Leonardo Elias</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=leonardoelias" title="Code">💻</a></td>
-  </tr>
-</table>
-
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
