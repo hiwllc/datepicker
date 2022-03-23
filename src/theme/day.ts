@@ -52,6 +52,12 @@ export const CalendarDay: ComponentSingleStyleConfig = {
     outside: {
       color: 'gray.300',
     },
+    today: {
+      bgColor: 'pink.100',
+      _hover: {
+        bgColor: 'pink.200',
+      },
+    },
   },
 
   defaultProps: {

@@ -26,6 +26,7 @@ export function CalendarDays() {
     disableFutureDates,
     disablePastDates,
     disableWeekends,
+    highlightToday,
   } = React.useContext(CalendarContext)
   const { month } = React.useContext(MonthContext)
 
@@ -36,7 +37,7 @@ export function CalendarDays() {
           return <span key={`not-a-day-${index}`} />
         }
 
-        let variant: 'selected' | 'range' | 'outside' | undefined
+        let variant: 'selected' | 'range' | 'outside' | 'today' | undefined
 
         const isSelected =
           (startSelectedDate && isSameDay(day, startSelectedDate)) ||
@@ -52,6 +53,10 @@ export function CalendarDays() {
           !isSelected
         ) {
           variant = 'outside'
+        }
+
+        if (highlightToday && isSameDay(new Date(), day)) {
+          variant = 'today'
         }
 
         const interval =
