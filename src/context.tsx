@@ -23,6 +23,7 @@ export type CalendarContext = {
   locale?: Locale
   weekdayFormat?: string
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+  highlightToday?: boolean
 }
 
 export const CalendarContext = React.createContext<CalendarContext>({
