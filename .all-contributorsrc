@@ -37,6 +37,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ggteixeira",
+      "name": "Guilherme Teixeira ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24235344?v=4",
+      "profile": "http://guiteixeira.dev",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
