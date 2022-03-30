@@ -1,6 +1,6 @@
 {
   "name": "@uselessdev/datepicker",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "A simple react datepicker build with chakra-ui and date-fns",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -14,7 +14,8 @@
     "lint": "eslint ./src/**",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "yarn build"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
