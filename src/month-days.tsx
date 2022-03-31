@@ -76,8 +76,18 @@ export function CalendarDays() {
         }
 
         const isDisabled =
-          (disablePastDates && isBefore(day, new Date())) ||
-          (disableFutureDates && isAfter(day, new Date())) ||
+          (disablePastDates &&
+            isBefore(
+              day,
+              disablePastDates instanceof Date ? disablePastDates : new Date()
+            )) ||
+          (disableFutureDates &&
+            isAfter(
+              day,
+              disableFutureDates instanceof Date
+                ? disableFutureDates
+                : new Date()
+            )) ||
           (disableWeekends && isWeekend(day)) ||
           (disableDates && disableDates.some(date => isSameDay(day, date)))
 
