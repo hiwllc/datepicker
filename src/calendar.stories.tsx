@@ -106,6 +106,33 @@ export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
   )
 }
 
+export const DisablePastDatesFrom: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar
+      value={dates}
+      onSelectDate={handleSelectDate}
+      disablePastDates={subDays(new Date(), 2)}
+    >
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
 export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
   const [dates, setDates] = useState<CalendarValues>({})
 
@@ -113,6 +140,33 @@ export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
 
   return (
     <Calendar value={dates} onSelectDate={handleSelectDate} disableFutureDates>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const DisableFutureDatesFrom: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar
+      value={dates}
+      onSelectDate={handleSelectDate}
+      disableFutureDates={addDays(new Date(), 2)}
+    >
       <CalendarControls>
         <CalendarPrevButton />
         <CalendarNextButton />
