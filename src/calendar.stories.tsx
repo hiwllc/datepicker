@@ -708,3 +708,31 @@ export const HighlightToday: ComponentStory<typeof Calendar> = () => {
     </Calendar>
   )
 }
+
+export const WeekSelection: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar
+      value={dates}
+      onSelectDate={handleSelectDate}
+      allowOutsideDays
+      weekDateSelection
+    >
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
