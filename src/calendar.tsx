@@ -2,7 +2,15 @@ import * as React from 'react'
 import { useMultiStyleConfig, Flex } from '@chakra-ui/react'
 import { CalendarContext } from './context'
 import { useCalendar } from './useCalendar'
-import { isAfter, isBefore, isSameDay, isValid, Locale } from 'date-fns'
+import {
+  endOfWeek,
+  isAfter,
+  isBefore,
+  isSameDay,
+  isValid,
+  Locale,
+  startOfWeek,
+} from 'date-fns'
 import { CalendarDate, CalendarStyles, CalendarValues, Target } from './types'
 
 export type Calendar = React.PropsWithChildren<{
@@ -19,6 +27,7 @@ export type Calendar = React.PropsWithChildren<{
   weekdayFormat?: string
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   highlightToday?: boolean
+  weekDateSelection?: boolean
 }>
 
 export function Calendar({
@@ -35,6 +44,7 @@ export function Calendar({
   weekdayFormat,
   onSelectDate,
   weekStartsOn,
+  weekDateSelection,
   highlightToday,
 }: Calendar) {
   const styles = useMultiStyleConfig('Calendar', {}) as CalendarStyles
@@ -61,6 +71,10 @@ export function Calendar({
   const selectDateHandler = (date: CalendarDate) => {
     if (singleDateSelection) {
       return onSelectDate(date)
+    }
+
+    if (weekDateSelection) {
+      return onSelectDate({ start: startOfWeek(date), end: endOfWeek(date) })
     }
 
     if (
