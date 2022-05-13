@@ -55,6 +55,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "BasicPixel",
+      "name": "O. Qudah",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69857856?v=4",
+      "profile": "https://pixel.is-a.dev",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
