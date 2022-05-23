@@ -14,7 +14,7 @@ import {
   useOutsideClick,
   VStack,
 } from '@chakra-ui/react'
-import ptBR from 'date-fns/locale/pt-BR'
+import * as locales from 'date-fns/locale'
 
 import { Calendar } from './calendar'
 import { CalendarMonth } from './month'
@@ -55,7 +55,7 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const CustomLocale: ComponentStory<typeof Calendar> = () => {
+export const CustomLocale: ComponentStory<typeof Calendar> = ({ locale }) => {
   const [dates, setDates] = useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -64,7 +64,7 @@ export const CustomLocale: ComponentStory<typeof Calendar> = () => {
     <Calendar
       value={dates}
       onSelectDate={handleSelectDate}
-      locale={ptBR}
+      locale={locale}
       weekdayFormat="EEEEEE"
     >
       <CalendarControls>
@@ -81,6 +81,19 @@ export const CustomLocale: ComponentStory<typeof Calendar> = () => {
       </CalendarMonths>
     </Calendar>
   )
+}
+
+const mapping = Object.fromEntries(Object.entries(locales))
+
+CustomLocale.argTypes = {
+  locale: {
+    options: Object.keys(mapping),
+    mapping,
+  },
+}
+
+CustomLocale.args = {
+  locale: locales.ptBR,
 }
 
 export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
