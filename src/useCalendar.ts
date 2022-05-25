@@ -5,6 +5,7 @@ import {
   endOfMonth,
   endOfWeek,
   isSameMonth,
+  Locale,
   startOfMonth,
   startOfWeek,
   subMonths,
@@ -20,6 +21,7 @@ export type UseCalendar = {
   blockFuture?: boolean
   allowOutsideDays?: boolean
   months?: number
+  locale?: Locale
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
 }
 
@@ -28,6 +30,7 @@ export function useCalendar({
   months = 1,
   blockFuture,
   allowOutsideDays,
+  locale,
   weekStartsOn = 0,
 }: UseCalendar) {
   const initialState = blockFuture ? subMonths(start, 1) : start
@@ -45,8 +48,11 @@ export function useCalendar({
 
         const startDateOfMonth = startOfMonth(month)
         const endDateOfMonth = endOfMonth(month)
-        const startWeek = startOfWeek(startDateOfMonth, { weekStartsOn })
-        const endWeek = endOfWeek(endDateOfMonth, { weekStartsOn })
+        const startWeek = startOfWeek(startDateOfMonth, {
+          locale,
+          weekStartsOn,
+        })
+        const endWeek = endOfWeek(endDateOfMonth, { locale, weekStartsOn })
         const days = eachDayOfInterval({ start: startWeek, end: endWeek })
 
         return {

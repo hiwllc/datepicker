@@ -54,6 +54,7 @@ export function Calendar({
     blockFuture: false,
     start: value?.start || new Date(),
     months,
+    locale,
     weekStartsOn,
   })
 
