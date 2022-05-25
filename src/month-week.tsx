@@ -11,7 +11,7 @@ type Weekdays = {
 }
 
 function weekdays({ weekdayFormat = 'E', locale, weekStartsOn }: Weekdays) {
-  const start = startOfWeek(new Date(), { weekStartsOn })
+  const start = startOfWeek(new Date(), { locale, weekStartsOn })
   return [...Array(7).keys()].map(i =>
     format(addDays(start, i), weekdayFormat, { locale })
   )

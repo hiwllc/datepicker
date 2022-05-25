@@ -1,13 +1,14 @@
 import * as React from 'react'
 import {
-  endOfMonth,
-  startOfMonth,
-  eachDayOfInterval,
   addMonths,
-  startOfWeek,
-  isSameMonth,
-  subMonths,
+  eachDayOfInterval,
+  endOfMonth,
   endOfWeek,
+  isSameMonth,
+  Locale,
+  startOfMonth,
+  startOfWeek,
+  subMonths,
 } from 'date-fns'
 import type { CalendarDate } from './types'
 
@@ -20,6 +21,7 @@ export type UseCalendar = {
   blockFuture?: boolean
   allowOutsideDays?: boolean
   months?: number
+  locale?: Locale
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
 }
 
@@ -28,7 +30,8 @@ export function useCalendar({
   months = 1,
   blockFuture,
   allowOutsideDays,
-  weekStartsOn = 0,
+  locale,
+  weekStartsOn,
 }: UseCalendar) {
   const initialState = blockFuture ? subMonths(start, 1) : start
   const [date, setDate] = React.useState<CalendarDate>(initialState)
@@ -45,8 +48,11 @@ export function useCalendar({
 
         const startDateOfMonth = startOfMonth(month)
         const endDateOfMonth = endOfMonth(month)
-        const startWeek = startOfWeek(startDateOfMonth, { weekStartsOn })
-        const endWeek = endOfWeek(endDateOfMonth, { weekStartsOn })
+        const startWeek = startOfWeek(startDateOfMonth, {
+          locale,
+          weekStartsOn,
+        })
+        const endWeek = endOfWeek(endDateOfMonth, { locale, weekStartsOn })
         const days = eachDayOfInterval({ start: startWeek, end: endWeek })
 
         return {

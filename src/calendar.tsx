@@ -54,6 +54,7 @@ export function Calendar({
     blockFuture: false,
     start: value?.start || new Date(),
     months,
+    locale,
     weekStartsOn,
   })
 
@@ -74,7 +75,10 @@ export function Calendar({
     }
 
     if (weekDateSelection) {
-      return onSelectDate({ start: startOfWeek(date), end: endOfWeek(date) })
+      return onSelectDate({
+        start: startOfWeek(date, { locale, weekStartsOn }),
+        end: endOfWeek(date, { locale, weekStartsOn }),
+      })
     }
 
     if (
