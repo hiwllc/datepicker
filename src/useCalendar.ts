@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import * as React from 'react'
 import {
   endOfMonth,
   startOfMonth,
@@ -31,9 +31,9 @@ export function useCalendar({
   weekStartsOn = 0,
 }: UseCalendar) {
   const initialState = blockFuture ? subMonths(start, 1) : start
-  const [date, setDate] = useState<CalendarDate>(initialState)
+  const [date, setDate] = React.useState<CalendarDate>(initialState)
 
-  const actions = useMemo(
+  const actions = React.useMemo(
     function actionsFn() {
       const nextMonth = () => setDate(prevSet => addMonths(prevSet, 1))
       const prevMonth = () => setDate(prevSet => subMonths(prevSet, 1))
