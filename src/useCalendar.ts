@@ -31,7 +31,7 @@ export function useCalendar({
   blockFuture,
   allowOutsideDays,
   locale,
-  weekStartsOn = 0,
+  weekStartsOn,
 }: UseCalendar) {
   const initialState = blockFuture ? subMonths(start, 1) : start
   const [date, setDate] = React.useState<CalendarDate>(initialState)
