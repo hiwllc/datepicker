@@ -1,13 +1,13 @@
 import * as React from 'react'
 import {
-  endOfMonth,
-  startOfMonth,
-  eachDayOfInterval,
   addMonths,
-  startOfWeek,
-  isSameMonth,
-  subMonths,
+  eachDayOfInterval,
+  endOfMonth,
   endOfWeek,
+  isSameMonth,
+  startOfMonth,
+  startOfWeek,
+  subMonths,
 } from 'date-fns'
 import type { CalendarDate } from './types'
 
