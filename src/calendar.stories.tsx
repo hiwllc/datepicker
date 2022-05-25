@@ -1,5 +1,5 @@
+import * as React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { ChangeEvent, useRef, useState, useEffect } from 'react'
 import { addDays, format, isAfter, isBefore, isValid, subDays } from 'date-fns'
 import {
   Box,
@@ -33,7 +33,7 @@ export default {
 } as ComponentMeta<typeof Calendar>
 
 export const Basic: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -56,7 +56,7 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
 }
 
 export const CustomLocale: ComponentStory<typeof Calendar> = ({ locale }) => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -97,7 +97,7 @@ CustomLocale.args = {
 }
 
 export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -120,7 +120,7 @@ export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
 }
 
 export const DisablePastDatesFrom: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -147,7 +147,7 @@ export const DisablePastDatesFrom: ComponentStory<typeof Calendar> = () => {
 }
 
 export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -170,7 +170,7 @@ export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
 }
 
 export const DisableFutureDatesFrom: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -197,7 +197,7 @@ export const DisableFutureDatesFrom: ComponentStory<typeof Calendar> = () => {
 }
 
 export const DisableDates: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -233,7 +233,7 @@ export const DisableDates: ComponentStory<typeof Calendar> = () => {
 }
 
 export const DisableWeekends: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -256,7 +256,7 @@ export const DisableWeekends: ComponentStory<typeof Calendar> = () => {
 }
 
 export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -279,7 +279,7 @@ export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
 }
 
 export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
-  const [date, setDate] = useState<CalendarDate>()
+  const [date, setDate] = React.useState<CalendarDate>()
 
   const handleSelectDate = (date: CalendarDate) => setDate(date)
 
@@ -306,7 +306,7 @@ export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
 }
 
 export const CustomControlButtons: ComponentStory<typeof Calendar> = () => {
-  const [date, setDate] = useState<CalendarDate>()
+  const [date, setDate] = React.useState<CalendarDate>()
 
   const handleSelectDate = (date: CalendarDate) => setDate(date)
 
@@ -345,7 +345,7 @@ export const CustomControlButtons: ComponentStory<typeof Calendar> = () => {
 }
 
 export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const MONTHS = 2
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -371,13 +371,13 @@ export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
 }
 
 export const WithInputPopover: ComponentStory<typeof Calendar> = () => {
-  const [date, setDate] = useState<CalendarDate>()
-  const [value, setValue] = useState('')
+  const [date, setDate] = React.useState<CalendarDate>()
+  const [value, setValue] = React.useState('')
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const initialRef = useRef(null)
-  const calendarRef = useRef(null)
+  const initialRef = React.useRef(null)
+  const calendarRef = React.useRef(null)
 
   const handleSelectDate = (date: CalendarDate) => {
     setDate(date)
@@ -387,7 +387,9 @@ export const WithInputPopover: ComponentStory<typeof Calendar> = () => {
 
   const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
 
-  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>) => {
     setValue(target.value)
 
     if (match(target.value)) {
@@ -401,7 +403,7 @@ export const WithInputPopover: ComponentStory<typeof Calendar> = () => {
     enabled: isOpen,
   })
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (match(value)) {
       const date = new Date(value)
 
@@ -462,167 +464,172 @@ export const WithInputPopover: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const WithInputPopoverStartEndDates: ComponentStory<
-  typeof Calendar
-> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
-  const [values, setValues] = useState({
-    start: '',
-    end: '',
-  })
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
-  const initialRef = useRef(null)
-  const calendarRef = useRef(null)
-  const startInputRef = useRef<HTMLInputElement>(null)
-  const endInputRef = useRef<HTMLInputElement>(null)
-
-  const MONTHS = 2
-
-  const handleSelectDate = (dates: CalendarValues) => {
-    setDates(dates)
-
-    setValues({
-      start: isValid(dates.start)
-        ? format(dates.start as Date, 'MM/dd/yyyy')
-        : '',
-      end: isValid(dates.end) ? format(dates.end as Date, 'MM/dd/yyyy') : '',
+export const WithInputPopoverStartEndDates: ComponentStory<typeof Calendar> =
+  () => {
+    const [dates, setDates] = React.useState<CalendarValues>({})
+    const [values, setValues] = React.useState({
+      start: '',
+      end: '',
     })
 
-    if (dates.end) {
-      onClose()
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const initialRef = React.useRef(null)
+    const calendarRef = React.useRef(null)
+    const startInputRef = React.useRef<HTMLInputElement>(null)
+    const endInputRef = React.useRef<HTMLInputElement>(null)
+
+    const MONTHS = 2
+
+    const handleSelectDate = (dates: CalendarValues) => {
+      setDates(dates)
+
+      setValues({
+        start: isValid(dates.start)
+          ? format(dates.start as Date, 'MM/dd/yyyy')
+          : '',
+        end: isValid(dates.end) ? format(dates.end as Date, 'MM/dd/yyyy') : '',
+      })
+
+      if (dates.end) {
+        onClose()
+      }
     }
-  }
 
-  const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
+    const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
 
-  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setValues({
-      ...values,
-      [target.name]: target.value,
+    const handleInputChange = ({
+      target,
+    }: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({
+        ...values,
+        [target.name]: target.value,
+      })
+
+      if (
+        target.name === 'start' &&
+        match(target.value) &&
+        endInputRef.current
+      ) {
+        endInputRef.current.focus()
+      }
+    }
+
+    useOutsideClick({
+      ref: calendarRef,
+      handler: onClose,
+      enabled: isOpen,
     })
 
-    if (target.name === 'start' && match(target.value) && endInputRef.current) {
-      endInputRef.current.focus()
-    }
-  }
+    React.useEffect(() => {
+      if (match(values.start)) {
+        const startDate = new Date(values.start)
+        const isValidStartDate = isValid(startDate)
+        const isAfterEndDate = dates.end && isAfter(startDate, dates.end)
 
-  useOutsideClick({
-    ref: calendarRef,
-    handler: onClose,
-    enabled: isOpen,
-  })
+        if (isValidStartDate && isAfterEndDate) {
+          setValues({ ...values, end: '' })
+          return setDates({ end: undefined, start: startDate })
+        }
 
-  useEffect(() => {
-    if (match(values.start)) {
-      const startDate = new Date(values.start)
-      const isValidStartDate = isValid(startDate)
-      const isAfterEndDate = dates.end && isAfter(startDate, dates.end)
-
-      if (isValidStartDate && isAfterEndDate) {
-        setValues({ ...values, end: '' })
-        return setDates({ end: undefined, start: startDate })
+        return setDates({ ...dates, start: startDate })
       }
+    }, [values.start])
 
-      return setDates({ ...dates, start: startDate })
-    }
-  }, [values.start])
+    React.useEffect(() => {
+      if (match(values.end)) {
+        const endDate = new Date(values.end)
+        const isValidEndDate = isValid(endDate)
+        const isBeforeStartDate = dates.start && isBefore(endDate, dates.start)
 
-  useEffect(() => {
-    if (match(values.end)) {
-      const endDate = new Date(values.end)
-      const isValidEndDate = isValid(endDate)
-      const isBeforeStartDate = dates.start && isBefore(endDate, dates.start)
+        if (isValidEndDate && isBeforeStartDate) {
+          setValues({ ...values, start: '' })
 
-      if (isValidEndDate && isBeforeStartDate) {
-        setValues({ ...values, start: '' })
+          startInputRef.current?.focus()
 
-        startInputRef.current?.focus()
+          return setDates({ start: undefined, end: endDate })
+        }
 
-        return setDates({ start: undefined, end: endDate })
+        onClose()
+        return setDates({ ...dates, end: endDate })
       }
+    }, [values.end])
 
-      onClose()
-      return setDates({ ...dates, end: endDate })
-    }
-  }, [values.end])
-
-  return (
-    <Box minH="400px">
-      <Popover
-        placement="auto-start"
-        isOpen={isOpen}
-        onClose={onClose}
-        initialFocusRef={initialRef}
-        isLazy
-      >
-        <PopoverTrigger>
-          <Flex
-            w="400px"
-            borderWidth={1}
-            rounded="md"
-            p={2}
-            onClick={onOpen}
-            ref={initialRef}
-          >
-            <Input
-              variant="unstyled"
-              name="start"
-              placeholder="MM/dd/yyyy"
-              value={values.start}
-              onChange={handleInputChange}
-              ref={startInputRef}
-            />
-            <Input
-              variant="unstyled"
-              name="end"
-              placeholder="MM/dd/yyyy"
-              value={values.end}
-              onChange={handleInputChange}
-              ref={endInputRef}
-            />
-          </Flex>
-        </PopoverTrigger>
-
-        <PopoverContent
-          p={0}
-          w="min-content"
-          border="none"
-          outline="none"
-          _focus={{ boxShadow: 'none' }}
-          ref={calendarRef}
+    return (
+      <Box minH="400px">
+        <Popover
+          placement="auto-start"
+          isOpen={isOpen}
+          onClose={onClose}
+          initialFocusRef={initialRef}
+          isLazy
         >
-          <Calendar
-            value={dates}
-            onSelectDate={handleSelectDate}
-            months={MONTHS}
-          >
-            <PopoverBody p={0}>
-              <CalendarControls>
-                <CalendarPrevButton />
-                <CalendarNextButton />
-              </CalendarControls>
+          <PopoverTrigger>
+            <Flex
+              w="400px"
+              borderWidth={1}
+              rounded="md"
+              p={2}
+              onClick={onOpen}
+              ref={initialRef}
+            >
+              <Input
+                variant="unstyled"
+                name="start"
+                placeholder="MM/dd/yyyy"
+                value={values.start}
+                onChange={handleInputChange}
+                ref={startInputRef}
+              />
+              <Input
+                variant="unstyled"
+                name="end"
+                placeholder="MM/dd/yyyy"
+                value={values.end}
+                onChange={handleInputChange}
+                ref={endInputRef}
+              />
+            </Flex>
+          </PopoverTrigger>
 
-              <CalendarMonths>
-                {[...Array(MONTHS).keys()].map(m => (
-                  <CalendarMonth key={m} month={m}>
-                    <CalendarMonthName />
-                    <CalendarWeek />
-                    <CalendarDays />
-                  </CalendarMonth>
-                ))}
-              </CalendarMonths>
-            </PopoverBody>
-          </Calendar>
-        </PopoverContent>
-      </Popover>
-    </Box>
-  )
-}
+          <PopoverContent
+            p={0}
+            w="min-content"
+            border="none"
+            outline="none"
+            _focus={{ boxShadow: 'none' }}
+            ref={calendarRef}
+          >
+            <Calendar
+              value={dates}
+              onSelectDate={handleSelectDate}
+              months={MONTHS}
+            >
+              <PopoverBody p={0}>
+                <CalendarControls>
+                  <CalendarPrevButton />
+                  <CalendarNextButton />
+                </CalendarControls>
+
+                <CalendarMonths>
+                  {[...Array(MONTHS).keys()].map(m => (
+                    <CalendarMonth key={m} month={m}>
+                      <CalendarMonthName />
+                      <CalendarWeek />
+                      <CalendarDays />
+                    </CalendarMonth>
+                  ))}
+                </CalendarMonths>
+              </PopoverBody>
+            </Calendar>
+          </PopoverContent>
+        </Popover>
+      </Box>
+    )
+  }
 
 export const CustomContent: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -678,7 +685,7 @@ export const CustomContent: ComponentStory<typeof Calendar> = () => {
 }
 
 export const StartWeekDay: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -701,7 +708,7 @@ export const StartWeekDay: ComponentStory<typeof Calendar> = () => {
 }
 
 export const HighlightToday: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return (
@@ -723,7 +730,7 @@ export const HighlightToday: ComponentStory<typeof Calendar> = () => {
 }
 
 export const WeekSelection: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = useState<CalendarValues>({})
+  const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 

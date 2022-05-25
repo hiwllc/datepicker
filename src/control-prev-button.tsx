@@ -1,5 +1,5 @@
+import * as React from 'react'
 import { Button, useMultiStyleConfig } from '@chakra-ui/react'
-import { useContext } from 'react'
 import { CalendarContext } from './context'
 import { CalendarControlStyles } from './types'
 
@@ -12,7 +12,7 @@ export function CalendarPrevButton({ as }: CalendarPrevButton) {
     'CalendarControl',
     {}
   ) as CalendarControlStyles
-  const { prevMonth } = useContext(CalendarContext)
+  const { prevMonth } = React.useContext(CalendarContext)
 
   if (as) {
     return as({ onClick: prevMonth })
