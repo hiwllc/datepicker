@@ -76,8 +76,8 @@ export function Calendar({
 
     if (weekDateSelection) {
       return onSelectDate({
-        start: startOfWeek(date, { locale }),
-        end: endOfWeek(date, { locale }),
+        start: startOfWeek(date, { locale, weekStartsOn }),
+        end: endOfWeek(date, { locale, weekStartsOn }),
       })
     }
 
