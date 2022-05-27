@@ -56,7 +56,7 @@
     "typescript": "^4.4.4"
   },
   "peerDependencies": {
-    "@chakra-ui/react": "^1.8.6",
+    "@chakra-ui/react": "^1.8.6 || ^2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "date-fns": "^2.25.0",
