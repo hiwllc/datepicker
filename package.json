@@ -61,7 +61,7 @@
     "@emotion/styled": "^11",
     "date-fns": "^2.25.0",
     "framer-motion": "^6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^17.0.2 || ^18",
+    "react-dom": "^17.0.2 || ^18"
   }
 }
