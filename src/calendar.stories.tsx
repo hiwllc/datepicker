@@ -4,6 +4,7 @@ import { addDays, format, isAfter, isBefore, isValid, subDays } from 'date-fns'
 import {
   Box,
   Button,
+  Circle,
   Flex,
   Input,
   Popover,
@@ -751,6 +752,39 @@ export const WeekSelection: ComponentStory<typeof Calendar> = () => {
           <CalendarMonthName />
           <CalendarWeek />
           <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const WithCustomDayRender: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = React.useState<CalendarValues>({})
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate}>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays
+            render={args =>
+              new Date(args.day).getDate() < 8 ? (
+                <Box d="flex" flexDirection="column" alignItems="center">
+                  <div>{format(args.day, 'd')}</div>
+                  <Circle size="4px" bgColor="pink.300" />
+                </Box>
+              ) : (
+                format(args.day, 'd')
+              )
+            }
+          />
         </CalendarMonth>
       </CalendarMonths>
     </Calendar>
