@@ -15,7 +15,7 @@ import { CalendarContext } from './context'
 import { Day } from './day'
 import { MonthContext } from './month'
 
-export function CalendarDays() {
+export function CalendarDays({render}: Pick<Day, "render">) {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
   const {
     dates,
@@ -98,6 +98,7 @@ export function CalendarDays() {
             key={format(day, 'd-M')}
             disabled={isDisabled}
             onSelectDate={onSelectDates}
+            render={render}
           />
         )
       })}

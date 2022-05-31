@@ -3,16 +3,20 @@ import format from 'date-fns/format'
 import { Button, useStyleConfig } from '@chakra-ui/react'
 import { CalendarDate } from './types'
 
-export type Day = React.PropsWithChildren<{
+export interface Day extends React.PropsWithChildren<{
   day: CalendarDate
   variant?: 'selected' | 'range' | 'outside' | 'today'
   disabled?: boolean
   onSelectDate: (date: CalendarDate) => void
-}>
+}> {
+  render?: (args: Omit<Day, "render">) => React.ReactNode;
+}
 
-export function Day({ day, variant, disabled, onSelectDate }: Day) {
+
+export function Day({ day, variant, disabled, onSelectDate,render }: Day) {
   const styles = useStyleConfig('CalendarDay', { variant })
   // console.log({ variant, day })
+
 
   return (
     <Button
@@ -22,7 +26,7 @@ export function Day({ day, variant, disabled, onSelectDate }: Day) {
       isDisabled={disabled}
       aria-current={variant === 'selected' ? 'date' : false}
     >
-      {format(day, 'd')}
+      {render ? render({ day, variant, disabled, onSelectDate }) : format(day, "d")}
     </Button>
   )
 }
