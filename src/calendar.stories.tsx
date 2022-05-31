@@ -4,12 +4,14 @@ import { addDays, format, isAfter, isBefore, isValid, subDays } from 'date-fns'
 import {
   Box,
   Button,
+  extendTheme,
   Flex,
   Input,
   Popover,
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  ThemeProvider,
   useDisclosure,
   useOutsideClick,
   VStack,
@@ -26,6 +28,7 @@ import { CalendarControls } from './control'
 import { CalendarNextButton } from './control-next-button'
 import { CalendarPrevButton } from './control-prev-button'
 import { CalendarDate, CalendarValues } from './types'
+import { theme } from './theme'
 
 export default {
   title: 'Calendar',
@@ -754,5 +757,45 @@ export const WeekSelection: ComponentStory<typeof Calendar> = () => {
         </CalendarMonth>
       </CalendarMonths>
     </Calendar>
+  )
+}
+
+export const WithCustomVariant: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = React.useState<CalendarValues>({})
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <ThemeProvider
+      theme={extendTheme(theme, {
+        components: {
+          CalendarDay: {
+            variants: {
+              'first-week': {
+                color: 'pink.300',
+              },
+            },
+          },
+        },
+      })}
+    >
+      <Calendar value={dates} onSelectDate={handleSelectDate}>
+        <CalendarControls>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarControls>
+
+        <CalendarMonths>
+          <CalendarMonth>
+            <CalendarMonthName />
+            <CalendarWeek />
+            <CalendarDays
+              getVariant={args =>
+                new Date(args.day).getDate() < 8 ? 'first-week' : args.variant
+              }
+            />
+          </CalendarMonth>
+        </CalendarMonths>
+      </Calendar>
+    </ThemeProvider>
   )
 }

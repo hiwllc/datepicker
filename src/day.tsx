@@ -5,10 +5,15 @@ import { CalendarDate } from './types'
 
 export type Day = React.PropsWithChildren<{
   day: CalendarDate
-  variant?: 'selected' | 'range' | 'outside' | 'today'
+  variant?: DayVariant
   disabled?: boolean
   onSelectDate: (date: CalendarDate) => void
 }>
+
+
+type LiteralUnion<T extends U, U = string> = T | (U & {});
+export type DayVariant = LiteralUnion<"selected" | "range" | "outside" | "today"> | undefined;
+
 
 export function Day({ day, variant, disabled, onSelectDate }: Day) {
   const styles = useStyleConfig('CalendarDay', { variant })

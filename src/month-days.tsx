@@ -10,12 +10,16 @@ import {
   isWeekend,
   startOfMonth,
 } from 'date-fns'
-import type { CalendarMonthStyles } from './types'
+import type { CalendarDate, CalendarMonthStyles } from './types'
 import { CalendarContext } from './context'
-import { Day } from './day'
+import { Day, DayVariant } from './day'
 import { MonthContext } from './month'
 
-export function CalendarDays() {
+export function CalendarDays({
+  getVariant,
+}: {
+  getVariant?: (args: GetVariantArgs) => DayVariant
+}) {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
   const {
     dates,
@@ -37,11 +41,12 @@ export function CalendarDays() {
           return <span key={`not-a-day-${index}`} />
         }
 
-        let variant: 'selected' | 'range' | 'outside' | 'today' | undefined
+        let variant: DayVariant
 
-        const isSelected =
+        const isSelected = Boolean(
           (startSelectedDate && isSameDay(day, startSelectedDate)) ||
-          (endSelectedDate && isSameDay(day, endSelectedDate))
+            (endSelectedDate && isSameDay(day, endSelectedDate))
+        )
 
         if (isSelected) {
           variant = 'selected'
@@ -59,13 +64,12 @@ export function CalendarDays() {
           variant = 'today'
         }
 
-        const interval =
-          startSelectedDate &&
+        const interval = (startSelectedDate &&
           endSelectedDate &&
           eachDayOfInterval({
             start: startSelectedDate,
             end: endSelectedDate,
-          })
+          })) as Date[]
 
         const isInRange = interval
           ? interval.some(date => isSameDay(day, date))
@@ -75,27 +79,42 @@ export function CalendarDays() {
           variant = 'range'
         }
 
-        const isDisabled =
+        const isDisabled = Boolean(
           (disablePastDates &&
             isBefore(
               day,
               disablePastDates instanceof Date ? disablePastDates : new Date()
             )) ||
-          (disableFutureDates &&
-            isAfter(
-              day,
-              disableFutureDates instanceof Date
-                ? disableFutureDates
-                : new Date()
-            )) ||
-          (disableWeekends && isWeekend(day)) ||
-          (disableDates && disableDates.some(date => isSameDay(day, date)))
+            (disableFutureDates &&
+              isAfter(
+                day,
+                disableFutureDates instanceof Date
+                  ? disableFutureDates
+                  : new Date()
+              )) ||
+            (disableWeekends && isWeekend(day)) ||
+            (disableDates && disableDates.some(date => isSameDay(day, date)))
+        )
+
+        const key = format(day, 'd-M')
+        if (getVariant) {
+          variant = getVariant({
+            day,
+            index,
+            key,
+            interval,
+            isDisabled,
+            isSelected,
+            isInRange,
+            variant,
+          })
+        }
 
         return (
           <Day
-            variant={variant}
+            variant={variant as Day['variant']}
             day={day}
-            key={format(day, 'd-M')}
+            key={key}
             disabled={isDisabled}
             onSelectDate={onSelectDates}
           />
@@ -103,4 +122,15 @@ export function CalendarDays() {
       })}
     </Grid>
   )
+}
+
+export interface GetVariantArgs {
+  day: CalendarDate
+  index: number
+  key: string
+  interval: Date[]
+  isDisabled: boolean
+  isSelected: boolean
+  isInRange: boolean
+  variant: DayVariant
 }
