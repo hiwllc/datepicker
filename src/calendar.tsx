@@ -81,13 +81,6 @@ export function Calendar({
       })
     }
 
-    if (
-      (value.start && isSameDay(date, value.start)) ||
-      (value.end && isSameDay(date, value.end))
-    ) {
-      return
-    }
-
     if (value.start && isBefore(date, value.start)) {
       return onSelectDate({ ...value, start: date })
     }
