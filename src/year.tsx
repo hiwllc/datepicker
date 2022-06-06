@@ -5,23 +5,21 @@ import { CalendarContext } from './context'
 import { MonthContext } from './month'
 import { CalendarYearStyles } from './types'
 
-export type CalendarYearName = {
+export type CalendarYear = {
   format?: string
 }
 
-export function CalendarYearName({
+export function CalendarYear({
   format = 'yyyy',
-}: CalendarYearName) {
+}: CalendarYear) {
   const styles = useMultiStyleConfig('CalendarYear', {}) as CalendarYearStyles
   const { dates, locale } = React.useContext(CalendarContext)
   const { month } = React.useContext(MonthContext)
 
-  console.log("styles", styles)
-
   const currentMonth = dates[Number(month)].startDateOfMonth
 
   return (
-    <Heading sx={styles.name}>
+    <Heading sx={styles.year}>
       {dateFormat(currentMonth, format, { locale })}
     </Heading>
   )

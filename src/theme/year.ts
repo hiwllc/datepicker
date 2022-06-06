@@ -1,10 +1,10 @@
 import { ComponentMultiStyleConfig } from '@chakra-ui/react'
 
 export const CalendarYear: ComponentMultiStyleConfig = {
-  parts: ['name'],
+  parts: ['year'],
 
   baseStyle: {
-    name: {
+    year: {
       h: 8,
       fontSize: 'md',
       lineHeight: 6,
@@ -14,7 +14,7 @@ export const CalendarYear: ComponentMultiStyleConfig = {
   },
 
   defaultProps: {
-    name: {
+    year: {
       as: 'h2',
     },
   },
