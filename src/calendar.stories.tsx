@@ -25,6 +25,7 @@ import { CalendarMonthName } from './month-name'
 import { CalendarWeek } from './month-week'
 import { CalendarMonths } from './months'
 import { CalendarDate, CalendarValues } from './types'
+import { CalendarYearName } from './year-name'
 
 
 export default {
@@ -769,6 +770,7 @@ export const ChangeYear: ComponentStory<typeof Calendar> = () => {
 
     <Flex p={4} pb={0} justifyContent="space-between">
       <CalendarPrevButton year />
+      <CalendarYearName />
         <CalendarNextButton year />
       </Flex>
 
@@ -780,8 +782,9 @@ export const ChangeYear: ComponentStory<typeof Calendar> = () => {
       </CalendarControls>
 
       <CalendarMonths>
-        <CalendarMonth>
-          <CalendarMonthName />
+        <CalendarMonth >
+         
+          <CalendarMonthName format="MMMM" />
           <CalendarWeek />
           <CalendarDays />
         </CalendarMonth>
