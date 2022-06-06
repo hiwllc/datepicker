@@ -1,6 +1,6 @@
-import * as React from 'react'
 import {
   addMonths,
+  addYears,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
@@ -9,7 +9,9 @@ import {
   startOfMonth,
   startOfWeek,
   subMonths,
+  subYears
 } from 'date-fns'
+import * as React from 'react'
 import type { CalendarDate } from './types'
 
 function replaceOutMonthDays(days: CalendarDate[], date: CalendarDate) {
@@ -41,6 +43,9 @@ export function useCalendar({
       const nextMonth = () => setDate(prevSet => addMonths(prevSet, 1))
       const prevMonth = () => setDate(prevSet => subMonths(prevSet, 1))
 
+      const nextYear = () => setDate(prevSet => addYears(prevSet, 1))
+      const prevYear = () => setDate(prevSet => subYears(prevSet, 1))
+
       const resetDate = () => setDate(initialState)
 
       const dates = [...Array(months).keys()].map(i => {
@@ -67,6 +72,8 @@ export function useCalendar({
       return {
         nextMonth,
         prevMonth,
+        nextYear,
+        prevYear,
         resetDate,
         dates,
       }

@@ -1,6 +1,3 @@
-import * as React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { addDays, format, isAfter, isBefore, isValid, subDays } from 'date-fns'
 import {
   Box,
   Button,
@@ -12,20 +9,23 @@ import {
   PopoverTrigger,
   useDisclosure,
   useOutsideClick,
-  VStack,
+  VStack
 } from '@chakra-ui/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { addDays, format, isAfter, isBefore, isValid, subDays } from 'date-fns'
 import * as locales from 'date-fns/locale'
-
+import * as React from 'react'
 import { Calendar } from './calendar'
+import { CalendarControls } from './control'
+import { CalendarNextButton } from './control-next-button'
+import { CalendarPrevButton } from './control-prev-button'
 import { CalendarMonth } from './month'
 import { CalendarDays } from './month-days'
 import { CalendarMonthName } from './month-name'
 import { CalendarWeek } from './month-week'
 import { CalendarMonths } from './months'
-import { CalendarControls } from './control'
-import { CalendarNextButton } from './control-next-button'
-import { CalendarPrevButton } from './control-prev-button'
 import { CalendarDate, CalendarValues } from './types'
+
 
 export default {
   title: 'Calendar',
@@ -713,6 +713,7 @@ export const HighlightToday: ComponentStory<typeof Calendar> = () => {
 
   return (
     <Calendar value={dates} onSelectDate={handleSelectDate} highlightToday>
+      
       <CalendarControls>
         <CalendarPrevButton />
         <CalendarNextButton />
@@ -753,6 +754,46 @@ export const WeekSelection: ComponentStory<typeof Calendar> = () => {
           <CalendarDays />
         </CalendarMonth>
       </CalendarMonths>
+    </Calendar>
+  )
+}
+export const ChangeYear: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = React.useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate}>
+    
+    <Box>
+
+    <Flex p={4} pb={0} justifyContent="space-between">
+      <CalendarPrevButton year />
+        <CalendarNextButton year />
+      </Flex>
+
+<Box>
+<CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+     
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+</Box>
+
+    </Box>
+
+   
+
+
+     
     </Calendar>
   )
 }
