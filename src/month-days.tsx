@@ -23,10 +23,11 @@ export function CalendarDays({ children }: CalendarDayProps) {
   return (
     <Grid sx={styles.days}>
       {dates[Number(month)].days.map((day, index) => (
-        <DayContext.Provider value={{ day }}>
-          <CalendarDay key={day ? format(day, 'd-M') : `not-a-day-${index}`}>
-            {children}
-          </CalendarDay>
+        <DayContext.Provider
+          value={{ day }}
+          key={day ? format(day, 'd-M') : `not-a-day-${index}`}
+        >
+          <CalendarDay>{children}</CalendarDay>
         </DayContext.Provider>
       ))}
     </Grid>

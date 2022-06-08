@@ -6,7 +6,6 @@ import {
   Button,
   Circle,
   Flex,
-  Grid,
   Input,
   Popover,
   PopoverBody,
@@ -21,7 +20,13 @@ import * as locales from 'date-fns/locale'
 
 import { Calendar } from './calendar'
 import { CalendarMonth, MonthContext } from './month'
-import { CalendarDay, CalendarDayProps, CalendarDays, DayContext, useCalendarDay } from './month-days'
+import {
+  CalendarDay,
+  CalendarDayProps,
+  CalendarDays,
+  DayContext,
+  useCalendarDay,
+} from './month-days'
 import { CalendarMonthName } from './month-name'
 import { CalendarWeek } from './month-week'
 import { CalendarMonths } from './months'
@@ -822,10 +827,11 @@ function CustomCalendarDaysGrid({ children }: CalendarDayProps) {
   return (
     <SimpleGrid columns={4} width="300px">
       {dates[Number(month)].days.map((day, index) => (
-        <DayContext.Provider value={{ day }}>
-          <CalendarDay key={day ? format(day, 'd-M') : `not-a-day-${index}`}>
-            {children}
-          </CalendarDay>
+        <DayContext.Provider
+          value={{ day }}
+          key={day ? format(day, 'd-M') : `not-a-day-${index}`}
+        >
+          <CalendarDay>{children}</CalendarDay>
         </DayContext.Provider>
       ))}
     </SimpleGrid>
@@ -854,11 +860,9 @@ export const CustomDaysGridComponent: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-
 function CustomDay() {
   const { day, variant, isDisabled, onSelectDates } = useCalendarDay()
-  if (!day)
-    return <span />
+  if (!day) return <span />
 
   return (
     <Day
