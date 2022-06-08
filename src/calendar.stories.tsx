@@ -9,7 +9,7 @@ import {
   PopoverTrigger,
   useDisclosure,
   useOutsideClick,
-  VStack
+  VStack,
 } from '@chakra-ui/react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { addDays, format, isAfter, isBefore, isValid, subDays } from 'date-fns'
@@ -26,7 +26,6 @@ import { CalendarWeek } from './month-week'
 import { CalendarMonths } from './months'
 import { CalendarDate, CalendarValues } from './types'
 import { CalendarYear } from './year'
-
 
 export default {
   title: 'Calendar',
@@ -764,39 +763,27 @@ export const ChangeYear: ComponentStory<typeof Calendar> = () => {
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return (
-    <Calendar value={dates} onSelectDate={handleSelectDate}>
-    
-    <Box>
-
-    <Flex p={4} pb={0} justifyContent="space-between">
-      <CalendarPrevButton year />
-      <CalendarYear />
-        <CalendarNextButton year />
-      </Flex>
-
-<Box>
-<CalendarControls>
-        <CalendarPrevButton />
-        <CalendarNextButton />
-     
-      </CalendarControls>
-
-      <CalendarMonths>
-        <CalendarMonth >
-         
-          <CalendarMonthName format="MMMM" />
-          <CalendarWeek />
-          <CalendarDays />
-        </CalendarMonth>
-      </CalendarMonths>
-</Box>
-
-    </Box>
-
-   
-
-
-     
+    <Calendar value={dates} onSelectDate={handleSelectDate}> 
+      <Box>
+        <Flex p={4} pb={0} justifyContent="space-between">
+          <CalendarPrevButton year />
+          <CalendarYear />
+            <CalendarNextButton year />
+         </Flex>
+         <Box>
+          <CalendarControls>
+            <CalendarPrevButton />
+            <CalendarNextButton />  
+          </CalendarControls>
+          <CalendarMonths>
+            <CalendarMonth>
+              <CalendarMonthName format="MMMM" />
+              <CalendarWeek />
+              <CalendarDays />
+            </CalendarMonth>
+          </CalendarMonths>
+        </Box>
+      </Box>
     </Calendar>
   )
 }
