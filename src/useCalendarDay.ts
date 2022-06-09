@@ -36,6 +36,10 @@ export function useCalendarDay() {
 
   let variant: 'selected' | 'range' | 'outside' | 'today' | undefined
 
+  if (highlightToday && isSameDay(new Date(), day)) {
+    variant = 'today'
+  }
+
   const isSelected =
     (startSelectedDate && isSameDay(day, startSelectedDate)) ||
     (endSelectedDate && isSameDay(day, endSelectedDate))
@@ -50,10 +54,6 @@ export function useCalendarDay() {
     !isSelected
   ) {
     variant = 'outside'
-  }
-
-  if (highlightToday && isSameDay(new Date(), day)) {
-    variant = 'today'
   }
 
   const interval =
