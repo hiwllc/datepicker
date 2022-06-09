@@ -19,9 +19,8 @@ function weekdays({ weekdayFormat = 'E', locale, weekStartsOn }: Weekdays) {
 
 export function CalendarWeek() {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
-  const { locale, weekdayFormat, weekStartsOn } = React.useContext(
-    CalendarContext
-  )
+  const { locale, weekdayFormat, weekStartsOn } =
+    React.useContext(CalendarContext)
   const week = weekdays({ weekdayFormat, locale, weekStartsOn })
 
   return (
