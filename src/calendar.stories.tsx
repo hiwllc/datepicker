@@ -11,7 +11,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  SimpleGrid,
+  Text,
   useDisclosure,
   useOutsideClick,
   VStack,
@@ -19,14 +19,8 @@ import {
 import * as locales from 'date-fns/locale'
 
 import { Calendar } from './calendar'
-import { CalendarMonth, MonthContext } from './month'
-import {
-  CalendarDay,
-  CalendarDayProps,
-  CalendarDays,
-  DayContext,
-  useCalendarDay,
-} from './month-days'
+import { CalendarMonth } from './month'
+import { CalendarDays } from './month-days'
 import { CalendarMonthName } from './month-name'
 import { CalendarWeek } from './month-week'
 import { CalendarMonths } from './months'
@@ -34,8 +28,7 @@ import { CalendarControls } from './control'
 import { CalendarNextButton } from './control-next-button'
 import { CalendarPrevButton } from './control-prev-button'
 import { CalendarDate, CalendarValues } from './types'
-import { Day } from './day'
-import { CalendarContext } from './context'
+import { useCalendarDay } from './useCalendarDay'
 
 export default {
   title: 'Calendar',
@@ -764,125 +757,50 @@ export const WeekSelection: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const CalendarDaysChildren: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = React.useState<CalendarValues>({})
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar value={dates} onSelectDate={handleSelectDate}>
-      <CalendarControls>
-        <CalendarPrevButton />
-        <CalendarNextButton />
-      </CalendarControls>
-
-      <CalendarMonths>
-        <CalendarMonth>
-          <CalendarMonthName />
-          <CalendarWeek />
-          <CalendarDays>
-            {({ day }) =>
-              day ? (
-                <span style={{ color: 'teal' }}>{format(day, 'd')}</span>
-              ) : (
-                <span />
-              )
-            }
-          </CalendarDays>
-        </CalendarMonth>
-      </CalendarMonths>
-    </Calendar>
-  )
-}
-
-export const CalendarDayChildren: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = React.useState<CalendarValues>({})
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar value={dates} onSelectDate={handleSelectDate}>
-      <CalendarControls>
-        <CalendarPrevButton />
-        <CalendarNextButton />
-      </CalendarControls>
-
-      <CalendarMonths>
-        <CalendarMonth>
-          <CalendarMonthName />
-          <CalendarWeek />
-          <CalendarDays>
-            <CalendarDay>
-              {({ day }) => (day ? `(${format(day, 'd')})` : <span />)}
-            </CalendarDay>
-          </CalendarDays>
-        </CalendarMonth>
-      </CalendarMonths>
-    </Calendar>
-  )
-}
-
-function CustomCalendarDaysGrid({ children }: CalendarDayProps) {
-  const { dates } = React.useContext(CalendarContext)
-  const { month } = React.useContext(MonthContext)
-
-  return (
-    <SimpleGrid columns={4} width="300px">
-      {dates[Number(month)].days.map((day, index) => (
-        <DayContext.Provider
-          value={{ day }}
-          key={day ? format(day, 'd-M') : `not-a-day-${index}`}
-        >
-          <CalendarDay>{children}</CalendarDay>
-        </DayContext.Provider>
-      ))}
-    </SimpleGrid>
-  )
-}
-export const CustomDaysGridComponent: ComponentStory<typeof Calendar> = () => {
-  const [dates, setDates] = React.useState<CalendarValues>({})
-  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
-
-  return (
-    <Calendar value={dates} onSelectDate={handleSelectDate}>
-      <CalendarControls>
-        <CalendarPrevButton />
-        <CalendarNextButton />
-      </CalendarControls>
-
-      <CalendarMonths>
-        <CalendarMonth>
-          <CalendarMonthName />
-          <CustomCalendarDaysGrid>
-            <CustomDay />
-          </CustomCalendarDaysGrid>
-        </CalendarMonth>
-      </CalendarMonths>
-    </Calendar>
-  )
-}
-
 function CustomDay() {
-  const { day, variant, isDisabled, onSelectDates } = useCalendarDay()
-  if (!day) return <span />
+  const { day, onSelectDates, isSelected, isInRange } = useCalendarDay()
+
+  const selected = isSelected
+    ? {
+        bgColor: 'teal.400',
+        color: 'white',
+        rounded: 0,
+        _hover: {
+          bgColor: 'teal.300',
+        },
+      }
+    : {}
+
+  const range = isInRange
+    ? {
+        bgColor: 'teal.300',
+        color: 'white',
+        rounded: 'none',
+        _hover: {
+          bgColor: 'teal.200',
+        },
+      }
+    : {}
 
   return (
-    <Day
-      day={day}
-      variant={variant}
-      disabled={isDisabled}
-      onSelectDate={onSelectDates}
+    <Button
+      variant="ghost"
+      onClick={() => onSelectDates(day)}
+      sx={{ ...selected, ...range }}
     >
       {new Date(day).getDate() < 8 ? (
         <Box d="flex" flexDirection="column" alignItems="center">
-          <div>{format(day, 'd')}</div>
+          <Text>{format(day, 'd')}</Text>
           <Circle size="4px" bgColor="pink.300" />
         </Box>
       ) : (
         format(day, 'd')
       )}
-    </Day>
+    </Button>
   )
 }
-export const CustomDayComponent: ComponentStory<typeof Calendar> = () => {
+
+export const WithCustomDay: ComponentStory<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 

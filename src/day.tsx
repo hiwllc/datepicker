@@ -1,26 +1,22 @@
 import * as React from 'react'
-import format from 'date-fns/format'
 import { Button, ButtonProps, useStyleConfig } from '@chakra-ui/react'
-import { CalendarDate } from './types'
+import { useCalendarDay } from './useCalendarDay'
+import { format } from 'date-fns'
 
-export type Day = React.PropsWithChildren<{
-  day: CalendarDate
-  variant?: 'selected' | 'range' | 'outside' | 'today'
-  onSelectDate: (date: CalendarDate) => void
-}> &
-  ButtonProps
+export type CalendarDay = React.PropsWithChildren<ButtonProps>
 
-export function Day({ day, variant, onSelectDate, children, ...props }: Day) {
+export function CalendarDay({ children, ...props }: CalendarDay) {
+  const { day, variant, isDisabled, onSelectDates } = useCalendarDay()
   const styles = useStyleConfig('CalendarDay', { variant })
-  // console.log({ variant, day })
 
   return (
     <Button
       aria-current={variant === 'selected' ? 'date' : false}
       aria-label={format(day, 'MM-d')}
-      {...props}
-      onClick={() => onSelectDate(day)}
+      onClick={() => onSelectDates(day)}
+      isDisabled={isDisabled}
       sx={{ ...styles, ...props }}
+      {...props}
     >
       {children || format(day, 'd')}
     </Button>
