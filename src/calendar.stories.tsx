@@ -29,7 +29,7 @@ import { CalendarNextButton } from './control-next-button'
 import { CalendarPrevButton } from './control-prev-button'
 import { CalendarDate, CalendarValues } from './types'
 import { useCalendarDay } from './useCalendarDay'
-import { CalendarYearName } from './year-name'
+import { CalendarYear } from './year'
 
 export default {
   title: 'Calendar',
@@ -838,7 +838,7 @@ export const ChangeYear: ComponentStory<typeof Calendar> = () => {
       <Box>
         <Flex p={4} pb={0} justifyContent="space-between">
           <CalendarPrevButton year />
-          <CalendarYearName />
+          <CalendarYear />
           <CalendarNextButton year />
         </Flex>
 
