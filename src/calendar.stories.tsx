@@ -826,3 +826,35 @@ export const WithCustomDay: ComponentStory<typeof Calendar> = () => {
     </Calendar>
   )
 }
+
+export const ChangeYear: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = React.useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate}>
+      <Box>
+        <Flex p={4} pb={0} justifyContent="space-between">
+          <CalendarPrevButton year />
+          <CalendarNextButton year />
+        </Flex>
+
+        <Box>
+          <CalendarControls>
+            <CalendarPrevButton />
+            <CalendarNextButton />
+          </CalendarControls>
+
+          <CalendarMonths>
+            <CalendarMonth>
+              <CalendarMonthName />
+              <CalendarWeek />
+              <CalendarDays />
+            </CalendarMonth>
+          </CalendarMonths>
+        </Box>
+      </Box>
+    </Calendar>
+  )
+}

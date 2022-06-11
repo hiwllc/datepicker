@@ -5,21 +5,30 @@ import { CalendarControlStyles } from './types'
 
 type CalendarNextButton = {
   as?: ({ onClick }: { onClick: VoidFunction }) => JSX.Element
+  year?: boolean
 }
 
-export function CalendarNextButton({ as }: CalendarNextButton) {
+export function CalendarNextButton({ as, year }: CalendarNextButton) {
   const styles = useMultiStyleConfig(
     'CalendarControl',
     {}
   ) as CalendarControlStyles
-  const { nextMonth } = React.useContext(CalendarContext)
+  const { nextMonth, nextYear } = React.useContext(CalendarContext)
+
+  const handleClick = () => {
+    if (year) {
+      nextYear()
+    } else {
+      nextMonth()
+    }
+  }
 
   if (as) {
-    return as({ onClick: nextMonth })
+    return as({ onClick: handleClick })
   }
 
   return (
-    <Button onClick={nextMonth} sx={styles.button}>
+    <Button onClick={handleClick} sx={styles.button}>
       &#8594;
     </Button>
   )

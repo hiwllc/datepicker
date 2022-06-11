@@ -12,6 +12,8 @@ export type CalendarContext = {
   }[]
   nextMonth: VoidFunction
   prevMonth: VoidFunction
+  nextYear: VoidFunction
+  prevYear: VoidFunction
   onSelectDates: (date: CalendarDate) => void
   startSelectedDate?: CalendarDate
   endSelectedDate?: CalendarDate
@@ -30,6 +32,8 @@ export const CalendarContext = React.createContext<CalendarContext>({
   dates: [],
   nextMonth: () => null,
   prevMonth: () => null,
+  nextYear: () => null,
+  prevYear: () => null,
   onSelectDates: () => null,
   weekStartsOn: 0,
 })
