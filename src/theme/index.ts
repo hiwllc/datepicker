@@ -1,14 +1,8 @@
 import { extendTheme } from '@chakra-ui/react'
-import { Calendar } from './calendar'
-import { CalendarMonth } from './month'
-import { CalendarDay } from './day'
-import { CalendarControl } from './controls'
+import { CalendarContent } from './content'
 
 export const theme = extendTheme({
   components: {
-    Calendar,
-    CalendarMonth,
-    CalendarDay,
-    CalendarControl,
+    CalendarContent,
   },
 })

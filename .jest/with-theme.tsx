@@ -11,3 +11,5 @@ const renderer = (ui: React.ReactElement, options?: RenderOptions) => {
 
 export * from '@testing-library/react'
 export { renderer as render }
+export { default as userEvent } from '@testing-library/user-event'
+
