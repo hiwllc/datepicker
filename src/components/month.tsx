@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box } from '@chakra-ui/react'
+import { Box, useMultiStyleConfig } from '@chakra-ui/react'
 
 type MonthContext = {
   month?: number
@@ -19,9 +19,11 @@ export function CalendarMonth({
   children,
   ...props
 }: React.PropsWithChildren<MonthContext>) {
+  const styles = useMultiStyleConfig('CalendarMonth', {})
+
   return (
     <MonthContext.Provider value={props}>
-      <Box>{children}</Box>
+      <Box sx={styles.month}>{children}</Box>
     </MonthContext.Provider>
   )
 }

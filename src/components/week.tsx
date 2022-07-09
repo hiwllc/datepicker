@@ -1,4 +1,4 @@
-import { Grid, Text } from '@chakra-ui/react'
+import { Grid, Text, useMultiStyleConfig } from '@chakra-ui/react'
 import { addDays, format, startOfWeek } from 'date-fns'
 
 function getWeek() {
@@ -8,11 +8,12 @@ function getWeek() {
 
 export function CalendarWeek() {
   const week = getWeek()
+  const styles = useMultiStyleConfig('CalendarMonth', {})
 
   return (
-    <Grid py={2} gridArea="week" gridTemplateColumns="repeat(7, 1fr)">
+    <Grid sx={styles.week}>
       {week.map(day => (
-        <Text textAlign="center" key={day} color="gray.500">
+        <Text key={day} sx={styles.weekday}>
           {day}
         </Text>
       ))}

@@ -1,17 +1,12 @@
-import { Button } from '@chakra-ui/react'
+import { Button, useStyleConfig } from '@chakra-ui/react'
 import { useCalendarContext } from './provider'
 
 export function CalendarNextButton() {
   const { onNextMonth } = useCalendarContext()
+  const style = useStyleConfig('CalendarControl')
+
   return (
-    <Button
-      fontSize="md"
-      h={6}
-      px={2}
-      lineHeight={0}
-      onClick={onNextMonth}
-      aria-label="next month"
-    >
+    <Button onClick={onNextMonth} aria-label="next month" sx={style}>
       &#8594;
     </Button>
   )
