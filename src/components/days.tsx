@@ -1,9 +1,10 @@
+import * as React from 'react'
 import { Button, Grid } from '@chakra-ui/react'
-import { format } from 'date-fns'
-import { useMonthContext } from '../hooks/use-month'
+import { format, getDay } from 'date-fns'
+import { MonthContext } from './month'
 
 export function CalendarMonthDays() {
-  const { days } = useMonthContext()
+  const { days } = React.useContext(MonthContext)
 
   return (
     <Grid gridTemplateColumns="repeat(7, 1fr)">

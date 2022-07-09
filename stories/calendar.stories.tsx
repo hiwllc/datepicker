@@ -22,7 +22,7 @@ export default {
 } as ComponentMeta<typeof Calendar>
 
 export const Basic: ComponentStory<typeof Calendar> = () => {
-  const { getCalendarProps } = useCalendar({
+  const { getCalendarProps, getMonthProps } = useCalendar({
     initialDate: addMonths(new Date(), 1),
   })
 
@@ -34,7 +34,7 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
           <CalendarNextButton />
         </CalendarHeader>
 
-        <CalendarMonth>
+        <CalendarMonth {...getMonthProps()}>
           <CalendarMonthName />
           <CalendarWeek />
           <CalendarMonthDays />
@@ -45,7 +45,7 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
 }
 
 export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
-  const { getCalendarProps } = useCalendar({
+  const { getCalendarProps, getMonthProps, months } = useCalendar({
     initialDate: addMonths(new Date(), 1),
     months: 2,
   })
@@ -59,17 +59,14 @@ export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
         </CalendarHeader>
 
         <CalendarMonths>
-          {({ months }) => (
-            <>
-              {months.map(month => (
-                <CalendarMonth key={month.name} month={month.number}>
-                  <CalendarMonthName />
-                  <CalendarWeek />
-                  <CalendarMonthDays />
-                </CalendarMonth>
-              ))}
-            </>
-          )}
+          {months.map(month => (
+            // eslint-disable-next-line react/jsx-key
+            <CalendarMonth {...getMonthProps(month.number)}>
+              <CalendarMonthName />
+              <CalendarWeek />
+              <CalendarMonthDays />
+            </CalendarMonth>
+          ))}
         </CalendarMonths>
       </CalendarContent>
     </Calendar>

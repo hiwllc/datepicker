@@ -5,10 +5,15 @@ import {
   endOfMonth,
   endOfWeek,
   format,
+  isSameMonth,
   startOfMonth,
   startOfWeek,
   subMonths,
 } from 'date-fns'
+
+function replaceOutsideDays(days: Date[], date: Date) {
+  return days.filter(d => isSameMonth(date, d))
+}
 
 type UseCalendar = {
   /**
@@ -61,7 +66,7 @@ export function useCalendar({
         lastDayOfMonth,
         firstWeekDayOfStartOfMonth,
         lastWeekDayOfEndOfMonth,
-        days,
+        days: replaceOutsideDays(days, currentMonth),
         name,
         number: index,
       }
@@ -79,9 +84,18 @@ export function useCalendar({
     }
   }, [state, dates, onNextMonth, onPrevMonth])
 
+  const getMonthProps = React.useCallback(
+    (month = 0) => {
+      return { ...dates[month], key: dates[month].name }
+    },
+    [dates]
+  )
+
   return {
     getCalendarProps,
+    getMonthProps,
     onPrevMonth,
     onNextMonth,
+    months: dates,
   }
 }

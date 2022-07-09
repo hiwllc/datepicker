@@ -13,7 +13,7 @@ import {
 } from '.'
 
 function Basic() {
-  const { getCalendarProps } = useCalendar({
+  const { getCalendarProps, getMonthProps } = useCalendar({
     initialDate: new Date(2022, 4),
   })
 
@@ -25,7 +25,7 @@ function Basic() {
           <CalendarNextButton />
         </CalendarHeader>
 
-        <CalendarMonth>
+        <CalendarMonth {...getMonthProps()}>
           <CalendarMonthName />
           <CalendarWeek />
           <CalendarMonthDays />
