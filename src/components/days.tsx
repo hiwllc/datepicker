@@ -8,16 +8,21 @@ export function CalendarMonthDays() {
 
   return (
     <Grid gridTemplateColumns="repeat(7, 1fr)">
-      {days.map(day => (
-        <Button
-          size="sm"
-          variant="ghost"
-          textAlign="center"
-          key={format(day, 'd-M')}
-        >
-          {format(day, 'd')}
-        </Button>
-      ))}
+      {days.map(day => {
+        const weekday = getDay(day)
+
+        return (
+          <Button
+            size="sm"
+            variant="ghost"
+            textAlign="center"
+            gridColumn={weekday + 1}
+            key={format(day, 'd-M')}
+          >
+            {format(day, 'd')}
+          </Button>
+        )
+      })}
     </Grid>
   )
 }
