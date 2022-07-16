@@ -1,17 +1,5 @@
 import * as React from 'react'
-import { Range } from '../hooks/use-calendar'
-
-export type Month = {
-  days: Date[]
-  firstDayOfMonth: Date | number
-  lastDayOfMonth: Date | number
-  firstWeekDayOfStartOfMonth: Date | number
-  lastWeekDayOfEndOfMonth: Date | number
-  name: string
-  number?: number
-}
-
-export type Months = Month[]
+import { Months, Range } from '../types'
 
 export type CalendarContextProps = {
   months: Months

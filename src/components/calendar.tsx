@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { CalendarProvider, Months } from '../providers/calendar'
-import { Range } from '../hooks/use-calendar'
+import { CalendarProvider } from '../providers/calendar'
+import { Months, Range } from '../types'
 
 export type CalendarProps = React.PropsWithChildren<{
   months: Months

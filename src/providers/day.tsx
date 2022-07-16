@@ -1,7 +1,7 @@
-import { eachDayOfInterval, isSameDay } from 'date-fns'
 import * as React from 'react'
-import { Range } from '../hooks/use-calendar'
+import { eachDayOfInterval, isSameDay } from 'date-fns'
 import { useCalendarContext } from './calendar'
+import { Range } from '../types'
 
 export type CalendarDayContext = {
   day: Date | number

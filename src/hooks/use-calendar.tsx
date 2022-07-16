@@ -12,18 +12,7 @@ import {
   startOfWeek,
   subMonths,
 } from 'date-fns'
-
-export type Range = {
-  end?: Date | null
-  start?: Date | null
-}
-
-enum Target {
-  START = 'Start',
-  END = 'End',
-}
-
-export type RangeSelection = (interval: Range) => void
+import { Range, RangeSelection, Target } from '../types'
 
 export type UseCalendar = {
   /**
