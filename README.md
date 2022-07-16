@@ -34,38 +34,38 @@ Before to use this you can create your own theme or use the default one.
 import { ChakraProvider } from '@chakra-ui/react'
 import {
   Calendar,
-  CalendarDefaultTheme,
-  CalendarControls,
-  CalendarPrevButton,
-  CalendarNextButton,
-  CalendarMonths,
+  CalendarContent,
+  CalendarHeader,
   CalendarMonth,
+  CalendarMonthDays,
   CalendarMonthName,
+  CalendarMonths,
+  CalendarNextButton,
+  CalendarPrevButton,
   CalendarWeek,
-  CalendarDays,
+  CalendarDefaultTheme,
+  useCalendar,
 } from '@uselessdev/datepicker'
 
 export function App() {
-  const [dates, setDates] = useState()
-
-  const handleSelectDate = (values) => setDates(values)
+  const { getCalendarProps, getMonthProps } = useCalendar()
 
   return (
     return (
       <ChakraProvider theme={CalendarDefaultTheme}>
-        <Calendar value={dates} onSelectDate={handleSelectDate}>
-          <CalendarControls>
-            <CalendarPrevButton />
-            <CalendarNextButton />
-          </CalendarControls>
+        <Calendar {...getCalendarProps()}>
+          <CalendarContent>
+            <CalendarHeader>
+              <CalendarPrevButton />
+              <CalendarNextButton />
+            </CalendarHeader>
 
-          <CalendarMonths>
-            <CalendarMonth>
+            <CalendarMonth {...getMonthProps()}>
               <CalendarMonthName />
               <CalendarWeek />
-              <CalendarDays />
+              <CalendarMonthDays />
             </CalendarMonth>
-          </CalendarMonths>
+          </CalendarContent>
         </Calendar>
       </ChakraProvider>
     )
@@ -74,87 +74,6 @@ export function App() {
 ```
 
 **note that the example above doens't render an input but only the calendar**
-
-If you want to use this with inputs and a popover [you can see this example](https://uselessdev-datepicker.netlify.app/?path=/story/calendar--with-input-popover-start-end-dates)
-
-### Customizing
-You can fully customize the Calendar component using the `extendTheme` provided by chakra-ui, you can see an example below.
-
-In your theme you can overrides the default theme (you can see all available components keys for theme customization here)
-
-```ts
-import { extendTheme } from '@chakra-ui/react'
-import { CalendarDefaultTheme } from '@uselessdev/datepicker'
-
-export const theme = extendTheme(CalendarDefaultTheme, {
-  components: {
-    Calendar: {
-      parts: ['calendar'],
-
-      baseStyle: {
-        calendar: {
-          borderWidth: '6px',
-          borderColor: 'pink.400',
-          rounded: 'none',
-          shadow: 'none',
-          boxShadow: '32px 16px 0 6px #3B4DCC'
-        },
-      },
-    },
-
-    CalendarControl: {
-      parts: ['button'],
-
-      baseStyle: {
-        button: {
-          h: 6,
-          px: 2,
-          rounded: 'none',
-          fontSize: 'sm',
-          color: 'white',
-          bgColor: 'pink.400',
-
-          _hover: {
-            bgColor: 'pink.200',
-          },
-
-          _focus: {
-            outline: 'none',
-          },
-        },
-      },
-    }
-  },
-})
-```
-
-Now you can use this theme in `ChakraProvider`:
-
-```tsx
-import { ChakraProvider } from '@chakra-ui/react'
-import { theme } from './theme'
-
-function App() {
-  return (
-    <ChakraProvider theme={theme}>
-      {/* children... */}
-    </ChakraProvider>
-  )
-}
-```
-
-Theses changes will produce the following results in Calendar:
-
-![Customized calendar](docs/datepicker-custom.png)
-
-## Available components theme keys
-
-| Key name        | Description                                                               | Parts                                    |
-|-----------------|---------------------------------------------------------------------------|------------------------------------------|
-| Calendar        | A multipart component this is reponsible for the calendar it self.        |`calendar`, `months`                      |
-| CalendarMonth   | Responsible to style one month block.                                     |`month`, `name`, `week`, `weekday`, `days`|
-| CalendarDay     | Applies styles to individual day. This is the only single part component. | --                                       |
-| CalendarControl | Applies styles to prev and next months.                                   |`controls`, `button`                      |
 
 ## License
 This code is under the [Apache-2.0](LICENSE) License

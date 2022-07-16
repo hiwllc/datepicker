@@ -9,3 +9,5 @@ export * from './components/next'
 export * from './components/prev'
 export * from './components/week'
 export * from './hooks/use-calendar'
+
+export { theme as CalendarDefaultTheme } from './theme'
