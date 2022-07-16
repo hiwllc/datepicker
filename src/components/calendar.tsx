@@ -7,7 +7,7 @@ export type CalendarProps = React.PropsWithChildren<{
   onNextMonth: VoidFunction
   onPrevMonth: VoidFunction
   onSelectDate: (date: Date) => void
-  selected: Range | Date
+  selected: Range | Date | null
 }>
 
 export function Calendar({

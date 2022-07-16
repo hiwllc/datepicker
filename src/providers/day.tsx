@@ -26,13 +26,13 @@ function getVariant(day: Date, dates: Date[]) {
     eachDayOfInterval({ start: dates[0], end: dates[1] })
 
   if (interval && interval.some(d => isSameDay(d, day))) {
-    return `range`
+    return 'range'
   }
 
   return 'default'
 }
 
-function selectedToArray(dates?: Range | Date) {
+function selectedToArray(dates?: Range | Date | null) {
   if (!dates) {
     return []
   }
@@ -50,9 +50,6 @@ export function useCalendarDay() {
 
   const dates = selectedToArray(selected)
 
-  /**
-   * @TODO variant selected, today, range, outside
-   */
   const variant = getVariant(day as Date, dates as Date[])
 
   return {

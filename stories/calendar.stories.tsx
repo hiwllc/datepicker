@@ -72,3 +72,27 @@ export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
     </Calendar>
   )
 }
+
+export const WithSingleDateSelection: ComponentStory<typeof Calendar> = () => {
+  const { getCalendarProps, getMonthProps } = useCalendar({
+    initialDate: addMonths(new Date(), 1),
+    singleDateSelection: true,
+  })
+
+  return (
+    <Calendar {...getCalendarProps()}>
+      <CalendarContent>
+        <CalendarHeader>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarHeader>
+
+        <CalendarMonth {...getMonthProps()}>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarMonthDays />
+        </CalendarMonth>
+      </CalendarContent>
+    </Calendar>
+  )
+}

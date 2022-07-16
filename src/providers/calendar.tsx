@@ -6,7 +6,7 @@ export type CalendarContextProps = {
   onNextMonth: VoidFunction
   onPrevMonth: VoidFunction
   onSelectDate: (date: Date) => void
-  selected?: Range | Date
+  selected?: Range | Date | null
 }
 
 export const CalendarContext = React.createContext<CalendarContextProps>({

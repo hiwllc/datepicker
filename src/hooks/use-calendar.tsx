@@ -25,6 +25,11 @@ export type UseCalendar = {
    * @default 1
    */
   months?: number
+  /**
+   * Allow single date selection.
+   * @default false
+   */
+  singleDateSelection?: boolean
 }
 
 function replaceOutsideDays(days: Date[], date: Date) {
@@ -34,12 +39,14 @@ function replaceOutsideDays(days: Date[], date: Date) {
 export function useCalendar({
   initialDate = new Date(),
   months = 1,
+  singleDateSelection,
 }: UseCalendar = {}) {
   const [state, setState] = React.useState(initialDate)
   const [range, setRange] = React.useState<Range>({
     end: null,
     start: null,
   })
+  const [date, setDate] = React.useState<Date | null>(null)
 
   const onPrevMonth = React.useCallback(
     () => setState(() => subMonths(state, 1)),
@@ -84,10 +91,18 @@ export function useCalendar({
     setRange({ end, start })
   }
 
+  const onSelectSingleDate = (date: Date) => {
+    setDate(date)
+  }
+
   const [target, setTarget] = React.useState<Target>(Target.START)
 
   const onSelectDate = React.useCallback(
     (date: Date) => {
+      if (singleDateSelection) {
+        return onSelectSingleDate(date)
+      }
+
       if (range.start && isBefore(date, range.start)) {
         return onSelectDates({ ...range, start: date })
       }
@@ -104,7 +119,7 @@ export function useCalendar({
       setTarget(Target.END)
       return onSelectDates({ ...range, start: date })
     },
-    [range, target]
+    [range, target, singleDateSelection]
   )
 
   const getCalendarProps = React.useCallback(() => {
@@ -115,9 +130,18 @@ export function useCalendar({
       onSelectDate,
       onNextMonth,
       onPrevMonth,
-      selected: range,
+      selected: singleDateSelection ? date : range,
     }
-  }, [state, dates, onNextMonth, onPrevMonth, onSelectDate, range])
+  }, [
+    state,
+    dates,
+    onNextMonth,
+    onPrevMonth,
+    onSelectDate,
+    range,
+    singleDateSelection,
+    date,
+  ])
 
   const getMonthProps = React.useCallback(
     (month = 0) => {
