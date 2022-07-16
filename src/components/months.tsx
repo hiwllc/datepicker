@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Grid, useMultiStyleConfig } from '@chakra-ui/react'
-import { useCalendarContext } from './provider'
+import { useCalendarContext } from '../providers/calendar'
 
 export function CalendarMonths({ children }: React.PropsWithChildren<unknown>) {
   const { months } = useCalendarContext()

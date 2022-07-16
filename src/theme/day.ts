@@ -2,6 +2,7 @@ import { ComponentStyleConfig } from '@chakra-ui/react'
 
 export const CalendarDay: ComponentStyleConfig = {
   baseStyle: {
+    w: 8,
     rounded: 'none',
     bgColor: 'transparent',
     textAlign: 'center',
@@ -18,8 +19,22 @@ export const CalendarDay: ComponentStyleConfig = {
   },
 
   variants: {
-    normal: {
-      w: 8,
+    selected: {
+      bgColor: 'pink.400',
+      color: 'white',
+
+      _hover: {
+        bgColor: 'pink.200',
+      },
+    },
+
+    range: {
+      bgColor: 'pink.300',
+      color: 'white',
+
+      _hover: {
+        bgColor: 'pink.200',
+      },
     },
   },
 

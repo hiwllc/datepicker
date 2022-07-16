@@ -1,10 +1,13 @@
 import * as React from 'react'
-import { CalendarProvider, Months } from './provider'
+import { CalendarProvider, Months } from '../providers/calendar'
+import { Range } from '../hooks/use-calendar'
 
 export type CalendarProps = React.PropsWithChildren<{
   months: Months
   onNextMonth: VoidFunction
   onPrevMonth: VoidFunction
+  onSelectDate: (date: Date) => void
+  selected: Range | Date
 }>
 
 export function Calendar({
@@ -12,12 +15,16 @@ export function Calendar({
   months,
   onNextMonth,
   onPrevMonth,
+  onSelectDate,
+  selected,
 }: CalendarProps) {
   return (
     <CalendarProvider
       months={months}
       onNextMonth={onNextMonth}
       onPrevMonth={onPrevMonth}
+      onSelectDate={onSelectDate}
+      selected={selected}
     >
       {children}
     </CalendarProvider>

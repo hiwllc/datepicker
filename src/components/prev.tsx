@@ -1,5 +1,5 @@
 import { Button, useStyleConfig } from '@chakra-ui/react'
-import { useCalendarContext } from './provider'
+import { useCalendarContext } from '../providers/calendar'
 
 export function CalendarPrevButton() {
   const { onPrevMonth } = useCalendarContext()
