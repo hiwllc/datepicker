@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Range } from '../hooks/use-calendar'
 
 export type Month = {
   days: Date[]
@@ -16,18 +17,23 @@ export type CalendarContextProps = {
   months: Months
   onNextMonth: VoidFunction
   onPrevMonth: VoidFunction
+  onSelectDate: (date: Date) => void
+  selected?: Range | Date
 }
 
 export const CalendarContext = React.createContext<CalendarContextProps>({
   months: [],
   onNextMonth: () => null,
   onPrevMonth: () => null,
+  onSelectDate: () => null,
 })
 
 export function CalendarProvider({
   months,
   onNextMonth,
   onPrevMonth,
+  onSelectDate,
+  selected,
   ...props
 }: React.PropsWithChildren<CalendarContextProps>) {
   return (
@@ -36,6 +42,8 @@ export function CalendarProvider({
         months,
         onNextMonth,
         onPrevMonth,
+        onSelectDate,
+        selected,
       }}
       {...props}
     />
