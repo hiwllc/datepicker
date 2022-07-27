@@ -27,7 +27,7 @@ export function CalendarNextButton({ as, skip, isSmall }: CalendarNextButton) {
       onClick={clickAction}
       sx={isSmall ? styles.smallButton : styles.button}
     >
-      {skip === 'year' ? '\u00BB' : '\u2192'}
+      {skip === 'year' ? '\u276F' : '\u2192'}
     </Button>
   )
 }

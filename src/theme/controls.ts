@@ -1,4 +1,4 @@
-import { ComponentMultiStyleConfig } from '@chakra-ui/react'
+import { ComponentMultiStyleConfig, flexbox } from '@chakra-ui/react'
 
 export const CalendarControl: ComponentMultiStyleConfig = {
   parts: ['controls', 'button'],
@@ -22,7 +22,6 @@ export const CalendarControl: ComponentMultiStyleConfig = {
       h: 6,
       minW: 6,
       px: 0,
-      justifyContent: 'center',
       lineHeight: 0,
       fontSize: 'md',
       rounded: 'md',
