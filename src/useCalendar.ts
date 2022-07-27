@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {
   addMonths,
+  addYears,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
@@ -39,7 +40,9 @@ export function useCalendar({
   const actions = React.useMemo(
     function actionsFn() {
       const nextMonth = () => setDate(prevSet => addMonths(prevSet, 1))
+      const nextYear = () => setDate(prevSet => addMonths(prevSet, 12))
       const prevMonth = () => setDate(prevSet => subMonths(prevSet, 1))
+      const prevYear = () => setDate(prevSet => subMonths(prevSet, 12))
 
       const resetDate = () => setDate(initialState)
 
@@ -66,7 +69,9 @@ export function useCalendar({
 
       return {
         nextMonth,
+        nextYear,
         prevMonth,
+        prevYear,
         resetDate,
         dates,
       }

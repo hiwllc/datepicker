@@ -25,5 +25,5 @@ export type CalendarMonthThemeKeys =
   | 'days'
 export type CalendarMonthStyles = Record<CalendarMonthThemeKeys, CSSObject>
 
-export type CalendarControlThemeKeys = 'controls' | 'button'
+export type CalendarControlThemeKeys = 'controls' | 'button' | 'smallButton'
 export type CalendarControlStyles = Record<CalendarControlThemeKeys, CSSObject>

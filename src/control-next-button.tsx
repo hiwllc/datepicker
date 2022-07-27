@@ -5,22 +5,29 @@ import { CalendarControlStyles } from './types'
 
 type CalendarNextButton = {
   as?: ({ onClick }: { onClick: VoidFunction }) => JSX.Element
+  skip?: 'month' | 'year'
+  isSmall?: boolean
 }
 
-export function CalendarNextButton({ as }: CalendarNextButton) {
+export function CalendarNextButton({ as, skip, isSmall }: CalendarNextButton) {
   const styles = useMultiStyleConfig(
     'CalendarControl',
     {}
   ) as CalendarControlStyles
-  const { nextMonth } = React.useContext(CalendarContext)
+  const { nextMonth, nextYear } = React.useContext(CalendarContext)
+
+  const clickAction = skip === 'year' ? nextYear : nextMonth
 
   if (as) {
-    return as({ onClick: nextMonth })
+    return as({ onClick: clickAction })
   }
 
   return (
-    <Button onClick={nextMonth} sx={styles.button}>
-      &#8594;
+    <Button
+      onClick={clickAction}
+      sx={isSmall ? styles.smallButton : styles.button}
+    >
+      {skip === 'year' ? '\u00BB' : '\u2192'}
     </Button>
   )
 }

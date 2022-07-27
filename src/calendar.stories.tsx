@@ -6,6 +6,7 @@ import {
   Button,
   Circle,
   Flex,
+  HStack,
   Input,
   Popover,
   PopoverBody,
@@ -821,6 +822,39 @@ export const WithCustomDay: ComponentStory<typeof Calendar> = () => {
           <CalendarDays>
             <CustomDay />
           </CalendarDays>
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
+
+export const WithSkipByYear: ComponentStory<typeof Calendar> = () => {
+  const [date, setDate] = React.useState<CalendarDate>()
+  const handleSelectDate = (date: CalendarDate) => setDate(date)
+
+  return (
+    <Calendar
+      value={{ start: date }}
+      onSelectDate={handleSelectDate}
+      singleDateSelection
+    >
+      <CalendarControls>
+        <HStack spacing={1}>
+          <CalendarPrevButton isSmall skip="year" />
+          <CalendarPrevButton isSmall />
+        </HStack>
+
+        <HStack spacing={1}>
+          <CalendarNextButton isSmall />
+          <CalendarNextButton isSmall skip="year" />
+        </HStack>
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
         </CalendarMonth>
       </CalendarMonths>
     </Calendar>
