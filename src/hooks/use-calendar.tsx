@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {
   addMonths,
+  addYears,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
@@ -11,6 +12,7 @@ import {
   startOfMonth,
   startOfWeek,
   subMonths,
+  subYears,
 } from 'date-fns'
 import { Range, RangeSelection, Target } from '../types'
 
@@ -55,6 +57,16 @@ export function useCalendar({
 
   const onNextMonth = React.useCallback(
     () => setState(() => addMonths(state, 1)),
+    [state]
+  )
+
+  const onPrevYear = React.useCallback(
+    () => setState(() => subYears(state, 1)),
+    [state]
+  )
+
+  const onNextYear = React.useCallback(
+    () => setState(() => addYears(state, 1)),
     [state]
   )
 
@@ -129,7 +141,9 @@ export function useCalendar({
       value: null,
       onSelectDate,
       onNextMonth,
+      onNextYear,
       onPrevMonth,
+      onPrevYear,
       selected: singleDateSelection ? date : range,
     }
   }, [
@@ -137,6 +151,8 @@ export function useCalendar({
     dates,
     onNextMonth,
     onPrevMonth,
+    onNextYear,
+    onPrevYear,
     onSelectDate,
     range,
     singleDateSelection,
@@ -155,6 +171,8 @@ export function useCalendar({
     getMonthProps,
     onPrevMonth,
     onNextMonth,
+    onPrevYear,
+    onNextYear,
     months: dates,
     dates: range,
   }
