@@ -1,3 +1,4 @@
+import { Locale } from 'date-fns'
 import * as React from 'react'
 import { CalendarProvider } from '../providers/calendar'
 import { Months, Range } from '../types'
@@ -8,6 +9,8 @@ export type CalendarProps = React.PropsWithChildren<{
   onPrevMonth: VoidFunction
   onSelectDate: (date: Date) => void
   selected: Range | Date | null
+  locale?: Locale
+  weekday?: string
 }>
 
 export function Calendar({
@@ -17,6 +20,8 @@ export function Calendar({
   onPrevMonth,
   onSelectDate,
   selected,
+  locale,
+  weekday,
 }: CalendarProps) {
   return (
     <CalendarProvider
@@ -25,6 +30,8 @@ export function Calendar({
       onPrevMonth={onPrevMonth}
       onSelectDate={onSelectDate}
       selected={selected}
+      locale={locale}
+      weekday={weekday}
     >
       {children}
     </CalendarProvider>

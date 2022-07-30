@@ -9,11 +9,13 @@ import {
   isAfter,
   isBefore,
   isSameMonth,
+  Locale,
   startOfMonth,
   startOfWeek,
   subMonths,
   subYears,
 } from 'date-fns'
+import { enUS } from 'date-fns/locale'
 import { Range, RangeSelection, Target } from '../types'
 
 export type UseCalendar = {
@@ -32,17 +34,23 @@ export type UseCalendar = {
    * @default false
    */
   singleDateSelection?: boolean
+  locale?: Locale
+  weekday?: string
 }
 
 function replaceOutsideDays(days: Date[], date: Date) {
   return days.filter(d => isSameMonth(date, d))
 }
 
-export function useCalendar({
-  initialDate = new Date(),
-  months = 1,
-  singleDateSelection,
-}: UseCalendar = {}) {
+export function useCalendar(
+  {
+    initialDate = new Date(),
+    months = 1,
+    singleDateSelection,
+    locale,
+    weekday,
+  }: UseCalendar = { locale: enUS }
+) {
   const [state, setState] = React.useState(initialDate)
   const [range, setRange] = React.useState<Range>({
     end: null,
@@ -85,7 +93,7 @@ export function useCalendar({
         start: firstWeekDayOfStartOfMonth,
       })
 
-      const name = format(currentMonth, 'MMMM, yyyy')
+      const name = format(currentMonth, 'MMMM, yyyy', { locale })
 
       return {
         firstDayOfMonth,
@@ -97,7 +105,7 @@ export function useCalendar({
         number: index,
       }
     })
-  }, [state, months])
+  }, [state, months, locale])
 
   const onSelectDates: RangeSelection = ({ end, start }) => {
     setRange({ end, start })
@@ -144,6 +152,8 @@ export function useCalendar({
       onNextYear,
       onPrevMonth,
       onPrevYear,
+      locale,
+      weekday,
       selected: singleDateSelection ? date : range,
     }
   }, [
@@ -157,6 +167,8 @@ export function useCalendar({
     range,
     singleDateSelection,
     date,
+    locale,
+    weekday,
   ])
 
   const getMonthProps = React.useCallback(

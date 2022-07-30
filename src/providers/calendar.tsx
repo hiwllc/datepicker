@@ -1,3 +1,5 @@
+import { Locale } from 'date-fns'
+import { enUS } from 'date-fns/locale'
 import * as React from 'react'
 import { Months, Range } from '../types'
 
@@ -7,6 +9,8 @@ export type CalendarContextProps = {
   onPrevMonth: VoidFunction
   onSelectDate: (date: Date) => void
   selected?: Range | Date | null
+  locale?: Locale
+  weekday?: string
 }
 
 export const CalendarContext = React.createContext<CalendarContextProps>({
@@ -14,6 +18,7 @@ export const CalendarContext = React.createContext<CalendarContextProps>({
   onNextMonth: () => null,
   onPrevMonth: () => null,
   onSelectDate: () => null,
+  locale: enUS,
 })
 
 export function CalendarProvider({
@@ -22,6 +27,8 @@ export function CalendarProvider({
   onPrevMonth,
   onSelectDate,
   selected,
+  locale,
+  weekday,
   ...props
 }: React.PropsWithChildren<CalendarContextProps>) {
   return (
@@ -32,6 +39,8 @@ export function CalendarProvider({
         onPrevMonth,
         onSelectDate,
         selected,
+        locale,
+        weekday,
       }}
       {...props}
     />

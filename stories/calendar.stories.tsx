@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as locales from 'date-fns/locale'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import {
@@ -95,4 +96,42 @@ export const WithSingleDateSelection: ComponentStory<typeof Calendar> = () => {
       </CalendarContent>
     </Calendar>
   )
+}
+
+export const WithCustomLocale: ComponentStory<typeof Calendar> = ({
+  locale,
+}) => {
+  const { getCalendarProps, getMonthProps } = useCalendar({
+    initialDate: addMonths(new Date(), 1),
+    locale,
+    weekday: 'EEEEEE',
+  })
+
+  return (
+    <Calendar {...getCalendarProps()}>
+      <CalendarContent>
+        <CalendarHeader>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarHeader>
+
+        <CalendarMonth {...getMonthProps()}>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarMonthDays />
+        </CalendarMonth>
+      </CalendarContent>
+    </Calendar>
+  )
+}
+
+WithCustomLocale.argTypes = {
+  locale: {
+    options: Object.keys(Object.fromEntries(Object.entries(locales))),
+    mapping: Object.fromEntries(Object.entries(locales)),
+  },
+}
+
+WithCustomLocale.args = {
+  locale: locales.ptBR,
 }
