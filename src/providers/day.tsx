@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { eachDayOfInterval, isBefore, isSameDay } from 'date-fns'
+import { eachDayOfInterval, isAfter, isBefore, isSameDay } from 'date-fns'
 import { useCalendarContext } from './calendar'
 import { Range } from '../types'
 
@@ -13,11 +13,17 @@ export const DayContext = React.createContext<CalendarDayContext>({
 
 export function useCalendarDay() {
   const { day } = React.useContext(DayContext)
-  const { selected, disablePastDates } = useCalendarContext()
+  const { selected, disablePastDates, disableFutureDates } =
+    useCalendarContext()
 
   const dates = selectedToArray(selected)
 
-  const variant = getVariant({ day, dates: dates as Date[], disablePastDates })
+  const variant = getVariant({
+    day,
+    dates: dates as Date[],
+    disablePastDates,
+    disableFutureDates,
+  })
 
   return {
     day,
@@ -29,10 +35,16 @@ export function useCalendarDay() {
 type GetVariant = {
   dates: Date[]
   day: Date | number
+  disableFutureDates?: boolean
   disablePastDates?: boolean
 }
 
-function getVariant({ dates, day, disablePastDates }: GetVariant) {
+function getVariant({
+  dates,
+  day,
+  disablePastDates,
+  disableFutureDates,
+}: GetVariant) {
   if (dates.some(d => isSameDay(day, d))) {
     return 'selected'
   }
@@ -42,7 +54,10 @@ function getVariant({ dates, day, disablePastDates }: GetVariant) {
     dates[1] &&
     eachDayOfInterval({ start: dates[0], end: dates[1] })
 
-  if (disablePastDates && isBefore(day, new Date())) {
+  if (
+    (disablePastDates && isBefore(day, new Date())) ||
+    (disableFutureDates && isAfter(day, new Date()))
+  ) {
     return 'disabled'
   }
 

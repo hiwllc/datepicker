@@ -45,7 +45,7 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
+export const MultipleMonths: ComponentStory<typeof Calendar> = () => {
   const { getCalendarProps, getMonthProps, months } = useCalendar({
     initialDate: addMonths(new Date(), 1),
     months: 2,
@@ -74,7 +74,7 @@ export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const WithSingleDateSelection: ComponentStory<typeof Calendar> = () => {
+export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
   const { getCalendarProps, getMonthProps } = useCalendar({
     initialDate: addMonths(new Date(), 1),
     singleDateSelection: true,
@@ -98,9 +98,7 @@ export const WithSingleDateSelection: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const WithCustomLocale: ComponentStory<typeof Calendar> = ({
-  locale,
-}) => {
+export const CustomLocale: ComponentStory<typeof Calendar> = ({ locale }) => {
   const { getCalendarProps, getMonthProps } = useCalendar({
     initialDate: addMonths(new Date(), 1),
     locale,
@@ -125,21 +123,45 @@ export const WithCustomLocale: ComponentStory<typeof Calendar> = ({
   )
 }
 
-WithCustomLocale.argTypes = {
+CustomLocale.argTypes = {
   locale: {
     options: Object.keys(Object.fromEntries(Object.entries(locales))),
     mapping: Object.fromEntries(Object.entries(locales)),
   },
 }
 
-WithCustomLocale.args = {
+CustomLocale.args = {
   locale: locales.ptBR,
 }
 
-export const WithDisabledPastDates: ComponentStory<typeof Calendar> = () => {
+export const DisabledPastDates: ComponentStory<typeof Calendar> = () => {
   const { getCalendarProps, getMonthProps } = useCalendar({
-    initialDate: addMonths(new Date(), 1),
+    initialDate: new Date(),
     disablePastDates: true,
+  })
+
+  return (
+    <Calendar {...getCalendarProps()}>
+      <CalendarContent>
+        <CalendarHeader>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarHeader>
+
+        <CalendarMonth {...getMonthProps()}>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarMonthDays />
+        </CalendarMonth>
+      </CalendarContent>
+    </Calendar>
+  )
+}
+
+export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
+  const { getCalendarProps, getMonthProps } = useCalendar({
+    initialDate: new Date(),
+    disableFutureDates: true,
   })
 
   return (

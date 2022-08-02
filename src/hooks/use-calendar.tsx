@@ -46,6 +46,11 @@ export type UseCalendar = {
    */
   weekday?: string
   /**
+   * Disable future date from being selected.
+   * @default false
+   */
+  disableFutureDates?: boolean
+  /**
    * Disable past date from being selected.
    * @default false
    */
@@ -58,6 +63,7 @@ function replaceOutsideDays(days: Date[], date: Date) {
 
 export function useCalendar(
   {
+    disableFutureDates = false,
     disablePastDates = false,
     initialDate = new Date(),
     locale,
@@ -159,6 +165,7 @@ export function useCalendar(
 
   const getCalendarProps = React.useCallback(() => {
     return {
+      disableFutureDates,
       disablePastDates,
       initialDate: state,
       locale,
@@ -175,6 +182,7 @@ export function useCalendar(
   }, [
     date,
     dates,
+    disableFutureDates,
     disablePastDates,
     locale,
     onNextMonth,

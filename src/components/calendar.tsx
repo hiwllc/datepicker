@@ -4,26 +4,28 @@ import { CalendarProvider } from '../providers/calendar'
 import { Months, Range } from '../types'
 
 export type CalendarProps = React.PropsWithChildren<{
+  disableFutureDates?: boolean
+  disablePastDates?: boolean
+  locale?: Locale
   months: Months
   onNextMonth: VoidFunction
   onPrevMonth: VoidFunction
   onSelectDate: (date: Date) => void
   selected: Range | Date | null
-  locale?: Locale
   weekday?: string
-  disablePastDates?: boolean
 }>
 
 export function Calendar({
   children,
+  disableFutureDates,
+  disablePastDates,
+  locale,
   months,
   onNextMonth,
   onPrevMonth,
   onSelectDate,
   selected,
-  locale,
   weekday,
-  disablePastDates,
 }: CalendarProps) {
   return (
     <CalendarProvider
@@ -34,6 +36,7 @@ export function Calendar({
       selected={selected}
       locale={locale}
       weekday={weekday}
+      disableFutureDates={disableFutureDates}
       disablePastDates={disablePastDates}
     >
       {children}

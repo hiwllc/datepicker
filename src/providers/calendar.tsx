@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Months, Range } from '../types'
 
 export type CalendarContextProps = {
+  disableFutureDates?: boolean
   disablePastDates?: boolean
   locale?: Locale
   months: Months
@@ -23,6 +24,7 @@ export const CalendarContext = React.createContext<CalendarContextProps>({
 })
 
 export function CalendarProvider({
+  disableFutureDates,
   disablePastDates,
   locale,
   months,
@@ -36,6 +38,7 @@ export function CalendarProvider({
   return (
     <CalendarContext.Provider
       value={{
+        disableFutureDates,
         disablePastDates,
         locale,
         months,
