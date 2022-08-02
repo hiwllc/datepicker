@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { eachDayOfInterval, isSameDay } from 'date-fns'
+import { eachDayOfInterval, isBefore, isSameDay } from 'date-fns'
 import { useCalendarContext } from './calendar'
 import { Range } from '../types'
 
@@ -11,11 +11,28 @@ export const DayContext = React.createContext<CalendarDayContext>({
   day: 0,
 })
 
-function isRange(selected?: Range | Date): selected is Range {
-  return !(selected instanceof Date)
+export function useCalendarDay() {
+  const { day } = React.useContext(DayContext)
+  const { selected, disablePastDates } = useCalendarContext()
+
+  const dates = selectedToArray(selected)
+
+  const variant = getVariant({ day, dates: dates as Date[], disablePastDates })
+
+  return {
+    day,
+    variant,
+    disabled: variant === 'disabled',
+  }
 }
 
-function getVariant(day: Date, dates: Date[]) {
+type GetVariant = {
+  dates: Date[]
+  day: Date | number
+  disablePastDates?: boolean
+}
+
+function getVariant({ dates, day, disablePastDates }: GetVariant) {
   if (dates.some(d => isSameDay(day, d))) {
     return 'selected'
   }
@@ -25,11 +42,19 @@ function getVariant(day: Date, dates: Date[]) {
     dates[1] &&
     eachDayOfInterval({ start: dates[0], end: dates[1] })
 
+  if (disablePastDates && isBefore(day, new Date())) {
+    return 'disabled'
+  }
+
   if (interval && interval.some(d => isSameDay(d, day))) {
     return 'range'
   }
 
   return 'default'
+}
+
+function isRange(selected?: Range | Date): selected is Range {
+  return !(selected instanceof Date)
 }
 
 function selectedToArray(dates?: Range | Date | null) {
@@ -42,18 +67,4 @@ function selectedToArray(dates?: Range | Date | null) {
   }
 
   return [dates]
-}
-
-export function useCalendarDay() {
-  const { day } = React.useContext(DayContext)
-  const { selected } = useCalendarContext()
-
-  const dates = selectedToArray(selected)
-
-  const variant = getVariant(day as Date, dates as Date[])
-
-  return {
-    day,
-    variant,
-  }
 }

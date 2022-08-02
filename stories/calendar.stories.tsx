@@ -135,3 +135,27 @@ WithCustomLocale.argTypes = {
 WithCustomLocale.args = {
   locale: locales.ptBR,
 }
+
+export const WithDisabledPastDates: ComponentStory<typeof Calendar> = () => {
+  const { getCalendarProps, getMonthProps } = useCalendar({
+    initialDate: addMonths(new Date(), 1),
+    disablePastDates: true,
+  })
+
+  return (
+    <Calendar {...getCalendarProps()}>
+      <CalendarContent>
+        <CalendarHeader>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarHeader>
+
+        <CalendarMonth {...getMonthProps()}>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarMonthDays />
+        </CalendarMonth>
+      </CalendarContent>
+    </Calendar>
+  )
+}

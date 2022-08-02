@@ -11,6 +11,7 @@ export type CalendarProps = React.PropsWithChildren<{
   selected: Range | Date | null
   locale?: Locale
   weekday?: string
+  disablePastDates?: boolean
 }>
 
 export function Calendar({
@@ -22,6 +23,7 @@ export function Calendar({
   selected,
   locale,
   weekday,
+  disablePastDates,
 }: CalendarProps) {
   return (
     <CalendarProvider
@@ -32,6 +34,7 @@ export function Calendar({
       selected={selected}
       locale={locale}
       weekday={weekday}
+      disablePastDates={disablePastDates}
     >
       {children}
     </CalendarProvider>

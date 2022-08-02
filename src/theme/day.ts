@@ -10,6 +10,11 @@ export const CalendarDay: ComponentStyleConfig = {
     _hover: {
       bgColor: 'gray.100',
     },
+
+    _disabled: {
+      cursor: 'initial',
+      opacity: '0.1',
+    },
   },
 
   sizes: {
@@ -34,6 +39,12 @@ export const CalendarDay: ComponentStyleConfig = {
 
       _hover: {
         bgColor: 'pink.200',
+      },
+    },
+
+    disabled: {
+      _hover: {
+        bgColor: 'transparent',
       },
     },
   },

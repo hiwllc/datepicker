@@ -5,7 +5,7 @@ import { useCalendarDay } from '../providers/day'
 
 export function CalendarDay() {
   const { onSelectDate } = useCalendarContext()
-  const { day, variant } = useCalendarDay()
+  const { day, variant, disabled } = useCalendarDay()
   const style = useStyleConfig('CalendarDay', { variant })
   const weekday = getDay(day)
 
@@ -15,6 +15,7 @@ export function CalendarDay() {
       gridColumn={weekday + 1}
       key={format(day, 'd-M')}
       onClick={() => onSelectDate(day as Date)}
+      isDisabled={disabled}
     >
       {format(day, 'd')}
     </Button>

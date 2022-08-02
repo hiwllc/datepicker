@@ -4,42 +4,45 @@ import * as React from 'react'
 import { Months, Range } from '../types'
 
 export type CalendarContextProps = {
+  disablePastDates?: boolean
+  locale?: Locale
   months: Months
   onNextMonth: VoidFunction
   onPrevMonth: VoidFunction
   onSelectDate: (date: Date) => void
   selected?: Range | Date | null
-  locale?: Locale
   weekday?: string
 }
 
 export const CalendarContext = React.createContext<CalendarContextProps>({
+  locale: enUS,
   months: [],
   onNextMonth: () => null,
   onPrevMonth: () => null,
   onSelectDate: () => null,
-  locale: enUS,
 })
 
 export function CalendarProvider({
+  disablePastDates,
+  locale,
   months,
   onNextMonth,
   onPrevMonth,
   onSelectDate,
   selected,
-  locale,
   weekday,
   ...props
 }: React.PropsWithChildren<CalendarContextProps>) {
   return (
     <CalendarContext.Provider
       value={{
+        disablePastDates,
+        locale,
         months,
         onNextMonth,
         onPrevMonth,
         onSelectDate,
         selected,
-        locale,
         weekday,
       }}
       {...props}

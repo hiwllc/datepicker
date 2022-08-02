@@ -34,8 +34,22 @@ export type UseCalendar = {
    * @default false
    */
   singleDateSelection?: boolean
+  /**
+   * The locale for the calendar.
+   * @default en-US
+   * @see https://date-fns.org/v2.29.1/docs/Locale
+   */
   locale?: Locale
+  /**
+   * Weekday format. This uses the same as date-fns options.
+   * @see https://date-fns.org/v2.29.1/docs/format
+   */
   weekday?: string
+  /**
+   * Disable past date from being selected.
+   * @default false
+   */
+  disablePastDates?: boolean
 }
 
 function replaceOutsideDays(days: Date[], date: Date) {
@@ -44,10 +58,11 @@ function replaceOutsideDays(days: Date[], date: Date) {
 
 export function useCalendar(
   {
+    disablePastDates = false,
     initialDate = new Date(),
+    locale,
     months = 1,
     singleDateSelection,
-    locale,
     weekday,
   }: UseCalendar = { locale: enUS }
 ) {
@@ -96,11 +111,11 @@ export function useCalendar(
       const name = format(currentMonth, 'MMMM, yyyy', { locale })
 
       return {
-        firstDayOfMonth,
-        lastDayOfMonth,
-        firstWeekDayOfStartOfMonth,
-        lastWeekDayOfEndOfMonth,
         days: replaceOutsideDays(days, currentMonth),
+        firstDayOfMonth,
+        firstWeekDayOfStartOfMonth,
+        lastDayOfMonth,
+        lastWeekDayOfEndOfMonth,
         name,
         number: index,
       }
@@ -144,30 +159,32 @@ export function useCalendar(
 
   const getCalendarProps = React.useCallback(() => {
     return {
+      disablePastDates,
       initialDate: state,
+      locale,
       months: dates,
-      value: null,
-      onSelectDate,
       onNextMonth,
       onNextYear,
       onPrevMonth,
       onPrevYear,
-      locale,
-      weekday,
+      onSelectDate,
       selected: singleDateSelection ? date : range,
+      value: null,
+      weekday,
     }
   }, [
-    state,
+    date,
     dates,
+    disablePastDates,
+    locale,
     onNextMonth,
-    onPrevMonth,
     onNextYear,
+    onPrevMonth,
     onPrevYear,
     onSelectDate,
     range,
     singleDateSelection,
-    date,
-    locale,
+    state,
     weekday,
   ])
 
@@ -179,13 +196,13 @@ export function useCalendar(
   )
 
   return {
+    dates: range,
     getCalendarProps,
     getMonthProps,
-    onPrevMonth,
-    onNextMonth,
-    onPrevYear,
-    onNextYear,
     months: dates,
-    dates: range,
+    onNextMonth,
+    onNextYear,
+    onPrevMonth,
+    onPrevYear,
   }
 }
