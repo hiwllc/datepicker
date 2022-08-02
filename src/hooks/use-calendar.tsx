@@ -25,15 +25,20 @@ export type UseCalendar = {
    */
   disableDates?: Date[]
   /**
-   * Disable future date from being selected.
+   * Disable future dates from being selected.
    * @default false
    */
   disableFutureDates?: boolean
   /**
-   * Disable past date from being selected.
+   * Disable past dates from being selected.
    * @default false
    */
   disablePastDates?: boolean
+  /**
+   * Disable weekends dates from being selected.
+   * @default false
+   */
+  disableWeekends?: boolean
   /**
    * The initial date that calendar will use to render the first month.
    * @default Date
@@ -71,6 +76,7 @@ export function useCalendar(
     disableDates = [],
     disableFutureDates = false,
     disablePastDates = false,
+    disableWeekends = false,
     initialDate = new Date(),
     locale,
     months = 1,
@@ -174,6 +180,7 @@ export function useCalendar(
       disableDates,
       disableFutureDates,
       disablePastDates,
+      disableWeekends,
       initialDate: state,
       locale,
       months: dates,
@@ -192,6 +199,7 @@ export function useCalendar(
     disableDates,
     disableFutureDates,
     disablePastDates,
+    disableWeekends,
     locale,
     onNextMonth,
     onNextYear,

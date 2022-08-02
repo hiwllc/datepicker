@@ -7,6 +7,7 @@ export type CalendarProps = React.PropsWithChildren<{
   disableDates?: Date[]
   disableFutureDates?: boolean
   disablePastDates?: boolean
+  disableWeekends?: boolean
   locale?: Locale
   months: Months
   onNextMonth: VoidFunction
@@ -21,6 +22,7 @@ export function Calendar({
   disableDates,
   disableFutureDates,
   disablePastDates,
+  disableWeekends,
   locale,
   months,
   onNextMonth,
@@ -31,16 +33,17 @@ export function Calendar({
 }: CalendarProps) {
   return (
     <CalendarProvider
+      disableDates={disableDates}
+      disableFutureDates={disableFutureDates}
+      disablePastDates={disablePastDates}
+      disableWeekends={disableWeekends}
+      locale={locale}
       months={months}
       onNextMonth={onNextMonth}
       onPrevMonth={onPrevMonth}
       onSelectDate={onSelectDate}
       selected={selected}
-      locale={locale}
       weekday={weekday}
-      disableDates={disableDates}
-      disableFutureDates={disableFutureDates}
-      disablePastDates={disablePastDates}
     >
       {children}
     </CalendarProvider>

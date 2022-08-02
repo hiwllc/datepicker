@@ -7,6 +7,7 @@ export type CalendarContextProps = {
   disableDates?: Date[]
   disableFutureDates?: boolean
   disablePastDates?: boolean
+  disableWeekends?: boolean
   locale?: Locale
   months: Months
   onNextMonth: VoidFunction
@@ -28,6 +29,7 @@ export function CalendarProvider({
   disableDates,
   disableFutureDates,
   disablePastDates,
+  disableWeekends,
   locale,
   months,
   onNextMonth,
@@ -43,6 +45,7 @@ export function CalendarProvider({
         disableDates,
         disableFutureDates,
         disablePastDates,
+        disableWeekends,
         locale,
         months,
         onNextMonth,

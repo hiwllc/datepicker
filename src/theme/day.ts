@@ -12,8 +12,11 @@ export const CalendarDay: ComponentStyleConfig = {
     },
 
     _disabled: {
-      cursor: 'initial',
-      opacity: '0.1',
+      color: 'gray.200',
+      _hover: {
+        cursor: 'initial',
+        bgColor: 'transparent',
+      },
     },
   },
 
@@ -34,17 +37,17 @@ export const CalendarDay: ComponentStyleConfig = {
     },
 
     range: {
-      bgColor: 'pink.300',
+      bgColor: 'pink.200',
       color: 'white',
 
       _hover: {
-        bgColor: 'pink.200',
+        bgColor: 'pink.100',
       },
-    },
 
-    disabled: {
-      _hover: {
-        bgColor: 'transparent',
+      _disabled: {
+        _hover: {
+          bgColor: 'pink.300',
+        },
       },
     },
   },

@@ -165,7 +165,7 @@ export const DisableDates: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const DisabledPastDates: ComponentStory<typeof Calendar> = () => {
+export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
   const { getCalendarProps, getMonthProps } = useCalendar({
     initialDate: new Date(),
     disablePastDates: true,
@@ -193,6 +193,30 @@ export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
   const { getCalendarProps, getMonthProps } = useCalendar({
     initialDate: new Date(),
     disableFutureDates: true,
+  })
+
+  return (
+    <Calendar {...getCalendarProps()}>
+      <CalendarContent>
+        <CalendarHeader>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarHeader>
+
+        <CalendarMonth {...getMonthProps()}>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarMonthDays />
+        </CalendarMonth>
+      </CalendarContent>
+    </Calendar>
+  )
+}
+
+export const DisableWeekends: ComponentStory<typeof Calendar> = () => {
+  const { getCalendarProps, getMonthProps } = useCalendar({
+    initialDate: new Date(),
+    disableWeekends: true,
   })
 
   return (
