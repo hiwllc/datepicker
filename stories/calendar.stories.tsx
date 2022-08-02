@@ -15,7 +15,7 @@ import {
   CalendarWeek,
   useCalendar,
 } from '../src'
-import { addMonths } from 'date-fns'
+import { addDays, addMonths, subDays } from 'date-fns'
 
 export default {
   title: 'Calendar',
@@ -132,6 +132,37 @@ CustomLocale.argTypes = {
 
 CustomLocale.args = {
   locale: locales.ptBR,
+}
+
+export const DisableDates: ComponentStory<typeof Calendar> = () => {
+  const today = new Date()
+
+  const { getCalendarProps, getMonthProps } = useCalendar({
+    disableDates: [
+      subDays(today, 2),
+      subDays(today, 1),
+      today,
+      addDays(today, 1),
+      addDays(today, 2),
+    ],
+  })
+
+  return (
+    <Calendar {...getCalendarProps()}>
+      <CalendarContent>
+        <CalendarHeader>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarHeader>
+
+        <CalendarMonth {...getMonthProps()}>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarMonthDays />
+        </CalendarMonth>
+      </CalendarContent>
+    </Calendar>
+  )
 }
 
 export const DisabledPastDates: ComponentStory<typeof Calendar> = () => {

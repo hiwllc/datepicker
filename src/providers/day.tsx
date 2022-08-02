@@ -13,7 +13,7 @@ export const DayContext = React.createContext<CalendarDayContext>({
 
 export function useCalendarDay() {
   const { day } = React.useContext(DayContext)
-  const { selected, disablePastDates, disableFutureDates } =
+  const { disableDates, disablePastDates, disableFutureDates, selected } =
     useCalendarContext()
 
   const dates = selectedToArray(selected)
@@ -21,6 +21,7 @@ export function useCalendarDay() {
   const variant = getVariant({
     day,
     dates: dates as Date[],
+    disableDates,
     disablePastDates,
     disableFutureDates,
   })
@@ -35,6 +36,7 @@ export function useCalendarDay() {
 type GetVariant = {
   dates: Date[]
   day: Date | number
+  disableDates?: Date[]
   disableFutureDates?: boolean
   disablePastDates?: boolean
 }
@@ -42,6 +44,7 @@ type GetVariant = {
 function getVariant({
   dates,
   day,
+  disableDates,
   disablePastDates,
   disableFutureDates,
 }: GetVariant) {
@@ -56,7 +59,8 @@ function getVariant({
 
   if (
     (disablePastDates && isBefore(day, new Date())) ||
-    (disableFutureDates && isAfter(day, new Date()))
+    (disableFutureDates && isAfter(day, new Date())) ||
+    (disableDates && disableDates.some(d => isSameDay(day, d)))
   ) {
     return 'disabled'
   }

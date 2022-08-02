@@ -4,6 +4,7 @@ import { CalendarProvider } from '../providers/calendar'
 import { Months, Range } from '../types'
 
 export type CalendarProps = React.PropsWithChildren<{
+  disableDates?: Date[]
   disableFutureDates?: boolean
   disablePastDates?: boolean
   locale?: Locale
@@ -17,6 +18,7 @@ export type CalendarProps = React.PropsWithChildren<{
 
 export function Calendar({
   children,
+  disableDates,
   disableFutureDates,
   disablePastDates,
   locale,
@@ -36,6 +38,7 @@ export function Calendar({
       selected={selected}
       locale={locale}
       weekday={weekday}
+      disableDates={disableDates}
       disableFutureDates={disableFutureDates}
       disablePastDates={disablePastDates}
     >

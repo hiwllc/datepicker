@@ -20,10 +20,31 @@ import { Range, RangeSelection, Target } from '../types'
 
 export type UseCalendar = {
   /**
+   * A list of dates to prevent from being selected.
+   * @default []
+   */
+  disableDates?: Date[]
+  /**
+   * Disable future date from being selected.
+   * @default false
+   */
+  disableFutureDates?: boolean
+  /**
+   * Disable past date from being selected.
+   * @default false
+   */
+  disablePastDates?: boolean
+  /**
    * The initial date that calendar will use to render the first month.
    * @default Date
    */
   initialDate?: Date | number
+  /**
+   * The locale for the calendar.
+   * @default en-US
+   * @see https://date-fns.org/v2.29.1/docs/Locale
+   */
+  locale?: Locale
   /**
    * The number of months that you want to render.
    * @default 1
@@ -35,26 +56,10 @@ export type UseCalendar = {
    */
   singleDateSelection?: boolean
   /**
-   * The locale for the calendar.
-   * @default en-US
-   * @see https://date-fns.org/v2.29.1/docs/Locale
-   */
-  locale?: Locale
-  /**
    * Weekday format. This uses the same as date-fns options.
    * @see https://date-fns.org/v2.29.1/docs/format
    */
   weekday?: string
-  /**
-   * Disable future date from being selected.
-   * @default false
-   */
-  disableFutureDates?: boolean
-  /**
-   * Disable past date from being selected.
-   * @default false
-   */
-  disablePastDates?: boolean
 }
 
 function replaceOutsideDays(days: Date[], date: Date) {
@@ -63,6 +68,7 @@ function replaceOutsideDays(days: Date[], date: Date) {
 
 export function useCalendar(
   {
+    disableDates = [],
     disableFutureDates = false,
     disablePastDates = false,
     initialDate = new Date(),
@@ -165,6 +171,7 @@ export function useCalendar(
 
   const getCalendarProps = React.useCallback(() => {
     return {
+      disableDates,
       disableFutureDates,
       disablePastDates,
       initialDate: state,
@@ -182,6 +189,7 @@ export function useCalendar(
   }, [
     date,
     dates,
+    disableDates,
     disableFutureDates,
     disablePastDates,
     locale,
