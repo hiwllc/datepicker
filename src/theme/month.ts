@@ -12,6 +12,7 @@ export const CalendarMonth: ComponentMultiStyleConfig = {
       h: 8,
       fontSize: 'md',
       textAlign: 'center',
+      textTransform: 'capitalize',
     },
 
     week: {
@@ -21,6 +22,7 @@ export const CalendarMonth: ComponentMultiStyleConfig = {
     weekday: {
       color: 'gray.500',
       textAlign: 'center',
+      textTransform: 'capitalize',
     },
 
     days: {
