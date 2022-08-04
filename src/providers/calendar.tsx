@@ -1,6 +1,6 @@
+import * as React from 'react'
 import { Locale } from 'date-fns'
 import { enUS } from 'date-fns/locale'
-import * as React from 'react'
 import { Months, Range } from '../types'
 
 export type CalendarContextProps = {
