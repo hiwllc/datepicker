@@ -18,6 +18,7 @@ export type Calendar = React.PropsWithChildren<{
   onSelectDate: (value: CalendarDate | CalendarValues) => void
   months?: number
   locale?: Locale
+  canSelectSameDay?: boolean
   allowOutsideDays?: boolean
   disablePastDates?: boolean | Date
   disableFutureDates?: boolean | Date
@@ -41,6 +42,7 @@ export function Calendar({
   disableWeekends,
   disableDates,
   locale,
+  canSelectSameDay,
   weekdayFormat,
   onSelectDate,
   weekStartsOn,
@@ -82,8 +84,9 @@ export function Calendar({
     }
 
     if (
-      (value.start && isSameDay(date, value.start)) ||
-      (value.end && isSameDay(date, value.end))
+      !canSelectSameDay &&
+      ((value.start && isSameDay(date, value.start)) ||
+        (value.end && isSameDay(date, value.end)))
     ) {
       return
     }
