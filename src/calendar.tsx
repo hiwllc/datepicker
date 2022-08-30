@@ -28,6 +28,7 @@ export type Calendar = React.PropsWithChildren<{
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   highlightToday?: boolean
   weekDateSelection?: boolean
+  allowSelectSameDay?: boolean
 }>
 
 export function Calendar({
@@ -46,6 +47,7 @@ export function Calendar({
   weekStartsOn,
   weekDateSelection,
   highlightToday,
+  allowSelectSameDay,
 }: Calendar) {
   const styles = useMultiStyleConfig('Calendar', {}) as CalendarStyles
 
@@ -82,8 +84,9 @@ export function Calendar({
     }
 
     if (
-      (value.start && isSameDay(date, value.start)) ||
-      (value.end && isSameDay(date, value.end))
+      !allowSelectSameDay &&
+      ((value.start && isSameDay(date, value.start)) ||
+        (value.end && isSameDay(date, value.end)))
     ) {
       return
     }

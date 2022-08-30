@@ -826,3 +826,26 @@ export const WithCustomDay: ComponentStory<typeof Calendar> = () => {
     </Calendar>
   )
 }
+
+export const AllowSelectSameDay: ComponentStory<typeof Calendar> = () => {
+  const [dates, setDates] = React.useState<CalendarValues>({})
+
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
+
+  return (
+    <Calendar value={dates} onSelectDate={handleSelectDate} allowSelectSameDay>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
+
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  )
+}
