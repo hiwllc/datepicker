@@ -1,6 +1,6 @@
 {
   "name": "@uselessdev/datepicker",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "A simple react datepicker build with chakra-ui and date-fns",
   "main": "dist/uselessdev-datepicker.cjs.js",
   "module": "dist/uselessdev-datepicker.esm.js",
