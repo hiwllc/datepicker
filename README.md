@@ -1,6 +1,6 @@
 # Datepicker
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 A simple datepicker component build with [date-fns][1] and [Chakra-UI][2].
@@ -170,19 +170,22 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://iamwallace.dev"><img src="https://avatars.githubusercontent.com/u/6943919?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Wallace Batista</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=uselessdev" title="Code">💻</a> <a href="#ideas-uselessdev" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="http://htttp://www.leonardoelias.me"><img src="https://avatars.githubusercontent.com/u/1995213?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Leonardo Elias</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=leonardoelias" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/kivi"><img src="https://avatars.githubusercontent.com/u/366163?v=4?s=100" width="100px;" alt=""/><br /><sub><b>kivi</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=kivi" title="Code">💻</a></td>
-    <td align="center"><a href="http://guiteixeira.dev"><img src="https://avatars.githubusercontent.com/u/24235344?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Guilherme Teixeira </b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=ggteixeira" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/branislaav"><img src="https://avatars.githubusercontent.com/u/10597602?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brano Zavracky</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=branislaav" title="Code">💻</a></td>
-    <td align="center"><a href="https://pixel.is-a.dev"><img src="https://avatars.githubusercontent.com/u/69857856?v=4?s=100" width="100px;" alt=""/><br /><sub><b>O. Qudah</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=BasicPixel" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://medium.com/@tomchentw"><img src="https://avatars.githubusercontent.com/u/922234?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tom Chen</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=tomchentw" title="Documentation">📖</a> <a href="https://github.com/uselessdev/datepicker/commits?author=tomchentw" title="Code">💻</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/astahmer"><img src="https://avatars.githubusercontent.com/u/47224540?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alexandre Stahmer</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=astahmer" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/raphaelrochap"><img src="https://avatars.githubusercontent.com/u/21209032?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Raphael da Rocha Pinto Barboza</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=raphaelrochap" title="Code">💻</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://iamwallace.dev"><img src="https://avatars.githubusercontent.com/u/6943919?v=4?s=100" width="100px;" alt="Wallace Batista"/><br /><sub><b>Wallace Batista</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=uselessdev" title="Code">💻</a> <a href="#ideas-uselessdev" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://htttp://www.leonardoelias.me"><img src="https://avatars.githubusercontent.com/u/1995213?v=4?s=100" width="100px;" alt="Leonardo Elias"/><br /><sub><b>Leonardo Elias</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=leonardoelias" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kivi"><img src="https://avatars.githubusercontent.com/u/366163?v=4?s=100" width="100px;" alt="kivi"/><br /><sub><b>kivi</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=kivi" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://guiteixeira.dev"><img src="https://avatars.githubusercontent.com/u/24235344?v=4?s=100" width="100px;" alt="Guilherme Teixeira "/><br /><sub><b>Guilherme Teixeira </b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=ggteixeira" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/branislaav"><img src="https://avatars.githubusercontent.com/u/10597602?v=4?s=100" width="100px;" alt="Brano Zavracky"/><br /><sub><b>Brano Zavracky</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=branislaav" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://pixel.is-a.dev"><img src="https://avatars.githubusercontent.com/u/69857856?v=4?s=100" width="100px;" alt="O. Qudah"/><br /><sub><b>O. Qudah</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=BasicPixel" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://medium.com/@tomchentw"><img src="https://avatars.githubusercontent.com/u/922234?v=4?s=100" width="100px;" alt="Tom Chen"/><br /><sub><b>Tom Chen</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=tomchentw" title="Documentation">📖</a> <a href="https://github.com/uselessdev/datepicker/commits?author=tomchentw" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/astahmer"><img src="https://avatars.githubusercontent.com/u/47224540?v=4?s=100" width="100px;" alt="Alexandre Stahmer"/><br /><sub><b>Alexandre Stahmer</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=astahmer" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/raphaelrochap"><img src="https://avatars.githubusercontent.com/u/21209032?v=4?s=100" width="100px;" alt="Raphael da Rocha Pinto Barboza"/><br /><sub><b>Raphael da Rocha Pinto Barboza</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=raphaelrochap" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://gleu.ch"><img src="https://avatars.githubusercontent.com/u/9039?v=4?s=100" width="100px;" alt="Greg Leuch"/><br /><sub><b>Greg Leuch</b></sub></a><br /><a href="https://github.com/uselessdev/datepicker/commits?author=gleuch" title="Code">💻</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
