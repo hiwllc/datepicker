@@ -6,8 +6,8 @@ import { format } from 'date-fns'
 export type CalendarDay = React.PropsWithChildren<ButtonProps>
 
 export function CalendarDay({ children, ...props }: CalendarDay) {
-  const { day, variant, isDisabled, onSelectDates } = useCalendarDay()
-  const styles = useStyleConfig('CalendarDay', { variant })
+  const { day, interval, variant, isDisabled, onSelectDates } = useCalendarDay()
+  const styles = useStyleConfig('CalendarDay', { variant, interval })
 
   return (
     <Button
