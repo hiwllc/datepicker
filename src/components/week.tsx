@@ -23,8 +23,8 @@ export function CalendarWeek() {
 
   return (
     <Grid sx={styles.week}>
-      {weekdays.map(day => (
-        <Text key={day} sx={styles.weekday}>
+      {weekdays.map((day, i) => (
+        <Text key={`${day}-${i}`} sx={styles.weekday}>
           {day}
         </Text>
       ))}
