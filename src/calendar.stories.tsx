@@ -605,7 +605,7 @@ export const WithInputPopoverStartEndDates: ComponentStory<typeof Calendar> =
           >
             <Calendar
               value={dates}
-              onSelectDate={handleSelectDate}
+              onSelectDate={(date) => handleSelectDate(date as CalendarValues)}
               months={MONTHS}
             >
               <PopoverBody p={0}>
