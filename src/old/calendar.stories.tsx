@@ -68,6 +68,7 @@ export const CustomLocale: ComponentStory<typeof Calendar> = ({ locale }) => {
       value={dates}
       onSelectDate={handleSelectDate}
       locale={locale}
+      weekStartsOn={5}
       weekdayFormat="EEEEEE"
     >
       <CalendarControls>

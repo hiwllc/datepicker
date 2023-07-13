@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import('jest').Config} */
+const config = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: ['dist/'],
@@ -9,4 +10,13 @@ module.exports = {
   moduleNameMapper: {
     renderer: '<rootDir>/.jest/with-theme.tsx',
   },
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        diagnostics: false,
+      },
+    ],
+  },
 }
+module.exports = config

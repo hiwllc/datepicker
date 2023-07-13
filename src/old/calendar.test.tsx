@@ -12,23 +12,22 @@ import {
 } from '@chakra-ui/react'
 import { addMonths, format, isAfter, isBefore, isValid } from 'date-fns'
 import {
-  CalendarDJ,
-  CalendarNextButtonDJ,
-  CalendarPrevButtonDJ,
-  CalendarMonthNameDJ,
-  CalendarDaysDJ,
-  CalendarWeekDJ,
-  CalendarAdapterProvider,
-  MultipleCalendarDJ,
-  CalendarControlsDJ,
-  CalendarMonthsDJ,
-  CalendarMonthDJ,
+  Calendar,
+  CalendarControls,
+  CalendarNextButton,
+  CalendarPrevButton,
+  CalendarMonths,
+  CalendarMonth,
+  CalendarMonthName,
+  CalendarDays,
+  CalendarWeek,
+  CalendarDate,
+  CalendarValues,
 } from './index'
 import { render, screen, fireEvent } from 'renderer'
-import { AdapterDateFns } from './adapters/AdapterDateFns'
 
 function CalendarBasic() {
-  const [date, setDate] = React.useState(new Date())
+  const [date, setDate] = React.useState<CalendarDate>()
   const [value, setValue] = React.useState('')
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -36,7 +35,7 @@ function CalendarBasic() {
   const initialRef = React.useRef(null)
   const calendarRef = React.useRef(null)
 
-  const handleSelectDate = (date: Date) => {
+  const handleSelectDate = (date: CalendarDate) => {
     setDate(date)
     setValue(() => (isValid(date) ? format(date, 'MM/dd/yyyy') : ''))
     onClose()
@@ -69,64 +68,60 @@ function CalendarBasic() {
   }, [value])
 
   return (
-    <CalendarAdapterProvider adapter={AdapterDateFns}>
-      <Box minH="400px">
-        <Popover
-          placement="auto-start"
-          isOpen={isOpen}
-          onClose={onClose}
-          initialFocusRef={initialRef}
-          isLazy
+    <Box minH="400px">
+      <Popover
+        placement="auto-start"
+        isOpen={isOpen}
+        onClose={onClose}
+        initialFocusRef={initialRef}
+        isLazy
+      >
+        <PopoverTrigger>
+          <Box onClick={onOpen} ref={initialRef}>
+            <Input
+              placeholder="Select a date"
+              value={value}
+              onChange={handleInputChange}
+            />
+          </Box>
+        </PopoverTrigger>
+
+        <PopoverContent
+          p={0}
+          w="min-content"
+          border="none"
+          outline="none"
+          _focus={{ boxShadow: 'none' }}
+          ref={calendarRef}
         >
-          <PopoverTrigger>
-            <Box onClick={onOpen} ref={initialRef}>
-              <Input
-                placeholder="Select a date"
-                value={value}
-                onChange={handleInputChange}
-              />
-            </Box>
-          </PopoverTrigger>
-
-          <PopoverContent
-            p={0}
-            w="min-content"
-            border="none"
-            outline="none"
-            _focus={{ boxShadow: 'none' }}
-            ref={calendarRef}
+          <Calendar
+            value={{ start: date }}
+            onSelectDate={handleSelectDate}
+            singleDateSelection
           >
-            <CalendarDJ
-              value={date}
-              onSelectDate={handleSelectDate}
-              singleDateSelection
-            >
-              <PopoverBody p={0}>
-                <CalendarControlsDJ>
-                  <CalendarPrevButtonDJ />
-                  <CalendarNextButtonDJ />
-                </CalendarControlsDJ>
+            <PopoverBody p={0}>
+              <CalendarControls>
+                <CalendarPrevButton />
+                <CalendarNextButton />
+              </CalendarControls>
 
-                <CalendarMonthsDJ>
-                  <CalendarMonthDJ>
-                    <CalendarMonthNameDJ />
-                    <CalendarWeekDJ />
-                    <CalendarDaysDJ />
-                  </CalendarMonthDJ>
-                </CalendarMonthsDJ>
-              </PopoverBody>
-            </CalendarDJ>
-          </PopoverContent>
-        </Popover>
-      </Box>
-    </CalendarAdapterProvider>
+              <CalendarMonths>
+                <CalendarMonth>
+                  <CalendarMonthName />
+                  <CalendarWeek />
+                  <CalendarDays />
+                </CalendarMonth>
+              </CalendarMonths>
+            </PopoverBody>
+          </Calendar>
+        </PopoverContent>
+      </Popover>
+    </Box>
   )
 }
 
 function CalendarRange() {
-  const [dates, setDates] = React.useState<MultipleCalendarDJ<Date>['value']>(
-    {}
-  )
+  const [dates, setDates] = React.useState<CalendarValues>({})
   const [values, setValues] = React.useState({
     start: '',
     end: '',
@@ -141,7 +136,7 @@ function CalendarRange() {
 
   const MONTHS = 2
 
-  const handleSelectDate: MultipleCalendarDJ<Date>['onSelectDate'] = dates => {
+  const handleSelectDate = (dates: CalendarValues) => {
     setDates(dates)
 
     setValues({
@@ -178,7 +173,6 @@ function CalendarRange() {
   })
 
   React.useEffect(() => {
-    console.log('3434', values.start, match(values.start))
     if (match(values.start)) {
       const startDate = new Date(values.start)
       const isValidStartDate = isValid(startDate)
@@ -213,77 +207,75 @@ function CalendarRange() {
   }, [values.end])
 
   return (
-    <CalendarAdapterProvider adapter={AdapterDateFns}>
-      <Box minH="400px">
-        <Popover
-          placement="auto-start"
-          isOpen={isOpen}
-          onClose={onClose}
-          initialFocusRef={initialRef}
-          isLazy
-        >
-          <PopoverTrigger>
-            <Flex
-              w="400px"
-              borderWidth={1}
-              rounded="md"
-              p={2}
-              onClick={onOpen}
-              ref={initialRef}
-            >
-              <Input
-                variant="unstyled"
-                name="start"
-                placeholder="Start date"
-                value={values.start}
-                onChange={handleInputChange}
-                ref={startInputRef}
-              />
-              <Input
-                variant="unstyled"
-                name="end"
-                placeholder="End date"
-                value={values.end}
-                onChange={handleInputChange}
-                ref={endInputRef}
-              />
-            </Flex>
-          </PopoverTrigger>
-
-          <PopoverContent
-            p={0}
-            w="min-content"
-            border="none"
-            outline="none"
-            _focus={{ boxShadow: 'none' }}
-            ref={calendarRef}
+    <Box minH="400px">
+      <Popover
+        placement="auto-start"
+        isOpen={isOpen}
+        onClose={onClose}
+        initialFocusRef={initialRef}
+        isLazy
+      >
+        <PopoverTrigger>
+          <Flex
+            w="400px"
+            borderWidth={1}
+            rounded="md"
+            p={2}
+            onClick={onOpen}
+            ref={initialRef}
           >
-            <CalendarDJ
-              value={dates}
-              onSelectDate={handleSelectDate}
-              months={MONTHS}
-            >
-              <PopoverBody p={0}>
-                <CalendarControlsDJ>
-                  <CalendarPrevButtonDJ />
-                  <CalendarNextButtonDJ />
-                </CalendarControlsDJ>
+            <Input
+              variant="unstyled"
+              name="start"
+              placeholder="Start date"
+              value={values.start}
+              onChange={handleInputChange}
+              ref={startInputRef}
+            />
+            <Input
+              variant="unstyled"
+              name="end"
+              placeholder="End date"
+              value={values.end}
+              onChange={handleInputChange}
+              ref={endInputRef}
+            />
+          </Flex>
+        </PopoverTrigger>
 
-                <CalendarMonthsDJ>
-                  {[...Array(MONTHS).keys()].map(m => (
-                    <CalendarMonthDJ key={m} month={m}>
-                      <CalendarMonthNameDJ />
-                      <CalendarWeekDJ />
-                      <CalendarDaysDJ />
-                    </CalendarMonthDJ>
-                  ))}
-                </CalendarMonthsDJ>
-              </PopoverBody>
-            </CalendarDJ>
-          </PopoverContent>
-        </Popover>
-      </Box>
-    </CalendarAdapterProvider>
+        <PopoverContent
+          p={0}
+          w="min-content"
+          border="none"
+          outline="none"
+          _focus={{ boxShadow: 'none' }}
+          ref={calendarRef}
+        >
+          <Calendar
+            value={dates}
+            onSelectDate={handleSelectDate}
+            months={MONTHS}
+          >
+            <PopoverBody p={0}>
+              <CalendarControls>
+                <CalendarPrevButton />
+                <CalendarNextButton />
+              </CalendarControls>
+
+              <CalendarMonths>
+                {[...Array(MONTHS).keys()].map(m => (
+                  <CalendarMonth key={m} month={m}>
+                    <CalendarMonthName />
+                    <CalendarWeek />
+                    <CalendarDays />
+                  </CalendarMonth>
+                ))}
+              </CalendarMonths>
+            </PopoverBody>
+          </Calendar>
+        </PopoverContent>
+      </Popover>
+    </Box>
   )
 }
 
@@ -327,7 +319,6 @@ test('should change date in input', () => {
   fireEvent.click(INPUT)
 
   expect(INPUT).toHaveValue('01/10/2022')
-  console.log('23', screen.getByRole('button', { current: 'date' }).innerText)
   expect(screen.getByRole('button', { current: 'date' })).toHaveTextContent(
     '10'
   )

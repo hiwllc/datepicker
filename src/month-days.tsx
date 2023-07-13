@@ -1,28 +1,32 @@
-import * as React from 'react'
 import { Grid, useMultiStyleConfig } from '@chakra-ui/react'
-import { format } from 'date-fns'
 import type { CalendarMonthStyles } from './types'
-import { CalendarContext } from './context'
-import { CalendarDay } from './day'
+import { useCalendarContext } from './context'
+import { CalendarDayDJ } from './day'
 import { MonthContext } from './month'
-import { DayContext } from './useCalendarDay'
+import { DayContextDJ } from './useCalendarDay'
+import { PropsWithChildren, useContext } from 'react'
 
-export function CalendarDays({ children }: React.PropsWithChildren<unknown>) {
+export function CalendarDaysDJ<TDate, TLocale>({
+  children,
+}: PropsWithChildren<unknown>) {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
-  const { dates } = React.useContext(CalendarContext)
-  const { month } = React.useContext(MonthContext)
+  const context = useCalendarContext<TDate, TLocale>()
+  const monthContext = useContext(MonthContext)
 
   return (
     <Grid sx={styles.days}>
-      {dates[Number(month)].days.map((day, index) => {
+      {context.dates[Number(monthContext.month)].days.map((day, index) => {
         if (!day) {
           return <span key={`not-a-day-${index}`} />
         }
 
         return (
-          <DayContext.Provider value={{ day }} key={format(day, 'd-M')}>
-            {children ? children : <CalendarDay>{children}</CalendarDay>}
-          </DayContext.Provider>
+          <DayContextDJ.Provider
+            value={{ day }}
+            key={context.adapter.format(day, 'monthDay')}
+          >
+            {children ? children : <CalendarDayDJ>{children}</CalendarDayDJ>}
+          </DayContextDJ.Provider>
         )
       })}
     </Grid>

@@ -4,7 +4,7 @@ import { CalendarControlStyles } from './types'
 
 export type CalendarControls = React.PropsWithChildren<unknown>
 
-export function CalendarControlsDJ({ children }: CalendarControls) {
+export function CalendarControls({ children }: CalendarControls) {
   const styles = useMultiStyleConfig(
     'CalendarControl',
     {}

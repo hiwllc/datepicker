@@ -1,35 +1,44 @@
-import * as React from 'react'
-import { Locale } from 'date-fns'
-import { CalendarDate } from './types'
+import { CalendarAdapter } from './adapters'
+import { createContext, useContext } from 'react'
 
-export type CalendarContext = {
+export type CalendarContextDJ<TDate, TLocale> = {
   dates: {
-    startDateOfMonth: Date
-    endDateOfMonth: Date
-    startWeek: Date
-    endWeek: Date
-    days: (CalendarDate | null)[]
+    startDateOfMonth: TDate
+    endDateOfMonth: TDate
+    startWeek: TDate
+    endWeek: TDate
+    days: (TDate | null)[]
   }[]
   nextMonth: VoidFunction
   prevMonth: VoidFunction
-  onSelectDates: (date: CalendarDate) => void
-  startSelectedDate?: CalendarDate
-  endSelectedDate?: CalendarDate
+  onSelectDates: (date: TDate) => void
+  startSelectedDate?: TDate
+  endSelectedDate?: TDate
   allowOutsideDays?: boolean
-  disablePastDates?: boolean | Date
-  disableFutureDates?: boolean | Date
+  disablePastDates?: boolean | TDate
+  disableFutureDates?: boolean | TDate
   disableWeekends?: boolean
-  disableDates?: CalendarDate[]
-  locale?: Locale
+  disableDates?: TDate[]
+  locale?: TLocale
   weekdayFormat?: string
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   highlightToday?: boolean
+  adapter: ReturnType<CalendarAdapter<TDate, TLocale>>
 }
 
-export const CalendarContext = React.createContext<CalendarContext>({
-  dates: [],
-  nextMonth: () => null,
-  prevMonth: () => null,
-  onSelectDates: () => null,
-  weekStartsOn: 0,
-})
+export const CalendarContextDJ = createContext<CalendarContextDJ<
+  any,
+  any
+> | null>(null)
+
+export const useCalendarContext = <TDate, TLocale>() => {
+  const calendarContext = useContext<CalendarContextDJ<TDate, TLocale> | null>(
+    CalendarContextDJ
+  )
+
+  if (calendarContext === null) {
+    throw new Error('Something went wrong')
+  }
+
+  return calendarContext
+}
