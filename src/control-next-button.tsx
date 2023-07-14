@@ -3,13 +3,13 @@ import { useCalendarContext } from './context'
 import { CalendarControlStyles } from './types'
 import { ReactElement } from 'react'
 
-type CalendarNextButton = {
+type CalendarNextButtonProps = {
   as?: ({ onClick }: { onClick: VoidFunction }) => ReactElement | null
 }
 
-export function CalendarNextButtonDJ<TDate, TLocale>({
+export function CalendarNextButton<TDate, TLocale>({
   as,
-}: CalendarNextButton) {
+}: CalendarNextButtonProps) {
   const styles = useMultiStyleConfig(
     'CalendarControl',
     {}

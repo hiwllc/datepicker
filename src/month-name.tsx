@@ -4,13 +4,13 @@ import { useCalendarContext } from './context'
 import { MonthContext } from './month'
 import { CalendarMonthStyles } from './types'
 
-export type CalendarMonthName = {
+export type CalendarMonthNameProps = {
   format?: string
 }
 
-export function CalendarMonthNameDJ<TDate, TLocale>({
+export function CalendarMonthName<TDate, TLocale>({
   format,
-}: CalendarMonthName) {
+}: CalendarMonthNameProps) {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
   const context = useCalendarContext<TDate, TLocale>()
   const monthContext = React.useContext(MonthContext)

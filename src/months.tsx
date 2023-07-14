@@ -3,9 +3,9 @@ import { Grid, useMultiStyleConfig } from '@chakra-ui/react'
 import { CalendarStyles } from './types'
 import { PropsWithChildren } from 'react'
 
-export type CalendarMonths = PropsWithChildren<GridProps>
+export type CalendarMonthsProps = PropsWithChildren<GridProps>
 
-export function CalendarMonthsDJ({ children, ...props }: CalendarMonths) {
+export function CalendarMonths({ children, ...props }: CalendarMonthsProps) {
   const styles = useMultiStyleConfig('Calendar', {}) as CalendarStyles
 
   return <Grid sx={{ ...styles.months, ...props }}>{children}</Grid>

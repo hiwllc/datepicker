@@ -1,18 +1,20 @@
 import { PropsWithChildren } from 'react'
 import { Button, ButtonProps, useStyleConfig } from '@chakra-ui/react'
-import { useCalendarDayDJ } from './useCalendarDay'
+import { useCalendarDay } from './useCalendarDay'
 import { useCalendarContext } from './context'
 
-export type CalendarDay = PropsWithChildren<ButtonProps>
+export type CalendarDayProps = PropsWithChildren<ButtonProps>
 
-export function CalendarDayDJ<TDate, TLocale>({
+export function CalendarDay<TDate, TLocale>({
   children,
   ...props
-}: CalendarDay) {
+}: CalendarDayProps) {
   const context = useCalendarContext<TDate, TLocale>()
 
-  const { day, interval, variant, isDisabled, onSelectDates } =
-    useCalendarDayDJ<TDate, TLocale>()
+  const { day, interval, variant, isDisabled, onSelectDates } = useCalendarDay<
+    TDate,
+    TLocale
+  >()
   const styles = useStyleConfig('CalendarDay', { variant, interval })
 
   return (

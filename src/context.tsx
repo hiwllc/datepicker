@@ -1,7 +1,7 @@
 import { CalendarAdapter } from './adapters'
 import { createContext, useContext } from 'react'
 
-export type CalendarContextDJ<TDate, TLocale> = {
+export type CalendarContextType<TDate, TLocale> = {
   dates: {
     startDateOfMonth: TDate
     endDateOfMonth: TDate
@@ -26,15 +26,16 @@ export type CalendarContextDJ<TDate, TLocale> = {
   adapter: ReturnType<CalendarAdapter<TDate, TLocale>>
 }
 
-export const CalendarContextDJ = createContext<CalendarContextDJ<
+export const CalendarContext = createContext<CalendarContextType<
   any,
   any
 > | null>(null)
 
 export const useCalendarContext = <TDate, TLocale>() => {
-  const calendarContext = useContext<CalendarContextDJ<TDate, TLocale> | null>(
-    CalendarContextDJ
-  )
+  const calendarContext = useContext<CalendarContextType<
+    TDate,
+    TLocale
+  > | null>(CalendarContext)
 
   if (calendarContext === null) {
     throw new Error('Something went wrong')

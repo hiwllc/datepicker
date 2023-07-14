@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import {
   Box,
   Button,
@@ -18,114 +18,52 @@ import {
 import * as locales from 'date-fns/locale'
 import 'dayjs/locale/ru'
 
-import { CalendarDJ, MultipleCalendarDJ } from './calendar'
-import { CalendarMonth, CalendarMonthDJ } from './month'
-import { CalendarDaysDJ } from './month-days'
-import { CalendarMonthNameDJ } from './month-name'
-import { CalendarWeekDJ } from './month-week'
-import { CalendarMonths, CalendarMonthsDJ } from './months'
-import { CalendarControls, CalendarControlsDJ } from './control'
-import { CalendarNextButtonDJ } from './control-next-button'
-import { CalendarPrevButtonDJ } from './control-prev-button'
-import { CalendarValues } from './types'
+import {
+  Calendar,
+  MultipleCalendar,
+  CalendarMonth,
+  CalendarDays,
+  CalendarMonthName,
+  CalendarWeek,
+  CalendarMonths,
+  CalendarControls,
+  CalendarNextButton,
+  CalendarPrevButton,
+  CalendarAdapterProvider,
+} from '../src'
 import dayjs, { Dayjs } from 'dayjs'
-import { CalendarAdapterProvider } from './adapters'
-import { AdapterDayjs } from './adapters/AdapterDayjs'
-import { AdapterDateFns } from './adapters/AdapterDateFns'
-
-import { Calendar } from './old/calendar'
-import { CalendarPrevButton } from './old/control-prev-button'
-import { CalendarNextButton } from './old/control-next-button'
-import { CalendarMonthName } from './old/month-name'
-import { CalendarWeek } from './old/month-week'
-import { CalendarDays } from './old/month-days'
+import { AdapterDayjs } from '../src/adapters/AdapterDayjs'
+import { AdapterDateFns } from '../src/adapters/AdapterDateFns'
 
 export default {
-  title: 'newCalendar',
-  component: CalendarDJ,
-} as ComponentMeta<typeof CalendarDJ>
+  title: 'calendar',
+  component: Calendar,
+} as Meta<typeof Calendar>
 
-export const Basicss: ComponentStory<typeof CalendarDJ> = () => {
-  const [dates, setDates] = React.useState<MultipleCalendarDJ<Date>['value']>({
+export const Basic: StoryFn<typeof Calendar> = () => {
+  const [dates, setDates] = React.useState<MultipleCalendar<Date>['value']>({
     start: new Date(),
   })
-  const [datesDJ, setDatesDJ] = React.useState({})
 
-  const handleSelectDate = (dates: { start: Date }) => setDates(dates)
-  const handleSelectDateDJ: MultipleCalendarDJ<Dayjs>['onSelectDate'] =
-    dates => {
-      console.log(dates)
-      setDatesDJ(dates)
-    }
-
-  const MONTHS = 2
+  const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
   return (
-    <Flex gap={4}>
-      <CalendarAdapterProvider adapter={AdapterDayjs}>
-        <CalendarDJ
-          value={datesDJ}
-          onSelectDate={handleSelectDateDJ}
-          // weekStartsOn={3}
-          // singleDateSelection
-          // disableWeekends
-          // weekDateSelection
-          months={MONTHS}
-          // allowOutsideDays
-          locale="ru"
-        >
-          <CalendarControlsDJ>
-            <CalendarPrevButtonDJ />
-            <CalendarNextButtonDJ />
-          </CalendarControlsDJ>
+    <Calendar value={dates} onSelectDate={handleSelectDate}>
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
 
-          <CalendarMonthsDJ>
-            {[...Array(MONTHS).keys()].map(m => (
-              <CalendarMonthDJ key={m} month={m}>
-                <CalendarMonthNameDJ />
-                <CalendarWeekDJ />
-                <CalendarDaysDJ />
-              </CalendarMonthDJ>
-            ))}
-          </CalendarMonthsDJ>
-        </CalendarDJ>
-      </CalendarAdapterProvider>
-      {/*<CalendarAdapterProvider adapter={AdapterDateFns}>*/}
-      {/*  <CalendarDJ*/}
-      {/*    value={dates}*/}
-      {/*    onSelectDate={handleSelectDate}*/}
-      {/*    // disableWeekends*/}
-      {/*    // weekDateSelection*/}
-      {/*    // weekStartsOn={3}*/}
-      {/*    months={2}*/}
-      {/*    allowOutsideDays*/}
-      {/*    // singleDateSelection*/}
-      {/*    locale={locales.ru}*/}
-      {/*  >*/}
-      {/*    <CalendarControlsDJ>*/}
-      {/*      <CalendarPrevButtonDJ />*/}
-      {/*      <CalendarNextButtonDJ />*/}
-      {/*    </CalendarControlsDJ>*/}
-
-      {/*    <CalendarMonthsDJ>*/}
-      {/*      {[...Array(MONTHS).keys()].map(m => (*/}
-      {/*        <CalendarMonthDJ key={m} month={m}>*/}
-      {/*          <CalendarMonthNameDJ />*/}
-      {/*          <CalendarWeekDJ />*/}
-      {/*          <CalendarDaysDJ />*/}
-      {/*        </CalendarMonthDJ>*/}
-      {/*      ))}*/}
-      {/*    </CalendarMonthsDJ>*/}
-      {/*  </CalendarDJ>*/}
-      {/*</CalendarAdapterProvider>*/}
-    </Flex>
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
   )
 }
-
-// export default {
-//   title: 'Calendar',
-//   component: Calendar,
-// } as ComponentMeta<typeof Calendar>
 //
 // export const CustomLocale: ComponentStory<typeof Calendar> = ({ locale }) => {
 //   const [dates, setDates] = React.useState<CalendarValues>({})
@@ -460,8 +398,8 @@ export const Basicss: ComponentStory<typeof CalendarDJ> = () => {
 //   const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
 //
 //   const handleInputChange = ({
-//     target,
-//   }: React.ChangeEvent<HTMLInputElement>) => {
+//                                target,
+//                              }: React.ChangeEvent<HTMLInputElement>) => {
 //     setValue(target.value)
 //
 //     if (match(target.value)) {
@@ -571,8 +509,8 @@ export const Basicss: ComponentStory<typeof CalendarDJ> = () => {
 //     const match = (value: string) => value.match(/(\d{2})\/(\d{2})\/(\d{4})/)
 //
 //     const handleInputChange = ({
-//       target,
-//     }: React.ChangeEvent<HTMLInputElement>) => {
+//                                  target,
+//                                }: React.ChangeEvent<HTMLInputElement>) => {
 //       setValues({
 //         ...values,
 //         [target.name]: target.value,
@@ -834,24 +772,24 @@ export const Basicss: ComponentStory<typeof CalendarDJ> = () => {
 //
 //   const selected = isSelected
 //     ? {
-//         bgColor: 'teal.400',
-//         color: 'white',
-//         rounded: 0,
-//         _hover: {
-//           bgColor: 'teal.300',
-//         },
-//       }
+//       bgColor: 'teal.400',
+//       color: 'white',
+//       rounded: 0,
+//       _hover: {
+//         bgColor: 'teal.300',
+//       },
+//     }
 //     : {}
 //
 //   const range = isInRange
 //     ? {
-//         bgColor: 'teal.300',
-//         color: 'white',
-//         rounded: 'none',
-//         _hover: {
-//           bgColor: 'teal.200',
-//         },
-//       }
+//       bgColor: 'teal.300',
+//       color: 'white',
+//       rounded: 'none',
+//       _hover: {
+//         bgColor: 'teal.200',
+//       },
+//     }
 //     : {}
 //
 //   return (

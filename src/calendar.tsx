@@ -1,11 +1,11 @@
 import { useMultiStyleConfig, Flex } from '@chakra-ui/react'
-import { CalendarContextDJ } from './context'
-import { useCalendarDJ } from './useCalendar'
+import { CalendarContext } from './context'
+import { useCalendar } from './useCalendar'
 import { CalendarStyles, Target } from './types'
 import { useAdapter } from './adapters'
 import { useState, PropsWithChildren, useEffect } from 'react'
 
-type BaseCalendarDJ<TDate, TLocale = void> = {
+type BaseCalendarProps<TDate, TLocale = void> = {
   months?: number
   locale?: TLocale
   allowOutsideDays?: boolean
@@ -19,44 +19,51 @@ type BaseCalendarDJ<TDate, TLocale = void> = {
   allowSelectSameDay?: boolean
 }
 
-export type SingleCalendarDJ<TDate, TLocale = void> = BaseCalendarDJ<
+export type CalendarSingleDate<TDate> = TDate | null | undefined
+
+export type SingleCalendarProps<TDate, TLocale = void> = BaseCalendarProps<
   TDate,
   TLocale
 > & {
-  value: TDate
-  onSelectDate: (value: TDate) => void
+  value: CalendarSingleDate<TDate>
+  onSelectDate: (value: CalendarSingleDate<TDate>) => void
   singleDateSelection: true
   weekDateSelection?: never
 }
 
-export type MultipleCalendarDJ<TDate, TLocale = void> = BaseCalendarDJ<
+export type CalendarDateRange<TDate> = {
+  start?: TDate | null
+  end?: TDate | null
+}
+
+export type RangeCalendarProps<TDate, TLocale = void> = BaseCalendarProps<
   TDate,
   TLocale
 > & {
-  value: { start?: TDate; end?: TDate }
-  onSelectDate: (value: { start: TDate; end?: TDate }) => void
+  value: CalendarDateRange<TDate>
+  onSelectDate: (value: CalendarDateRange<TDate>) => void
   singleDateSelection?: false
   weekDateSelection?: boolean
 }
 
-type CalendarDJProps<TDate, TLocale = void> =
-  | SingleCalendarDJ<TDate, TLocale>
-  | MultipleCalendarDJ<TDate, TLocale>
+export type CalendarProps<TDate, TLocale = void> =
+  | SingleCalendarProps<TDate, TLocale>
+  | RangeCalendarProps<TDate, TLocale>
 
-function isMultiMode<TDate, TLocale>(
-  props: CalendarDJProps<TDate, TLocale>
-): props is MultipleCalendarDJ<TDate, TLocale> {
-  return !props.singleDateSelection
-}
+// function isMultiMode<TDate, TLocale>(
+//   props: CalendarProps<TDate, TLocale>
+// ): props is RangeCalendarProps<TDate, TLocale> {
+//   return !props.singleDateSelection
+// }
 
 function isSingleMode<TDate, TLocale>(
-  props: CalendarDJProps<TDate, TLocale>
-): props is SingleCalendarDJ<TDate, TLocale> {
+  props: CalendarProps<TDate, TLocale>
+): props is SingleCalendarProps<TDate, TLocale> {
   return !!props.singleDateSelection
 }
 
-export function CalendarDJ<TDate, TLocale>(
-  props: PropsWithChildren<CalendarDJProps<TDate, TLocale>>
+export function Calendar<TDate, TLocale>(
+  props: PropsWithChildren<CalendarProps<TDate, TLocale>>
 ) {
   const styles = useMultiStyleConfig('Calendar', {}) as CalendarStyles
 
@@ -65,11 +72,11 @@ export function CalendarDJ<TDate, TLocale>(
     weekStartsOn: props.weekStartsOn,
   })
 
-  const { resetDate, ...values } = useCalendarDJ<TDate, TLocale>({
+  const { resetDate, ...values } = useCalendar<TDate, TLocale>({
     allowOutsideDays: props.allowOutsideDays,
     blockFuture: false,
     start:
-      (isMultiMode(props) ? props.value.start : props.value) || adapter.today,
+      (isSingleMode(props) ? props.value : props.value.start) || adapter.today,
     months: props.months,
     adapter,
   })
@@ -77,7 +84,8 @@ export function CalendarDJ<TDate, TLocale>(
   const [target, setTarget] = useState<Target>(Target.START)
 
   useEffect(() => {
-    if (adapter.isValid(isMultiMode(props) ? props.value.start : props.value)) {
+    const date = isSingleMode(props) ? props.value : props.value.start
+    if (date && adapter.isValid(date)) {
       resetDate()
     }
     // missing resetDate, adding resetDate causes to calendar
@@ -110,12 +118,12 @@ export function CalendarDJ<TDate, TLocale>(
     }
 
     if (props.value.end && adapter.isAfter(date, props.value.end)) {
-      return props.onSelectDate({ ...props.value, end: date })
+      return props.onSelectDate({ start: props.value.start!, end: date })
     }
 
     if (target === Target.END) {
       setTarget(Target.START)
-      return props.onSelectDate({ ...props.value, end: date })
+      return props.onSelectDate({ start: props.value.start!, end: date })
     }
 
     console.log('start')
@@ -125,7 +133,7 @@ export function CalendarDJ<TDate, TLocale>(
   }
 
   return (
-    <CalendarContextDJ.Provider
+    <CalendarContext.Provider
       value={{
         ...values,
         onSelectDates: selectDateHandler,
@@ -145,6 +153,6 @@ export function CalendarDJ<TDate, TLocale>(
       }}
     >
       <Flex sx={styles.calendar}>{props.children}</Flex>
-    </CalendarContextDJ.Provider>
+    </CalendarContext.Provider>
   )
 }

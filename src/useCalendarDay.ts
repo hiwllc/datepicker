@@ -2,18 +2,18 @@ import { useCalendarContext } from './context'
 import { MonthContext } from './month'
 import { createContext, useContext } from 'react'
 
-export type CalendarDayContextDJ<TDate> = {
+export type CalendarDayContextType<TDate> = {
   day: TDate
 }
 
-export const DayContextDJ = createContext<CalendarDayContextDJ<any>>({
+export const DayContext = createContext<CalendarDayContextType<any>>({
   day: null,
 })
 
-export function useCalendarDayDJ<TDate, TLocale>() {
+export function useCalendarDay<TDate, TLocale>() {
   const context = useCalendarContext<TDate, TLocale>()
 
-  const dayContext = useContext<CalendarDayContextDJ<TDate>>(DayContextDJ)
+  const dayContext = useContext<CalendarDayContextType<TDate>>(DayContext)
   const monthContext = useContext(MonthContext)
 
   let variant: 'selected' | 'range' | 'outside' | 'today' | undefined
@@ -68,12 +68,9 @@ export function useCalendarDayDJ<TDate, TLocale>() {
     (context.disablePastDates &&
       context.adapter.isBefore(
         dayContext.day,
-        context.adapter.addDays(
-          typeof context.disablePastDates !== 'boolean'
-            ? context.disablePastDates
-            : context.adapter.today,
-          -1
-        )
+        typeof context.disablePastDates !== 'boolean'
+          ? context.disablePastDates
+          : context.adapter.addDays(context.adapter.today, -1)
       )) ||
     (context.disableFutureDates &&
       context.adapter.isAfter(

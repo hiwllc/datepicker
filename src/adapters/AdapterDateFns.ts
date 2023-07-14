@@ -1,18 +1,21 @@
 import { CalendarAdapter } from './index'
-import addDays from 'date-fns/addDays'
-import addMonths from 'date-fns/addMonths'
-import startOfMonth from 'date-fns/startOfMonth'
-import isSameMonth from 'date-fns/isSameMonth'
-import isValid from 'date-fns/isValid'
-import endOfMonth from 'date-fns/endOfMonth'
-import format from 'date-fns/format'
-import startOfWeek from 'date-fns/startOfWeek'
-import endOfWeek from 'date-fns/endOfWeek'
-import isBefore from 'date-fns/isBefore'
-import isAfter from 'date-fns/isBefore'
-import isSameDay from 'date-fns/isSameDay'
-import isWeekend from 'date-fns/isWeekend'
-import eachDayOfInterval from 'date-fns/eachDayOfInterval'
+import {
+  addDays,
+  addMonths,
+  startOfMonth,
+  isSameMonth,
+  isValid,
+  endOfMonth,
+  format,
+  startOfWeek,
+  endOfWeek,
+  isBefore,
+  isAfter,
+  isSameDay,
+  isWeekend,
+  eachDayOfInterval,
+} from 'date-fns'
+
 import enUS from 'date-fns/locale/en-US'
 
 export const AdapterDateFns: CalendarAdapter<Date, typeof enUS> = props => {

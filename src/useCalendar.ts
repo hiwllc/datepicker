@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { CalendarAdapter } from './adapters'
 
-export type UseCalendarDJ<TDate, TLocale> = {
+export type UseCalendarProps<TDate, TLocale> = {
   start: TDate
   blockFuture?: boolean
   allowOutsideDays?: boolean
@@ -9,13 +9,13 @@ export type UseCalendarDJ<TDate, TLocale> = {
   adapter: ReturnType<CalendarAdapter<TDate, TLocale>>
 }
 
-export function useCalendarDJ<TDate, TLocale>({
+export function useCalendar<TDate, TLocale>({
   start,
   months = 1,
   blockFuture,
   allowOutsideDays,
   adapter,
-}: UseCalendarDJ<TDate, TLocale>) {
+}: UseCalendarProps<TDate, TLocale>) {
   const initialState = blockFuture ? adapter.addMonths(start, -1) : start
 
   const [date, setDate] = useState(initialState)

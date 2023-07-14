@@ -2,7 +2,7 @@ import { Grid, Text, useMultiStyleConfig } from '@chakra-ui/react'
 import { useCalendarContext } from './context'
 import { CalendarMonthStyles } from './types'
 
-export function CalendarWeekDJ<TDate, TLocale>() {
+export function CalendarWeek<TDate, TLocale>() {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
   const context = useCalendarContext<TDate, TLocale>()
 

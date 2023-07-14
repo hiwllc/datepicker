@@ -1,12 +1,12 @@
 import { Grid, useMultiStyleConfig } from '@chakra-ui/react'
 import type { CalendarMonthStyles } from './types'
 import { useCalendarContext } from './context'
-import { CalendarDayDJ } from './day'
+import { CalendarDay } from './day'
 import { MonthContext } from './month'
-import { DayContextDJ } from './useCalendarDay'
+import { DayContext } from './useCalendarDay'
 import { PropsWithChildren, useContext } from 'react'
 
-export function CalendarDaysDJ<TDate, TLocale>({
+export function CalendarDays<TDate, TLocale>({
   children,
 }: PropsWithChildren<unknown>) {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
@@ -21,12 +21,12 @@ export function CalendarDaysDJ<TDate, TLocale>({
         }
 
         return (
-          <DayContextDJ.Provider
+          <DayContext.Provider
             value={{ day }}
             key={context.adapter.format(day, 'monthDay')}
           >
-            {children ? children : <CalendarDayDJ>{children}</CalendarDayDJ>}
-          </DayContextDJ.Provider>
+            {children ? children : <CalendarDay>{children}</CalendarDay>}
+          </DayContext.Provider>
         )
       })}
     </Grid>

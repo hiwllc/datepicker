@@ -12,17 +12,17 @@ import {
 } from '@chakra-ui/react'
 import { addMonths, format, isAfter, isBefore, isValid } from 'date-fns'
 import {
-  CalendarDJ,
-  CalendarNextButtonDJ,
-  CalendarPrevButtonDJ,
-  CalendarMonthNameDJ,
-  CalendarDaysDJ,
-  CalendarWeekDJ,
+  Calendar,
+  CalendarNextButton,
+  CalendarPrevButton,
+  CalendarMonthName,
+  CalendarDays,
+  CalendarWeek,
   CalendarAdapterProvider,
-  MultipleCalendarDJ,
-  CalendarControlsDJ,
-  CalendarMonthsDJ,
-  CalendarMonthDJ,
+  MultipleCalendar,
+  CalendarControls,
+  CalendarMonths,
+  CalendarMonth,
 } from './index'
 import { render, screen, fireEvent } from 'renderer'
 import { AdapterDateFns } from './adapters/AdapterDateFns'
@@ -96,26 +96,26 @@ function CalendarBasic() {
             _focus={{ boxShadow: 'none' }}
             ref={calendarRef}
           >
-            <CalendarDJ
+            <Calendar
               value={date}
               onSelectDate={handleSelectDate}
               singleDateSelection
             >
               <PopoverBody p={0}>
-                <CalendarControlsDJ>
-                  <CalendarPrevButtonDJ />
-                  <CalendarNextButtonDJ />
-                </CalendarControlsDJ>
+                <CalendarControls>
+                  <CalendarPrevButton />
+                  <CalendarNextButton />
+                </CalendarControls>
 
-                <CalendarMonthsDJ>
-                  <CalendarMonthDJ>
-                    <CalendarMonthNameDJ />
-                    <CalendarWeekDJ />
-                    <CalendarDaysDJ />
-                  </CalendarMonthDJ>
-                </CalendarMonthsDJ>
+                <CalendarMonths>
+                  <CalendarMonth>
+                    <CalendarMonthName />
+                    <CalendarWeek />
+                    <CalendarDays />
+                  </CalendarMonth>
+                </CalendarMonths>
               </PopoverBody>
-            </CalendarDJ>
+            </Calendar>
           </PopoverContent>
         </Popover>
       </Box>
@@ -124,9 +124,7 @@ function CalendarBasic() {
 }
 
 function CalendarRange() {
-  const [dates, setDates] = React.useState<MultipleCalendarDJ<Date>['value']>(
-    {}
-  )
+  const [dates, setDates] = React.useState<MultipleCalendar<Date>['value']>({})
   const [values, setValues] = React.useState({
     start: '',
     end: '',
@@ -141,7 +139,7 @@ function CalendarRange() {
 
   const MONTHS = 2
 
-  const handleSelectDate: MultipleCalendarDJ<Date>['onSelectDate'] = dates => {
+  const handleSelectDate: MultipleCalendar<Date>['onSelectDate'] = dates => {
     setDates(dates)
 
     setValues({
@@ -178,7 +176,6 @@ function CalendarRange() {
   })
 
   React.useEffect(() => {
-    console.log('3434', values.start, match(values.start))
     if (match(values.start)) {
       const startDate = new Date(values.start)
       const isValidStartDate = isValid(startDate)
@@ -258,28 +255,28 @@ function CalendarRange() {
             _focus={{ boxShadow: 'none' }}
             ref={calendarRef}
           >
-            <CalendarDJ
+            <Calendar
               value={dates}
               onSelectDate={handleSelectDate}
               months={MONTHS}
             >
               <PopoverBody p={0}>
-                <CalendarControlsDJ>
-                  <CalendarPrevButtonDJ />
-                  <CalendarNextButtonDJ />
-                </CalendarControlsDJ>
+                <CalendarControls>
+                  <CalendarPrevButton />
+                  <CalendarNextButton />
+                </CalendarControls>
 
-                <CalendarMonthsDJ>
+                <CalendarMonths>
                   {[...Array(MONTHS).keys()].map(m => (
-                    <CalendarMonthDJ key={m} month={m}>
-                      <CalendarMonthNameDJ />
-                      <CalendarWeekDJ />
-                      <CalendarDaysDJ />
-                    </CalendarMonthDJ>
+                    <CalendarMonth key={m} month={m}>
+                      <CalendarMonthName />
+                      <CalendarWeek />
+                      <CalendarDays />
+                    </CalendarMonth>
                   ))}
-                </CalendarMonthsDJ>
+                </CalendarMonths>
               </PopoverBody>
-            </CalendarDJ>
+            </Calendar>
           </PopoverContent>
         </Popover>
       </Box>
@@ -327,7 +324,6 @@ test('should change date in input', () => {
   fireEvent.click(INPUT)
 
   expect(INPUT).toHaveValue('01/10/2022')
-  console.log('23', screen.getByRole('button', { current: 'date' }).innerText)
   expect(screen.getByRole('button', { current: 'date' })).toHaveTextContent(
     '10'
   )
