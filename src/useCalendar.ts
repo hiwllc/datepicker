@@ -26,7 +26,7 @@ export function useCalendar<TDate, TLocale>({
       const prevMonth = () => setDate(prevSet => adapter.addMonths(prevSet, -1))
       const resetDate = () => setDate(initialState)
 
-      const dates = [...Array(months).keys()].map(i => {
+      const dates = Array.from({ length: months }, (_, i) => {
         const month = adapter.addMonths(date, i)
 
         const startDateOfMonth = adapter.startOfMonth(month)

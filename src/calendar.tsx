@@ -47,14 +47,8 @@ export type RangeCalendarProps<TDate, TLocale = void> = BaseCalendarProps<
 }
 
 export type CalendarProps<TDate, TLocale = void> =
-  | SingleCalendarProps<TDate, TLocale>
   | RangeCalendarProps<TDate, TLocale>
-
-// function isMultiMode<TDate, TLocale>(
-//   props: CalendarProps<TDate, TLocale>
-// ): props is RangeCalendarProps<TDate, TLocale> {
-//   return !props.singleDateSelection
-// }
+  | SingleCalendarProps<TDate, TLocale>
 
 function isSingleMode<TDate, TLocale>(
   props: CalendarProps<TDate, TLocale>
@@ -76,7 +70,7 @@ export function Calendar<TDate, TLocale>(
     allowOutsideDays: props.allowOutsideDays,
     blockFuture: false,
     start:
-      (isSingleMode(props) ? props.value : props.value.start) || adapter.today,
+      (isSingleMode(props) ? props.value : props.value?.start) || adapter.today,
     months: props.months,
     adapter,
   })
@@ -84,7 +78,7 @@ export function Calendar<TDate, TLocale>(
   const [target, setTarget] = useState<Target>(Target.START)
 
   useEffect(() => {
-    const date = isSingleMode(props) ? props.value : props.value.start
+    const date = isSingleMode(props) ? props.value : props.value?.start
     if (date && adapter.isValid(date)) {
       resetDate()
     }
@@ -107,26 +101,24 @@ export function Calendar<TDate, TLocale>(
 
     if (
       !props.allowSelectSameDay &&
-      ((props.value.start && adapter.isSameDay(date, props.value.start)) ||
-        (props.value.end && adapter.isSameDay(date, props.value.end)))
+      ((props.value?.start && adapter.isSameDay(date, props.value.start)) ||
+        (props.value?.end && adapter.isSameDay(date, props.value.end)))
     ) {
       return
     }
 
-    if (props.value.start && adapter.isBefore(date, props.value.start)) {
+    if (props.value?.start && adapter.isBefore(date, props.value.start)) {
       return props.onSelectDate({ ...props.value, start: date })
     }
 
-    if (props.value.end && adapter.isAfter(date, props.value.end)) {
-      return props.onSelectDate({ start: props.value.start!, end: date })
+    if (props.value?.end && adapter.isAfter(date, props.value.end)) {
+      return props.onSelectDate({ start: props.value.start, end: date })
     }
 
     if (target === Target.END) {
       setTarget(Target.START)
-      return props.onSelectDate({ start: props.value.start!, end: date })
+      return props.onSelectDate({ start: props.value.start, end: date })
     }
-
-    console.log('start')
 
     setTarget(Target.END)
     return props.onSelectDate({ ...props.value, start: date })
@@ -137,10 +129,10 @@ export function Calendar<TDate, TLocale>(
       value={{
         ...values,
         onSelectDates: selectDateHandler,
-        startSelectedDate: isMultiMode(props)
-          ? props.value?.start
-          : props.value,
-        endSelectedDate: isMultiMode(props) ? props.value?.end : props.value,
+        startSelectedDate: isSingleMode(props)
+          ? props.value
+          : props.value?.start,
+        endSelectedDate: isSingleMode(props) ? props.value : props.value?.end,
         disableDates: props.disableDates,
         disableFutureDates: props.disableFutureDates,
         disablePastDates: props.disablePastDates,
