@@ -95,7 +95,7 @@ var useAdapter = (props) => {
 };
 
 // src/calendar.tsx
-import { useState as useState2, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { jsx as jsx2 } from "react/jsx-runtime";
 function isSingleMode(props) {
   return !!props.singleDateSelection;
@@ -113,7 +113,7 @@ function Calendar(props) {
     months: props.months,
     adapter
   });
-  const [target, setTarget] = useState2("start" /* START */);
+  const target = useRef("start" /* START */);
   useEffect(() => {
     const date = isSingleMode(props) ? props.value : props.value?.start;
     if (date && adapter.isValid(date)) {
@@ -121,6 +121,16 @@ function Calendar(props) {
     }
   }, [props.value]);
   const selectDateHandler = (date) => {
+    if (props.customSelectHandler) {
+      return props.customSelectHandler(date, {
+        currentValue: props.value,
+        // @ts-expect-error not sure how to pass proper type here
+        onSelectDate: props.onSelectDate,
+        adapter,
+        target: target.current,
+        changeTarget: (t) => target.current = t
+      });
+    }
     if (isSingleMode(props)) {
       return props.onSelectDate(date);
     }
@@ -139,11 +149,11 @@ function Calendar(props) {
     if (props.value?.end && adapter.isAfter(date, props.value.end)) {
       return props.onSelectDate({ start: props.value.start, end: date });
     }
-    if (target === "end" /* END */) {
-      setTarget("start" /* START */);
+    if (target.current === "end" /* END */) {
+      target.current = "start" /* START */;
       return props.onSelectDate({ start: props.value.start, end: date });
     }
-    setTarget("end" /* END */);
+    target.current = "end" /* END */;
     return props.onSelectDate({ ...props.value, start: date });
   };
   return /* @__PURE__ */ jsx2(

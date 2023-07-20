@@ -12,7 +12,7 @@ type AdapterFormats = {
     monthDay: string;
     day: string;
 };
-type CalendarAdapter<TDate, TLocale> = (props: CalendarAdapterProps<TLocale>) => {
+type CalendarAdapter<TDate, TLocale = void> = (props: CalendarAdapterProps<TLocale>) => {
     defaultFormats: AdapterFormats;
     today: TDate;
     isValid: (v: TDate | undefined) => boolean;

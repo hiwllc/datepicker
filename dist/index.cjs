@@ -169,7 +169,7 @@ function Calendar(props) {
     months: props.months,
     adapter
   });
-  const [target, setTarget] = (0, import_react5.useState)("start" /* START */);
+  const target = (0, import_react5.useRef)("start" /* START */);
   (0, import_react5.useEffect)(() => {
     const date = isSingleMode(props) ? props.value : props.value?.start;
     if (date && adapter.isValid(date)) {
@@ -177,6 +177,16 @@ function Calendar(props) {
     }
   }, [props.value]);
   const selectDateHandler = (date) => {
+    if (props.customSelectHandler) {
+      return props.customSelectHandler(date, {
+        currentValue: props.value,
+        // @ts-expect-error not sure how to pass proper type here
+        onSelectDate: props.onSelectDate,
+        adapter,
+        target: target.current,
+        changeTarget: (t) => target.current = t
+      });
+    }
     if (isSingleMode(props)) {
       return props.onSelectDate(date);
     }
@@ -195,11 +205,11 @@ function Calendar(props) {
     if (props.value?.end && adapter.isAfter(date, props.value.end)) {
       return props.onSelectDate({ start: props.value.start, end: date });
     }
-    if (target === "end" /* END */) {
-      setTarget("start" /* START */);
+    if (target.current === "end" /* END */) {
+      target.current = "start" /* START */;
       return props.onSelectDate({ start: props.value.start, end: date });
     }
-    setTarget("end" /* END */);
+    target.current = "end" /* END */;
     return props.onSelectDate({ ...props.value, start: date });
   };
   return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(

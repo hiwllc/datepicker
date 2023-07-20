@@ -1,10 +1,36 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
+import { CSSObject, ButtonProps, GridProps } from '@chakra-ui/react';
+import { C as CalendarAdapter } from './index-be44333c.js';
+export { A as AdapterFormats, b as CalendarAdapterContext, a as CalendarAdapterContextType, c as CalendarAdapterProvider, u as useAdapter } from './index-be44333c.js';
 import * as react from 'react';
 import { PropsWithChildren, ReactElement } from 'react';
-import { C as CalendarAdapter } from './index-00cfeeff.js';
-export { A as AdapterFormats, b as CalendarAdapterContext, a as CalendarAdapterContextType, c as CalendarAdapterProvider, u as useAdapter } from './index-00cfeeff.js';
-import { ButtonProps, GridProps, CSSObject } from '@chakra-ui/react';
 
+type CalendarDate = Date | number;
+type CalendarValues = {
+    start?: CalendarDate;
+    end?: CalendarDate;
+};
+type Buttons = ({ onClick }: {
+    onClick: () => void;
+}) => JSX.Element;
+declare enum Target {
+    START = "start",
+    END = "end"
+}
+type CalendarThemeKeys = 'calendar' | 'months';
+type CalendarStyles = Record<CalendarThemeKeys, CSSObject>;
+type CalendarMonthThemeKeys = 'month' | 'name' | 'week' | 'weekday' | 'days';
+type CalendarMonthStyles = Record<CalendarMonthThemeKeys, CSSObject>;
+type CalendarControlThemeKeys = 'controls' | 'button';
+type CalendarControlStyles = Record<CalendarControlThemeKeys, CSSObject>;
+
+type CustomSelectHandler<TDate, TValue> = (value: TDate, meta: {
+    currentValue: TValue;
+    onSelectDate: (value: TValue) => void;
+    adapter: ReturnType<CalendarAdapter<TDate>>;
+    target: Target;
+    changeTarget: (t: Target) => void;
+}) => void;
 type BaseCalendarProps<TDate, TLocale = void> = {
     months?: number;
     locale?: TLocale;
@@ -17,6 +43,7 @@ type BaseCalendarProps<TDate, TLocale = void> = {
     weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
     highlightToday?: boolean;
     allowSelectSameDay?: boolean;
+    customSelectHandler?: CustomSelectHandler<TDate, CalendarSingleDate<TDate> | CalendarDateRange<TDate>>;
 };
 type CalendarSingleDate<TDate> = TDate | null | undefined;
 type SingleCalendarProps<TDate, TLocale = void> = BaseCalendarProps<TDate, TLocale> & {
@@ -106,25 +133,6 @@ declare function CalendarWeek<TDate, TLocale>(): react_jsx_runtime.JSX.Element;
 type CalendarMonthsProps = PropsWithChildren<GridProps>;
 declare function CalendarMonths({ children, ...props }: CalendarMonthsProps): react_jsx_runtime.JSX.Element;
 
-type CalendarDate = Date | number;
-type CalendarValues = {
-    start?: CalendarDate;
-    end?: CalendarDate;
-};
-type Buttons = ({ onClick }: {
-    onClick: () => void;
-}) => JSX.Element;
-declare enum Target {
-    START = "start",
-    END = "end"
-}
-type CalendarThemeKeys = 'calendar' | 'months';
-type CalendarStyles = Record<CalendarThemeKeys, CSSObject>;
-type CalendarMonthThemeKeys = 'month' | 'name' | 'week' | 'weekday' | 'days';
-type CalendarMonthStyles = Record<CalendarMonthThemeKeys, CSSObject>;
-type CalendarControlThemeKeys = 'controls' | 'button';
-type CalendarControlStyles = Record<CalendarControlThemeKeys, CSSObject>;
-
 type UseCalendarProps<TDate, TLocale> = {
     start: TDate;
     blockFuture?: boolean;
@@ -162,4 +170,4 @@ declare function useCalendarDay<TDate, TLocale>(): {
 
 declare const theme: Record<string, any>;
 
-export { Buttons, Calendar, CalendarAdapter, CalendarContext, CalendarContextType, CalendarControlStyles, CalendarControlThemeKeys, CalendarControls, CalendarControlsProps, CalendarDate, CalendarDateRange, CalendarDay, CalendarDayContextType, CalendarDayProps, CalendarDays, theme as CalendarDefaultTheme, CalendarMonth, CalendarMonthName, CalendarMonthNameProps, CalendarMonthProps, CalendarMonthStyles, CalendarMonthThemeKeys, CalendarMonths, CalendarMonthsProps, CalendarNextButton, CalendarPrevButton, CalendarProps, CalendarSingleDate, CalendarStyles, CalendarThemeKeys, CalendarValues, CalendarWeek, DayContext, MonthContext, RangeCalendarProps, SingleCalendarProps, Target, UseCalendarProps, useCalendar, useCalendarContext, useCalendarDay };
+export { Buttons, Calendar, CalendarAdapter, CalendarContext, CalendarContextType, CalendarControlStyles, CalendarControlThemeKeys, CalendarControls, CalendarControlsProps, CalendarDate, CalendarDateRange, CalendarDay, CalendarDayContextType, CalendarDayProps, CalendarDays, theme as CalendarDefaultTheme, CalendarMonth, CalendarMonthName, CalendarMonthNameProps, CalendarMonthProps, CalendarMonthStyles, CalendarMonthThemeKeys, CalendarMonths, CalendarMonthsProps, CalendarNextButton, CalendarPrevButton, CalendarProps, CalendarSingleDate, CalendarStyles, CalendarThemeKeys, CalendarValues, CalendarWeek, CustomSelectHandler, DayContext, MonthContext, RangeCalendarProps, SingleCalendarProps, Target, UseCalendarProps, useCalendar, useCalendarContext, useCalendarDay };
