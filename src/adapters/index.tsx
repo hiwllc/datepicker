@@ -12,7 +12,7 @@ export type AdapterFormats = {
   day: string
 }
 
-export type CalendarAdapter<TDate, TLocale> = (
+export type CalendarAdapter<TDate, TLocale = void> = (
   props: CalendarAdapterProps<TLocale>
 ) => {
   defaultFormats: AdapterFormats

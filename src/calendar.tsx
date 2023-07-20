@@ -2,8 +2,19 @@ import { useMultiStyleConfig, Flex } from '@chakra-ui/react'
 import { CalendarContext } from './context'
 import { useCalendar } from './useCalendar'
 import { CalendarStyles, Target } from './types'
-import { useAdapter } from './adapters'
-import { useState, PropsWithChildren, useEffect } from 'react'
+import { CalendarAdapter, useAdapter } from './adapters'
+import { PropsWithChildren, useEffect, useRef } from 'react'
+
+export type CustomSelectHandler<TDate, TValue> = (
+  value: TDate,
+  meta: {
+    currentValue: TValue
+    onSelectDate: (value: TValue) => void
+    adapter: ReturnType<CalendarAdapter<TDate>>
+    target: Target
+    changeTarget: (t: Target) => void
+  }
+) => void
 
 type BaseCalendarProps<TDate, TLocale = void> = {
   months?: number
@@ -17,6 +28,10 @@ type BaseCalendarProps<TDate, TLocale = void> = {
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   highlightToday?: boolean
   allowSelectSameDay?: boolean
+  customSelectHandler?: CustomSelectHandler<
+    TDate,
+    CalendarSingleDate<TDate> | CalendarDateRange<TDate>
+  >
 }
 
 export type CalendarSingleDate<TDate> = TDate | null | undefined
@@ -75,7 +90,7 @@ export function Calendar<TDate, TLocale>(
     adapter,
   })
 
-  const [target, setTarget] = useState<Target>(Target.START)
+  const target = useRef<Target>(Target.START)
 
   useEffect(() => {
     const date = isSingleMode(props) ? props.value : props.value?.start
@@ -88,6 +103,17 @@ export function Calendar<TDate, TLocale>(
   }, [props.value])
 
   const selectDateHandler = (date: TDate) => {
+    if (props.customSelectHandler) {
+      return props.customSelectHandler(date, {
+        currentValue: props.value,
+        // @ts-expect-error not sure how to pass proper type here
+        onSelectDate: props.onSelectDate,
+        adapter,
+        target: target.current,
+        changeTarget: (t: Target) => (target.current = t),
+      })
+    }
+
     if (isSingleMode(props)) {
       return props.onSelectDate(date)
     }
@@ -115,12 +141,12 @@ export function Calendar<TDate, TLocale>(
       return props.onSelectDate({ start: props.value.start, end: date })
     }
 
-    if (target === Target.END) {
-      setTarget(Target.START)
+    if (target.current === Target.END) {
+      target.current = Target.START
       return props.onSelectDate({ start: props.value.start, end: date })
     }
 
-    setTarget(Target.END)
+    target.current = Target.END
     return props.onSelectDate({ ...props.value, start: date })
   }
 
