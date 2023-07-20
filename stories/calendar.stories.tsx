@@ -34,6 +34,8 @@ import {
   CalendarAdapterProvider,
   CalendarSingleDate,
   useCalendarDay,
+  Target,
+  type CustomSelectHandler,
 } from '../src'
 import { AdapterDayjs } from '../src/adapters/AdapterDayjs'
 import { AdapterDateFns } from '../src/adapters/AdapterDateFns'
@@ -908,6 +910,49 @@ export const AllowSelectSameDay: StoryFn<typeof Calendar> = () => {
         value={dates}
         onSelectDate={handleSelectDate}
         allowSelectSameDay
+      >
+        <CalendarControls>
+          <CalendarPrevButton />
+          <CalendarNextButton />
+        </CalendarControls>
+
+        <CalendarMonths>
+          <CalendarMonth>
+            <CalendarMonthName />
+            <CalendarWeek />
+            <CalendarDays />
+          </CalendarMonth>
+        </CalendarMonths>
+      </Calendar>
+    </CalendarAdapterProvider>
+  )
+}
+
+export const WithCustomHandler: StoryFn<typeof Calendar> = () => {
+  const [dates, setDates] = React.useState<CalendarDateRange<Dayjs>>({})
+
+  const handleSelectDate = (dates: CalendarDateRange<Dayjs>) => setDates(dates)
+
+  // handler that starts new selection in case both dates were selected before
+  const customSelectHandler: CustomSelectHandler<
+    Dayjs,
+    CalendarDateRange<Dayjs>
+  > = (date, { onSelectDate, currentValue, adapter, target, changeTarget }) => {
+    if (target === Target.END && adapter.isAfter(date, currentValue.start)) {
+      changeTarget(Target.START)
+      return onSelectDate({ start: currentValue.start, end: date })
+    }
+
+    changeTarget(Target.END)
+    return onSelectDate({ start: date })
+  }
+
+  return (
+    <CalendarAdapterProvider adapter={AdapterDayjs}>
+      <Calendar
+        value={dates}
+        onSelectDate={handleSelectDate}
+        customSelectHandler={customSelectHandler}
       >
         <CalendarControls>
           <CalendarPrevButton />
