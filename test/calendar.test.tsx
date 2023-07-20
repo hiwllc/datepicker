@@ -19,16 +19,17 @@ import {
   CalendarDays,
   CalendarWeek,
   CalendarAdapterProvider,
-  MultipleCalendar,
+  CalendarDateRange,
   CalendarControls,
   CalendarMonths,
   CalendarMonth,
-} from './index'
-import { render, screen, fireEvent } from 'renderer'
-import { AdapterDateFns } from './adapters/AdapterDateFns'
+  CalendarSingleDate,
+} from '../src'
+import { render, screen, fireEvent } from '../.jest/with-theme'
+import { AdapterDateFns } from '../src/adapters/AdapterDateFns'
 
 function CalendarBasic() {
-  const [date, setDate] = React.useState(new Date())
+  const [date, setDate] = React.useState<CalendarSingleDate<Date>>(new Date())
   const [value, setValue] = React.useState('')
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -36,7 +37,7 @@ function CalendarBasic() {
   const initialRef = React.useRef(null)
   const calendarRef = React.useRef(null)
 
-  const handleSelectDate = (date: Date) => {
+  const handleSelectDate = (date: CalendarSingleDate<Date>) => {
     setDate(date)
     setValue(() => (isValid(date) ? format(date, 'MM/dd/yyyy') : ''))
     onClose()
@@ -124,7 +125,7 @@ function CalendarBasic() {
 }
 
 function CalendarRange() {
-  const [dates, setDates] = React.useState<MultipleCalendar<Date>['value']>({})
+  const [dates, setDates] = React.useState<CalendarDateRange<Date>>({})
   const [values, setValues] = React.useState({
     start: '',
     end: '',
@@ -139,7 +140,7 @@ function CalendarRange() {
 
   const MONTHS = 2
 
-  const handleSelectDate: MultipleCalendar<Date>['onSelectDate'] = dates => {
+  const handleSelectDate = (dates: CalendarDateRange<Date>) => {
     setDates(dates)
 
     setValues({
@@ -267,8 +268,8 @@ function CalendarRange() {
                 </CalendarControls>
 
                 <CalendarMonths>
-                  {[...Array(MONTHS).keys()].map(m => (
-                    <CalendarMonth key={m} month={m}>
+                  {Array.from({ length: MONTHS }, (_, month) => (
+                    <CalendarMonth key={month} month={month}>
                       <CalendarMonthName />
                       <CalendarWeek />
                       <CalendarDays />
