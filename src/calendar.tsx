@@ -83,7 +83,7 @@ export function Calendar<TDate, TLocale>(
 
   const { resetDate, ...values } = useCalendar<TDate, TLocale>({
     allowOutsideDays: props.allowOutsideDays,
-    blockFuture: false,
+    blockFuture: props.disableFutureDates,
     start:
       (isSingleMode(props) ? props.value : props.value?.start) || adapter.today,
     months: props.months,

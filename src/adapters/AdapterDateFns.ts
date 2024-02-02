@@ -14,6 +14,7 @@ import {
   isSameDay,
   isWeekend,
   eachDayOfInterval,
+  differenceInCalendarMonths,
 } from 'date-fns'
 
 import enUS from 'date-fns/locale/en-US'
@@ -61,5 +62,7 @@ export const AdapterDateFns: CalendarAdapter<Date, typeof enUS> = props => {
     isSameDay: (value, comparing) => isSameDay(value, comparing),
     isToday: value => isSameDay(value, new Date()),
     isWeekend: value => isWeekend(value),
+    differenceInMonths: (value, comparing) =>
+      differenceInCalendarMonths(value, comparing),
   }
 }

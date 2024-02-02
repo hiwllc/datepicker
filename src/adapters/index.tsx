@@ -37,6 +37,7 @@ export type CalendarAdapter<TDate, TLocale = void> = (
   isSameDay: (value: TDate, comparing: TDate) => boolean
   isToday: (value: TDate) => boolean
   isWeekend: (value: TDate) => boolean
+  differenceInMonths: (value: TDate, comparing: TDate) => number
 }
 
 export type CalendarAdapterContextType<TDate, TLocale> = {

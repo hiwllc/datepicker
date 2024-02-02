@@ -3,7 +3,7 @@ import { CalendarAdapter } from './adapters'
 
 export type UseCalendarProps<TDate, TLocale> = {
   start: TDate
-  blockFuture?: boolean
+  blockFuture?: boolean | TDate
   allowOutsideDays?: boolean
   months?: number
   adapter: ReturnType<CalendarAdapter<TDate, TLocale>>
@@ -16,7 +16,12 @@ export function useCalendar<TDate, TLocale>({
   allowOutsideDays,
   adapter,
 }: UseCalendarProps<TDate, TLocale>) {
-  const initialState = blockFuture ? adapter.addMonths(start, -1) : start
+  const initialState = blockFuture
+    ? typeof blockFuture === 'boolean' ||
+      adapter.differenceInMonths(blockFuture, start) < 1
+      ? adapter.addMonths(start, -1)
+      : start
+    : start
 
   const [date, setDate] = useState(initialState)
 
