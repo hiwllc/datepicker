@@ -31,6 +31,7 @@ type CalendarAdapter<TDate, TLocale = void> = (props: CalendarAdapterProps<TLoca
     isSameDay: (value: TDate, comparing: TDate) => boolean;
     isToday: (value: TDate) => boolean;
     isWeekend: (value: TDate) => boolean;
+    differenceInMonths: (value: TDate, comparing: TDate) => number;
 };
 type CalendarAdapterContextType<TDate, TLocale> = {
     adapter: CalendarAdapter<TDate, TLocale>;
@@ -56,6 +57,7 @@ declare const useAdapter: <TDate, TLocale>(props: CalendarAdapterProps<TLocale>)
     isSameDay: (value: TDate, comparing: TDate) => boolean;
     isToday: (value: TDate) => boolean;
     isWeekend: (value: TDate) => boolean;
+    differenceInMonths: (value: TDate, comparing: TDate) => number;
 };
 
 export { AdapterFormats as A, CalendarAdapter as C, CalendarAdapterContextType as a, CalendarAdapterContext as b, CalendarAdapterProvider as c, useAdapter as u };

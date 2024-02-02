@@ -98,7 +98,8 @@ var AdapterDayjs = (props) => {
     isWeekend: (value) => {
       const day = localizedDayjs(value).isoWeekday();
       return day === 6 || day === 7;
-    }
+    },
+    differenceInMonths: (value, comparing) => value.diff(comparing, "month")
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

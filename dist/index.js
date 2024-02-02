@@ -21,7 +21,7 @@ function useCalendar({
   allowOutsideDays,
   adapter
 }) {
-  const initialState = blockFuture ? adapter.addMonths(start, -1) : start;
+  const initialState = blockFuture ? typeof blockFuture === "boolean" || adapter.differenceInMonths(blockFuture, start) < 1 ? adapter.addMonths(start, -1) : start : start;
   const [date, setDate] = useState(initialState);
   const actions = useMemo(
     function actionsFn() {
@@ -108,7 +108,7 @@ function Calendar(props) {
   });
   const { resetDate, ...values } = useCalendar({
     allowOutsideDays: props.allowOutsideDays,
-    blockFuture: false,
+    blockFuture: props.disableFutureDates,
     start: (isSingleMode(props) ? props.value : props.value?.start) || adapter.today,
     months: props.months,
     adapter

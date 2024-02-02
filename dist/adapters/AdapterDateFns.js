@@ -13,7 +13,8 @@ import {
   isAfter,
   isSameDay,
   isWeekend,
-  eachDayOfInterval
+  eachDayOfInterval,
+  differenceInCalendarMonths
 } from "date-fns";
 import enUS from "date-fns/locale/en-US";
 var AdapterDateFns = (props) => {
@@ -55,7 +56,8 @@ var AdapterDateFns = (props) => {
     isAfter: (value, comparing) => isAfter(value, comparing),
     isSameDay: (value, comparing) => isSameDay(value, comparing),
     isToday: (value) => isSameDay(value, /* @__PURE__ */ new Date()),
-    isWeekend: (value) => isWeekend(value)
+    isWeekend: (value) => isWeekend(value),
+    differenceInMonths: (value, comparing) => differenceInCalendarMonths(value, comparing)
   };
 };
 export {

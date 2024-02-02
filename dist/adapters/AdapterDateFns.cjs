@@ -74,7 +74,8 @@ var AdapterDateFns = (props) => {
     isAfter: (value, comparing) => (0, import_date_fns.isAfter)(value, comparing),
     isSameDay: (value, comparing) => (0, import_date_fns.isSameDay)(value, comparing),
     isToday: (value) => (0, import_date_fns.isSameDay)(value, /* @__PURE__ */ new Date()),
-    isWeekend: (value) => (0, import_date_fns.isWeekend)(value)
+    isWeekend: (value) => (0, import_date_fns.isWeekend)(value),
+    differenceInMonths: (value, comparing) => (0, import_date_fns.differenceInCalendarMonths)(value, comparing)
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

@@ -1,7 +1,7 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import { CSSObject, ButtonProps, GridProps } from '@chakra-ui/react';
-import { C as CalendarAdapter } from './index-be44333c.js';
-export { A as AdapterFormats, b as CalendarAdapterContext, a as CalendarAdapterContextType, c as CalendarAdapterProvider, u as useAdapter } from './index-be44333c.js';
+import { C as CalendarAdapter } from './index-22b4aa82.js';
+export { A as AdapterFormats, b as CalendarAdapterContext, a as CalendarAdapterContextType, c as CalendarAdapterProvider, u as useAdapter } from './index-22b4aa82.js';
 import * as react from 'react';
 import { PropsWithChildren, ReactElement } from 'react';
 
@@ -135,7 +135,7 @@ declare function CalendarMonths({ children, ...props }: CalendarMonthsProps): re
 
 type UseCalendarProps<TDate, TLocale> = {
     start: TDate;
-    blockFuture?: boolean;
+    blockFuture?: boolean | TDate;
     allowOutsideDays?: boolean;
     months?: number;
     adapter: ReturnType<CalendarAdapter<TDate, TLocale>>;
