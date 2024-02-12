@@ -11,13 +11,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 20
 
       - name: Install dependencies
-        run: yarn
+        run: bun install
 
       - name: Run lint tests
-        run: yarn lint
+        run: bun run lint
 
       - name: Run tests
-        run: yarn test --collect-coverage
+        run: bun run test --collect-coverage

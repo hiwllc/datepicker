@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   addMonths,
   eachDayOfInterval,
@@ -11,6 +10,7 @@ import {
   subMonths,
 } from 'date-fns'
 import type { CalendarDate } from './types'
+import { useMemo, useState } from 'react'
 
 function replaceOutMonthDays(days: CalendarDate[], date: CalendarDate) {
   return days.map(d => (isSameMonth(date, d) ? d : null))
@@ -34,9 +34,9 @@ export function useCalendar({
   weekStartsOn,
 }: UseCalendar) {
   const initialState = blockFuture ? subMonths(start, 1) : start
-  const [date, setDate] = React.useState<CalendarDate>(initialState)
+  const [date, setDate] = useState<CalendarDate>(initialState)
 
-  const actions = React.useMemo(
+  const actions = useMemo(
     function actionsFn() {
       const nextMonth = () => setDate(prevSet => addMonths(prevSet, 1))
       const prevMonth = () => setDate(prevSet => subMonths(prevSet, 1))
@@ -71,6 +71,7 @@ export function useCalendar({
         dates,
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [allowOutsideDays, date, initialState, months]
   )
 

@@ -1,12 +1,17 @@
 {
-  "name": "@uselessdev/datepicker",
+  "name": "@imbios/datepicker",
   "version": "2.7.0",
   "description": "A simple react datepicker build with chakra-ui and date-fns",
-  "main": "dist/uselessdev-datepicker.cjs.js",
-  "module": "dist/uselessdev-datepicker.esm.js",
-  "types": "dist/uselessdev-datepicker.cjs.d.ts",
-  "repository": "git@github.com:uselessdev/datepicker.git",
+  "main": "dist/imbios-datepicker.cjs.js",
+  "module": "dist/imbios-datepicker.esm.js",
+  "types": "dist/imbios-datepicker.cjs.d.ts",
+  "repository": "git@github.com:ImBIOS/datepicker.git",
   "author": "Wallace Oliveira <wallacebatistaoliveira@gmail.com>",
+  "contributors": [{
+    "name": "Imamuzzaki Abu Salam",
+    "email": "imamuzzaki@gmail.com",
+    "url": "https://github.com/ImBIOS"
+  }],
   "license": "Apache-2.0",
   "private": false,
   "files": [
@@ -15,11 +20,12 @@
   "scripts": {
     "dev": "preconstruct dev",
     "build": "preconstruct build",
-    "lint": "eslint ./src/**",
+    "lint": "eslint ./src/** --max-warnings 0",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "test": "jest",
-    "prepublish": "yarn build"
+    "prepublish": "bun run build",
+    "up": "bunx npm-check-updates --interactive --format group --doctor --doctorTest \"bun run test\" --doctorInstall \"bun install\""
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

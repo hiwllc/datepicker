@@ -7,25 +7,31 @@ A simple datepicker component build with [date-fns][1] and [Chakra-UI][2].
 
 ## Table of Contents
 
-- [Requisites](#requisites)
-- [Installation and Usage](#installation-and-usage)
-- [Customizing](#customizing)
-- [License](#license)
+- [Datepicker](#datepicker)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Installation and Usage](#installation-and-usage)
+    - [Customizing](#customizing)
+  - [Available components theme keys](#available-components-theme-keys)
+  - [License](#license)
+  - [Contributors ✨](#contributors-)
 
-## Requisites
+## Prerequisites
+
 You need to install [date-fns][1] and [chakra-ui][2] in order to use this library.
 
 ```bash
-yarn add date-fns
+bun add date-fns
 ```
 
 To install chakra-ui follow their [guide here](https://chakra-ui.com/guides/first-steps#framework-guide).
 
 ## Installation and Usage
+
 After install these dependencies you can now install the library and use this as below:
 
 ```bash
-yarn add @uselessdev/datepicker
+bun add @imbios/datepicker
 ```
 
 Before to use this you can create your own theme or use the default one.
@@ -43,7 +49,7 @@ import {
   CalendarMonthName,
   CalendarWeek,
   CalendarDays,
-} from '@uselessdev/datepicker'
+} from '@imbios/datepicker'
 
 export function App() {
   const [dates, setDates] = useState()
@@ -73,18 +79,19 @@ export function App() {
 }
 ```
 
-**note that the example above doens't render an input but only the calendar**
+> **note that the example above doens't render an input but only the calendar**
 
 If you want to use this with inputs and a popover [you can see this example](https://uselessdev-datepicker.netlify.app/?path=/story/calendar--with-input-popover-start-end-dates)
 
 ### Customizing
+
 You can fully customize the Calendar component using the `extendTheme` provided by chakra-ui, you can see an example below.
 
 In your theme you can overrides the default theme (you can see all available components keys for theme customization here)
 
 ```ts
 import { extendTheme } from '@chakra-ui/react'
-import { CalendarDefaultTheme } from '@uselessdev/datepicker'
+import { CalendarDefaultTheme } from '@imbios/datepicker'
 
 export const theme = extendTheme(CalendarDefaultTheme, {
   components: {
@@ -157,6 +164,7 @@ Theses changes will produce the following results in Calendar:
 | CalendarControl | Applies styles to prev and next months.                                   |`controls`, `button`                      |
 
 ## License
+
 This code is under the [Apache-2.0](LICENSE) License
 
 [1]: https://date-fns.org/
