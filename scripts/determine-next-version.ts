@@ -1,10 +1,15 @@
-const execSync = require('child_process').execSync
-const semver = require('semver')
-const packageName = '@imbios/datepicker'
+import { execSync } from 'child_process'
+import semver from 'semver'
+import { packageName } from './_constant'
 
 const getNextVersion = () => {
-  const output = execSync(`npm view ${packageName} versions --json`)
-  let versions = JSON.parse(output)
+  const output = execSync(`npm view ${packageName} versions --json`).toString(
+    'utf8'
+  )
+  let versions = JSON.parse(output) as string[] | string
+  if (!Array.isArray(versions)) {
+    versions = [versions]
+  }
 
   // Filter out pre-releases like canary builds
   versions = versions.filter(version => !version.includes('-canary'))

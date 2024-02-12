@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e # Exit immediately if a command exits with a non-zero status.
 
-VERSION=$(node scripts/determine-next-version.js)
+VERSION=$(bun scripts/determine-next-version.js)
 echo "Building and publishing version $VERSION"
-DEFAULT_LAST_TAG=$(node scripts/get-default-last-tag.js)
+DEFAULT_LAST_TAG=$(bun scripts/get-default-last-tag.js)
 echo "Default last tag is $DEFAULT_LAST_TAG"
 
 # Set the version and default last tag as environment variables

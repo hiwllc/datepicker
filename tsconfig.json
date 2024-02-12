@@ -51,7 +51,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
-    "**/*.mjs"
+    "**/*.mjs",
+    "**/*.js"
   ],
   "exclude": ["node_modules", "dist"]
 }
