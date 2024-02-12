@@ -12,7 +12,7 @@ const config = {
       version: 'detect',
     },
   },
-  ignorePatterns: ['**/dist/**/*', '**/scripts/**/*'],
+  ignorePatterns: ['**/dist/**/*'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: true,
