@@ -1,6 +1,6 @@
 import { execSync } from 'child_process'
 import semver from 'semver'
-import { packageName } from './_constant'
+import { packageName } from './_shared'
 
 const getNextVersion = () => {
   const output = execSync(`npm view ${packageName} versions --json`).toString(
