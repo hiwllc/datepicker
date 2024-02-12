@@ -32,7 +32,7 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           bun run build
-          VERSION=$(bun scripts/determine-next-version.ts)-canary.$(date +%s)
+          VERSION=$(bun scripts/determine-next-version.ts)-canary.$(bun scripts/determine-next-canary.ts)
 
           yarn version --new-version $VERSION --no-git-tag-version
           npm publish --tag canary --provenance --access public

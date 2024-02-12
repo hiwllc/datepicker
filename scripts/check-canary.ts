@@ -1,14 +1,7 @@
 import { execSync } from 'child_process'
 import semver from 'semver'
-import { packageName } from './_constant'
+import { packageName } from './_shared'
 
-/**
- * {
-  "created": "2023-09-26T03:18:40.196Z",
-  "1.0.0": "2023-09-26T03:18:40.511Z",
-  "modified": "2023-09-26T03:18:40.789Z"
-}
- */
 type NpmViewTimeOutput = {
   [version: string]: string
   created: string
