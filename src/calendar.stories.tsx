@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { type StoryFn, type Meta } from '@storybook/react'
 import { addDays, format, isAfter, isBefore, isValid, subDays } from 'date-fns'
 import {
   Box,
@@ -27,15 +27,15 @@ import { CalendarMonths } from './months'
 import { CalendarControls } from './control'
 import { CalendarNextButton } from './control-next-button'
 import { CalendarPrevButton } from './control-prev-button'
-import { CalendarDate, CalendarValues } from './types'
+import { type CalendarDate, type CalendarValues } from './types'
 import { useCalendarDay } from './useCalendarDay'
 
 export default {
   title: 'Calendar',
   component: Calendar,
-} as ComponentMeta<typeof Calendar>
+} satisfies Meta<typeof Calendar>
 
-export const Basic: ComponentStory<typeof Calendar> = () => {
+export const Basic: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -58,7 +58,7 @@ export const Basic: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const CustomLocale: ComponentStory<typeof Calendar> = ({ locale }) => {
+export const CustomLocale: StoryFn<typeof Calendar> = ({ locale }) => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -99,7 +99,7 @@ CustomLocale.args = {
   locale: locales.ptBR,
 }
 
-export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
+export const DisablePastDates: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -122,7 +122,7 @@ export const DisablePastDates: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const DisablePastDatesFrom: ComponentStory<typeof Calendar> = () => {
+export const DisablePastDatesFrom: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -149,7 +149,7 @@ export const DisablePastDatesFrom: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
+export const DisableFutureDates: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -172,7 +172,7 @@ export const DisableFutureDates: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const DisableFutureDatesFrom: ComponentStory<typeof Calendar> = () => {
+export const DisableFutureDatesFrom: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -199,7 +199,7 @@ export const DisableFutureDatesFrom: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const DisableDates: ComponentStory<typeof Calendar> = () => {
+export const DisableDates: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -235,7 +235,7 @@ export const DisableDates: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const DisableWeekends: ComponentStory<typeof Calendar> = () => {
+export const DisableWeekends: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -258,7 +258,7 @@ export const DisableWeekends: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
+export const AllowOutsideDays: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -281,7 +281,7 @@ export const AllowOutsideDays: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
+export const SingleDateSelection: StoryFn<typeof Calendar> = () => {
   const [date, setDate] = React.useState<CalendarDate>()
 
   const handleSelectDate = (date: CalendarDate) => setDate(date)
@@ -308,7 +308,7 @@ export const SingleDateSelection: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const CustomControlButtons: ComponentStory<typeof Calendar> = () => {
+export const CustomControlButtons: StoryFn<typeof Calendar> = () => {
   const [date, setDate] = React.useState<CalendarDate>()
 
   const handleSelectDate = (date: CalendarDate) => setDate(date)
@@ -347,7 +347,7 @@ export const CustomControlButtons: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
+export const WithMultipleMonths: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const MONTHS = 2
@@ -373,7 +373,7 @@ export const WithMultipleMonths: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const WithInputPopover: ComponentStory<typeof Calendar> = () => {
+export const WithInputPopover: StoryFn<typeof Calendar> = () => {
   const [date, setDate] = React.useState<CalendarDate>()
   const [value, setValue] = React.useState('')
 
@@ -467,9 +467,7 @@ export const WithInputPopover: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const WithInputPopoverStartEndDates: ComponentStory<
-  typeof Calendar
-> = () => {
+export const WithInputPopoverStartEndDates: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
   const [values, setValues] = React.useState({
     start: '',
@@ -630,7 +628,7 @@ export const WithInputPopoverStartEndDates: ComponentStory<
   )
 }
 
-export const CustomContent: ComponentStory<typeof Calendar> = () => {
+export const CustomContent: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -686,7 +684,7 @@ export const CustomContent: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const StartWeekDay: ComponentStory<typeof Calendar> = () => {
+export const StartWeekDay: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -709,7 +707,7 @@ export const StartWeekDay: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const HighlightToday: ComponentStory<typeof Calendar> = () => {
+export const HighlightToday: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -731,7 +729,7 @@ export const HighlightToday: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const WeekSelection: ComponentStory<typeof Calendar> = () => {
+export const WeekSelection: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
@@ -791,7 +789,7 @@ function CustomDay() {
       sx={{ ...selected, ...range }}
     >
       {new Date(day).getDate() < 8 ? (
-        <Box d="flex" flexDirection="column" alignItems="center">
+        <Box display="flex" flexDirection="column" alignItems="center">
           <Text>{format(day, 'd')}</Text>
           <Circle size="4px" bgColor="pink.300" />
         </Box>
@@ -802,7 +800,7 @@ function CustomDay() {
   )
 }
 
-export const WithCustomDay: ComponentStory<typeof Calendar> = () => {
+export const WithCustomDay: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)
 
@@ -826,7 +824,7 @@ export const WithCustomDay: ComponentStory<typeof Calendar> = () => {
   )
 }
 
-export const AllowSelectSameDay: ComponentStory<typeof Calendar> = () => {
+export const AllowSelectSameDay: StoryFn<typeof Calendar> = () => {
   const [dates, setDates] = React.useState<CalendarValues>({})
 
   const handleSelectDate = (dates: CalendarValues) => setDates(dates)

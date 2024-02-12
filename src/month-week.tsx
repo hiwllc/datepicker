@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Grid, Text, useMultiStyleConfig } from '@chakra-ui/react'
-import { addDays, format, startOfWeek } from 'date-fns'
+import { type Locale, addDays, format, startOfWeek } from 'date-fns'
 import { CalendarContext } from './context'
-import { CalendarMonthStyles } from './types'
+import { type CalendarMonthStyles } from './types'
 
 type Weekdays = {
   weekdayFormat?: string

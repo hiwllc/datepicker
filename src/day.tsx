@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, ButtonProps, useStyleConfig } from '@chakra-ui/react'
+import { Button, type ButtonProps, useStyleConfig } from '@chakra-ui/react'
 import { useCalendarDay } from './useCalendarDay'
 import { format } from 'date-fns'
 
@@ -18,7 +18,7 @@ export function CalendarDay({ children, ...props }: CalendarDay) {
       sx={{ ...styles, ...props }}
       {...props}
     >
-      {children || format(day, 'd')}
+      {children ?? format(day, 'd')}
     </Button>
   )
 }

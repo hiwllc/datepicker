@@ -1,4 +1,4 @@
-import { ComponentMultiStyleConfig } from '@chakra-ui/react'
+import { type ComponentMultiStyleConfig } from '@chakra-ui/react'
 
 export const CalendarMonth: ComponentMultiStyleConfig = {
   parts: ['month', 'name', 'week', 'weekday', 'days'],

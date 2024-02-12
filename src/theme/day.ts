@@ -1,4 +1,4 @@
-import { ComponentSingleStyleConfig } from '@chakra-ui/react'
+import { type ComponentSingleStyleConfig } from '@chakra-ui/react'
 
 export const CalendarDay: ComponentSingleStyleConfig = {
   baseStyle: {

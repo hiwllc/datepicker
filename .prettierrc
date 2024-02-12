@@ -7,6 +7,5 @@
   "trailingComma": "es5",
   "quoteProps": "consistent",
   "bracketSpacing": true,
-  "jsxBracketSameLine": false,
   "arrowParens": "avoid"
 }

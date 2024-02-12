@@ -8,28 +8,42 @@ import {
   isBefore,
   isSameDay,
   isValid,
-  Locale,
+  type Locale,
   startOfWeek,
 } from 'date-fns'
-import { CalendarDate, CalendarStyles, CalendarValues, Target } from './types'
+import {
+  type CalendarDate,
+  type CalendarStyles,
+  type CalendarValues,
+  Target,
+} from './types'
 
-export type Calendar = React.PropsWithChildren<{
-  value: CalendarValues
-  onSelectDate: (value: CalendarDate | CalendarValues) => void
-  months?: number
-  locale?: Locale
-  allowOutsideDays?: boolean
-  disablePastDates?: boolean | Date
-  disableFutureDates?: boolean | Date
-  disableWeekends?: boolean
-  disableDates?: CalendarDate[]
-  singleDateSelection?: boolean
-  weekdayFormat?: string
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
-  highlightToday?: boolean
-  weekDateSelection?: boolean
-  allowSelectSameDay?: boolean
-}>
+export type Calendar = React.PropsWithChildren<
+  {
+    value: CalendarValues
+    months?: number
+    locale?: Locale
+    allowOutsideDays?: boolean
+    disablePastDates?: boolean | Date
+    disableFutureDates?: boolean | Date
+    disableWeekends?: boolean
+    disableDates?: CalendarDate[]
+    weekdayFormat?: string
+    weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+    highlightToday?: boolean
+    weekDateSelection?: boolean
+    allowSelectSameDay?: boolean
+  } & (
+    | {
+        singleDateSelection: true
+        onSelectDate: (value: CalendarDate) => void
+      }
+    | {
+        singleDateSelection?: false
+        onSelectDate: (value: CalendarValues) => void
+      }
+  )
+>
 
 export function Calendar({
   children,
@@ -54,7 +68,7 @@ export function Calendar({
   const { resetDate, ...values } = useCalendar({
     allowOutsideDays,
     blockFuture: false,
-    start: value?.start || new Date(),
+    start: value?.start ?? new Date(),
     months,
     locale,
     weekStartsOn,
@@ -85,7 +99,7 @@ export function Calendar({
 
     if (
       !allowSelectSameDay &&
-      ((value.start && isSameDay(date, value.start)) ||
+      ((value.start && isSameDay(date, value.start)) ??
         (value.end && isSameDay(date, value.end)))
     ) {
       return

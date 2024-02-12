@@ -1,0 +1,43 @@
+name: Stable Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    # This cron job runs at 00:00 on the first day of every month
+    - cron: '0 0 1 * *'
+
+jobs:
+  stable-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          registry-url: 'https://registry.npmjs.org'
+      - run: bun install --frozen-lockfile
+      - name: Check for canary releases
+        id: canary-check
+        run: |
+          CANARY_EXISTS=$(bun scripts/check-canary.js) # This script should output "true" or "false"
+          echo "CANARY_EXISTS=$CANARY_EXISTS" >> $GITHUB_ENV
+      - name: Test
+        run: bun test
+      - name: Build and Publish Latest
+        if: env.CANARY_EXISTS == 'true'
+        run: ./scripts/build-and-publish.sh
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        if: env.CANARY_EXISTS == 'true'
+        with:
+          tag: ${{ env.VERSION }}
+          body: ${{ env.RELEASE_NOTES }}

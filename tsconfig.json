@@ -1,23 +1,40 @@
 {
   "compilerOptions": {
+    // enable latest features
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "jsx": "react-jsx", // support JSX
+    "allowJs": true, // allow importing `.js` from `.ts`
+
+    // Bundler mode
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    // "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
+    "noEmit": true,
+
+    // Best practices
+    "strict": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Some stricter flags
+    "useUnknownInCatchVariables": true,
+    "noPropertyAccessFromIndexSignature": true,
+
     "outDir": "dist",
-    "module": "esnext",
-    "target": "es5",
-    "lib": ["es6", "dom", "ES2016", "ES2017"],
-    "jsx": "react-jsx",
     "sourceMap": true,
-    "allowJs": false,
     "declaration": true,
     "declarationDir": "types",
-    "emitDeclarationOnly": true,
-    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "esModuleInterop": true,
     "downlevelIteration": true,
     "rootDir": ".",
@@ -27,6 +44,14 @@
       "renderer": ["./.jest/with-theme"]
     }
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "happydom.ts",
+    ".eslintrc.cjs",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs"
+  ],
   "exclude": ["node_modules", "dist"]
 }

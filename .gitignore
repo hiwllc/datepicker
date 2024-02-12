@@ -116,3 +116,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Storybook
+/storybook-static
+
+# Jest
+/.jest-cache

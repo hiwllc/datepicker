@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Locale } from 'date-fns'
-import { CalendarDate } from './types'
+import { type Locale } from 'date-fns'
+import { type CalendarDate } from './types'
 
 export type CalendarContext = {
   dates: {

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Box, useMultiStyleConfig } from '@chakra-ui/react'
-import { CalendarMonthStyles } from './types'
+import { type CalendarMonthStyles } from './types'
 
 export type CalendarMonth = React.PropsWithChildren<{ month?: number }>
 

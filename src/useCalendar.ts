@@ -4,7 +4,7 @@ import {
   endOfMonth,
   endOfWeek,
   isSameMonth,
-  Locale,
+  type Locale,
   startOfMonth,
   startOfWeek,
   subMonths,

@@ -1,0 +1,40 @@
+name: Continuous Integration and Delivery
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci-cd:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Run lint tests
+        run: bun run lint
+      - name: Run tests
+        run: bun run test --collect-coverage
+      - name: Build & Publish Canary
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          bun run build
+          VERSION=$(node ../scripts/determine-next-version.js)-canary.$(date +%s)
+
+          yarn version --new-version $VERSION --no-git-tag-version
+          npm publish --tag canary --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
