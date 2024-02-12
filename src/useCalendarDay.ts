@@ -1,75 +1,63 @@
-import {
-  eachDayOfInterval,
-  endOfMonth,
-  isAfter,
-  isBefore,
-  isSameDay,
-  isWeekend,
-  startOfMonth,
-} from 'date-fns'
-import * as React from 'react'
-import { CalendarContext } from './context'
+import { createContext, useContext } from 'react'
+import { useCalendarContext } from './context'
 import { MonthContext } from './month'
-import { type CalendarDate } from './types'
 
-export type CalendarDayContext = {
-  day: CalendarDate
+export type CalendarDayContextType<TDate> = {
+  day: TDate
 }
 
-export const DayContext = React.createContext<CalendarDayContext>({ day: 0 })
+export const DayContext = createContext<CalendarDayContextType<any>>({
+  day: null,
+})
 
-export function useCalendarDay() {
-  const {
-    dates,
-    onSelectDates,
-    startSelectedDate,
-    endSelectedDate,
-    disableDates,
-    disableFutureDates,
-    disablePastDates,
-    disableWeekends,
-    highlightToday,
-  } = React.useContext(CalendarContext)
+export function useCalendarDay<TDate, TLocale>() {
+  const context = useCalendarContext<TDate, TLocale>()
 
-  const { day } = React.useContext(DayContext)
-  const { month } = React.useContext(MonthContext)
+  const dayContext = useContext<CalendarDayContextType<TDate>>(DayContext)
+  const monthContext = useContext(MonthContext)
 
   let variant: 'selected' | 'range' | 'outside' | 'today' | undefined
 
-  if (highlightToday && isSameDay(new Date(), day)) {
+  if (context.highlightToday && context.adapter.isToday(dayContext.day)) {
     variant = 'today'
   }
 
-  const isStartDateSelected = Boolean(
-    startSelectedDate && isSameDay(day, startSelectedDate)
-  )
-  const isEndDateSelected = Boolean(
-    endSelectedDate && isSameDay(day, endSelectedDate)
-  )
-  const isSelected = isStartDateSelected || isEndDateSelected
+  const isSelected =
+    (context.startSelectedDate &&
+      context.adapter.isSameDay(dayContext.day, context.startSelectedDate)) ||
+    (context.endSelectedDate &&
+      context.adapter.isSameDay(dayContext.day, context.endSelectedDate))
 
   if (isSelected) {
     variant = 'selected'
   }
 
   if (
-    (isBefore(day, startOfMonth(dates[Number(month)].startDateOfMonth)) ||
-      isAfter(day, endOfMonth(dates[Number(month)].startDateOfMonth))) &&
+    (context.adapter.isBefore(
+      dayContext.day,
+      context.dates[Number(monthContext.month)].startDateOfMonth
+    ) ||
+      context.adapter.isAfter(
+        dayContext.day,
+        context.dates[Number(monthContext.month)].endDateOfMonth
+      )) &&
     !isSelected
   ) {
     variant = 'outside'
   }
 
   const interval =
-    startSelectedDate &&
-    endSelectedDate &&
-    eachDayOfInterval({
-      start: startSelectedDate,
-      end: endSelectedDate,
-    })
+    context.startSelectedDate &&
+    context.endSelectedDate &&
+    context.adapter.daysInRange(
+      context.startSelectedDate,
+      context.endSelectedDate
+    )
 
   const isInRange = interval
-    ? interval.some(date => isSameDay(day, date) && !isSelected)
+    ? interval.some(
+        date => context.adapter.isSameDay(dayContext.day, date) && !isSelected
+      )
     : false
 
   if (isInRange && !isSelected) {
@@ -77,26 +65,33 @@ export function useCalendarDay() {
   }
 
   const isDisabled =
-    (disablePastDates &&
-      isBefore(
-        day,
-        disablePastDates instanceof Date ? disablePastDates : new Date()
-      )) ??
-    (disableFutureDates &&
-      isAfter(
-        day,
-        disableFutureDates instanceof Date ? disableFutureDates : new Date()
-      )) ??
-    (disableWeekends && isWeekend(day)) ??
-    (disableDates && disableDates.some(date => isSameDay(day, date)))
+    (context.disablePastDates &&
+      context.adapter.isBefore(
+        dayContext.day,
+        typeof context.disablePastDates !== 'boolean'
+          ? context.disablePastDates
+          : context.adapter.addDays(context.adapter.today, -1)
+      )) ||
+    (context.disableFutureDates &&
+      context.adapter.isAfter(
+        dayContext.day,
+        typeof context.disableFutureDates !== 'boolean'
+          ? context.disableFutureDates
+          : context.adapter.today
+      )) ||
+    (context.disableWeekends && context.adapter.isWeekend(dayContext.day)) ||
+    (context.disableDates &&
+      context.disableDates.some(date =>
+        context.adapter.isSameDay(dayContext.day, date)
+      ))
 
   return {
-    day,
+    day: dayContext.day,
     variant,
     isSelected,
     interval,
     isInRange,
     isDisabled,
-    onSelectDates,
+    onSelectDates: context.onSelectDates,
   }
 }

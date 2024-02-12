@@ -1,25 +1,28 @@
-import * as React from 'react'
 import { Button, useMultiStyleConfig } from '@chakra-ui/react'
-import { CalendarContext } from './context'
+import { ReactElement } from 'react'
+import { useCalendarContext } from './context'
 import { type CalendarControlStyles } from './types'
 
-type CalendarNextButton = {
-  as?: ({ onClick }: { onClick: VoidFunction }) => JSX.Element
+type CalendarNextButtonProps = {
+  as?: ({ onClick }: { onClick: VoidFunction }) => ReactElement | null
 }
 
-export function CalendarNextButton({ as }: CalendarNextButton) {
+export function CalendarNextButton<TDate, TLocale>({
+  as,
+}: CalendarNextButtonProps) {
   const styles = useMultiStyleConfig(
     'CalendarControl',
     {}
   ) as CalendarControlStyles
-  const { nextMonth } = React.useContext(CalendarContext)
+
+  const context = useCalendarContext<TDate, TLocale>()
 
   if (as) {
-    return as({ onClick: nextMonth })
+    return as({ onClick: context.nextMonth })
   }
 
   return (
-    <Button onClick={nextMonth} sx={styles.button}>
+    <Button onClick={context.nextMonth} sx={styles.button}>
       &#8594;
     </Button>
   )

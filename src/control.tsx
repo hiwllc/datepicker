@@ -2,9 +2,9 @@ import * as React from 'react'
 import { Flex, useMultiStyleConfig } from '@chakra-ui/react'
 import { type CalendarControlStyles } from './types'
 
-export type CalendarControls = React.PropsWithChildren<unknown>
+export type CalendarControlsProps = React.PropsWithChildren<unknown>
 
-export function CalendarControls({ children }: CalendarControls) {
+export function CalendarControls({ children }: CalendarControlsProps) {
   const styles = useMultiStyleConfig(
     'CalendarControl',
     {}

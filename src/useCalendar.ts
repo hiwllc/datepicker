@@ -1,66 +1,53 @@
-import {
-  addMonths,
-  eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
-  isSameMonth,
-  type Locale,
-  startOfMonth,
-  startOfWeek,
-  subMonths,
-} from 'date-fns'
-import type { CalendarDate } from './types'
 import { useMemo, useState } from 'react'
+import { CalendarAdapter } from './adapters'
 
-function replaceOutMonthDays(days: CalendarDate[], date: CalendarDate) {
-  return days.map(d => (isSameMonth(date, d) ? d : null))
-}
-
-export type UseCalendar = {
-  start: CalendarDate
-  blockFuture?: boolean
+export type UseCalendarProps<TDate, TLocale> = {
+  start: TDate
+  blockFuture?: boolean | TDate
   allowOutsideDays?: boolean
   months?: number
-  locale?: Locale
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+  adapter: ReturnType<CalendarAdapter<TDate, TLocale>>
 }
 
-export function useCalendar({
+export function useCalendar<TDate, TLocale>({
   start,
   months = 1,
   blockFuture,
   allowOutsideDays,
-  locale,
-  weekStartsOn,
-}: UseCalendar) {
-  const initialState = blockFuture ? subMonths(start, 1) : start
-  const [date, setDate] = useState<CalendarDate>(initialState)
+  adapter,
+}: UseCalendarProps<TDate, TLocale>) {
+  const initialState = blockFuture
+    ? typeof blockFuture === 'boolean' ||
+      adapter.differenceInMonths(blockFuture, start) < 1
+      ? adapter.addMonths(start, -1)
+      : start
+    : start
+
+  const [date, setDate] = useState(initialState)
 
   const actions = useMemo(
     function actionsFn() {
-      const nextMonth = () => setDate(prevSet => addMonths(prevSet, 1))
-      const prevMonth = () => setDate(prevSet => subMonths(prevSet, 1))
-
+      const nextMonth = () => setDate(prevSet => adapter.addMonths(prevSet, 1))
+      const prevMonth = () => setDate(prevSet => adapter.addMonths(prevSet, -1))
       const resetDate = () => setDate(initialState)
 
-      const dates = [...Array(months).keys()].map(i => {
-        const month = addMonths(date, i)
+      const dates = Array.from({ length: months }, (_, i) => {
+        const month = adapter.addMonths(date, i)
 
-        const startDateOfMonth = startOfMonth(month)
-        const endDateOfMonth = endOfMonth(month)
-        const startWeek = startOfWeek(startDateOfMonth, {
-          locale,
-          weekStartsOn,
-        })
-        const endWeek = endOfWeek(endDateOfMonth, { locale, weekStartsOn })
-        const days = eachDayOfInterval({ start: startWeek, end: endWeek })
+        const startDateOfMonth = adapter.startOfMonth(month)
+        const endDateOfMonth = adapter.endOfMonth(month)
+        const startWeek = adapter.startOfWeek(startDateOfMonth)
+        const endWeek = adapter.endOfWeek(endDateOfMonth)
+        const days = adapter.daysInRange(startWeek, endWeek)
 
         return {
           startDateOfMonth,
           endDateOfMonth,
           startWeek,
           endWeek,
-          days: allowOutsideDays ? days : replaceOutMonthDays(days, month),
+          days: allowOutsideDays
+            ? days
+            : adapter.removeOutMonthDays(days, month),
         }
       })
 

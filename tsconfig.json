@@ -38,7 +38,7 @@
     "esModuleInterop": true,
     "downlevelIteration": true,
     "rootDir": ".",
-
+    "ignoreDeprecations": "5.0",
     "baseUrl": "./",
     "paths": {
       "renderer": ["./.jest/with-theme"]

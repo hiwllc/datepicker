@@ -1,31 +1,16 @@
-import * as React from 'react'
 import { Grid, Text, useMultiStyleConfig } from '@chakra-ui/react'
-import { type Locale, addDays, format, startOfWeek } from 'date-fns'
-import { CalendarContext } from './context'
-import { type CalendarMonthStyles } from './types'
+import { useCalendarContext } from './context'
+import { CalendarMonthStyles } from './types'
 
-type Weekdays = {
-  weekdayFormat?: string
-  locale?: Locale
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
-}
-
-function weekdays({ weekdayFormat = 'E', locale, weekStartsOn }: Weekdays) {
-  const start = startOfWeek(new Date(), { locale, weekStartsOn })
-  return [...Array(7).keys()].map(i =>
-    format(addDays(start, i), weekdayFormat, { locale })
-  )
-}
-
-export function CalendarWeek() {
+export function CalendarWeek<TDate, TLocale>() {
   const styles = useMultiStyleConfig('CalendarMonth', {}) as CalendarMonthStyles
-  const { locale, weekdayFormat, weekStartsOn } =
-    React.useContext(CalendarContext)
-  const week = weekdays({ weekdayFormat, locale, weekStartsOn })
+  const context = useCalendarContext<TDate, TLocale>()
+
+  const weekdays = context.adapter.weekdays(context.weekdayFormat)
 
   return (
     <Grid sx={styles.week}>
-      {week.map((weekday, i) => (
+      {weekdays.map((weekday, i) => (
         <Text key={`${weekday}-${i}`} sx={styles.weekday}>
           {weekday}
         </Text>
