@@ -101,6 +101,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "philzen",
+      "name": "Philzen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1634615",
+      "profile": "https://github.com/Philzen",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
