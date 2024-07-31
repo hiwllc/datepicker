@@ -5,7 +5,10 @@
   "main": "dist/uselessdev-datepicker.cjs.js",
   "module": "dist/uselessdev-datepicker.esm.js",
   "types": "dist/uselessdev-datepicker.cjs.d.ts",
-  "repository": "git@github.com:uselessdev/datepicker.git",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/uselessdev/datepicker.git"
+  },
   "author": "Wallace Oliveira <wallacebatistaoliveira@gmail.com>",
   "license": "Apache-2.0",
   "private": false,
