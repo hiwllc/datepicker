@@ -1,11 +1,14 @@
 {
   "name": "@uselessdev/datepicker",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "description": "A simple react datepicker build with chakra-ui and date-fns",
   "main": "dist/uselessdev-datepicker.cjs.js",
   "module": "dist/uselessdev-datepicker.esm.js",
   "types": "dist/uselessdev-datepicker.cjs.d.ts",
-  "repository": "git@github.com:uselessdev/datepicker.git",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/uselessdev/datepicker.git"
+  },
   "author": "Wallace Oliveira <wallacebatistaoliveira@gmail.com>",
   "license": "Apache-2.0",
   "private": false,
@@ -47,7 +50,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "framer-motion": "^6",
+    "framer-motion": ">=6.5.2",
     "jest": "^27.4.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
